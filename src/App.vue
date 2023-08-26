@@ -7,14 +7,13 @@
 <script>
 export default {
     name: 'App',
-
-    data() {
-        return {
-
-        }
-    },
 }
 </script>
+
+
+<style>
+@import "@vueform/multiselect/themes/default.css";
+</style>
 
 <style>
 #app {

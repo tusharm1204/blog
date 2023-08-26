@@ -1,15 +1,11 @@
 <template>
-<div class="">
-   demo
+<div>
+   DASHBOARD
 </div>
 </template>
 
-<script>
+<script setup>
 
-export default {
-    name: 'DeshBoard',
-
-}
 </script>
 <style>
 

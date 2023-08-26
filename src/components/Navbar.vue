@@ -11,29 +11,19 @@
         </ul>
     </div>
 </div>
-
 <Modal />
 </template>
 
     
-<script>
+<script setup>
 import Modal from './Modal.vue'
-export default {
-    name: 'navBar',
-    components:{
-        Modal
-    },
-  
-}
 </script>
-
-    
+ 
 <style scoped>
 .navbar {
     padding: 19px;
     background: rgb(195, 223, 230);
 }
-
 .rounded-circle {
     height: 50px;
 }
@@ -46,7 +36,7 @@ export default {
     background: rgb(55, 99, 194);
     display: flex;
     justify-content: end;
-    width: 110%;
+    width: 97%;
     left: 46px;
     padding: 4px;
     position: fixed;

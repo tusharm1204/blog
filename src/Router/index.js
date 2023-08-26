@@ -3,14 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
 
     {
-        name: 'Login',
+        name: 'LoginPage',
         path: '/login',
-        component: () => import('../components/Login.vue'),
+        component: () => import('../components/LoginPage.vue'),
     },
     {
-        name: 'Layout',
-        path: '/',
-        component: () => import('../components/Layout.vue'),
+        name: 'Admin',
+        path: '/admin',
+        component: () => import('../components/Admin.vue'),
 
         children: [
             {
@@ -23,7 +23,7 @@ const routes = [
                 name: 'Blog',
                 path: 'blog',
                 component: () => import('../components/Blog.vue'),
-        
+
             },
             {
                 name: 'Category',
@@ -43,18 +43,22 @@ const routes = [
                 component: () => import('../components/Tags.vue'),
 
             },
+            {
+                name: 'Creatblog',
+                path: 'creatblog',
+                component: () => import('../components/CreatBlog.vue'),
+
+            },
+            {
+                name: 'EditBlog',
+                path: 'editBlog/:id',
+                component: () => import('../components/EditBlog.vue'),
+
+            },
 
         ]
 
     },
-    // {
-    //     name: 'Modal',
-    //     path: '/modal',
-    //     component: () => import('../components/Modal.vue'),
-    // },
-
-
-
 ]
 
 
@@ -62,19 +66,4 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
-
-// router.beforeEach(() => {
-//     let user = localStorage.getItem('user');
-//     if (user) {
-//         return true;
-//         // this.$router.push({
-//         //     name: 'DashBoard'
-//         // });
-//     }else{
-//         return false;
-//         // this.$router.push({
-//         //     name: 'LoginPage'
-//         // });
-//     }  
-//   });
 export default router

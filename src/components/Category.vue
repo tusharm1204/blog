@@ -3,11 +3,15 @@
     <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData">
         Add Category +
     </button>
+    <Multiselect
+    v-model="selected"
+    :options="options" placeholder="select opation" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" mode="tags" :multiple="true"  class="w-[11rem]">
+  </Multiselect>
+
 </div>
 <div class="mt-5">
     <table class="table table-bordered">
         <tr>
-
             <th>IMAGE</th>
             <!-- <th>NUMBER</th> -->
             <th>NAME</th>
@@ -15,7 +19,7 @@
         </tr>
         <tr v-for="datum in detail" :key="datum">
             <td><img :src="datum.image" alt="img" /></td>
-            <td>{{datum.name }}</td>
+            <td>{{ datum.name }}</td>
             <td>
                 <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
                 <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(datum.id)"></i>
@@ -28,8 +32,8 @@
                 </li>
                 <li class="page-item" v-for="page in totalPage" :key="page">
                     <a class="page-link" href="#" @click.prevent="currentPage = page">{{
-                page
-              }}</a>
+              page
+            }}</a>
                 </li>
                 <li class="page-item">
                     <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
@@ -37,7 +41,6 @@
             </ul>
         </nav>
     </table>
-
 </div>
 
 <!--------create modal------>
@@ -46,14 +49,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">{{ isEdit ? "Update category" : "Add category" }}</h4>
+                    <h4 class="modal-title">
+                        {{ isEdit ? "Update category" : "Add category" }}
+                    </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <label for="name">Name</label>
-                    <input type="text" v-model="form.name"><br /><br />
+                    <input type="text" v-model="form.name" /><br /><br />
                     <label for="file">File</label>
-                    <input type="file" @change="addImage" style="width: 100%;" />
+                    <input type="file" @change="addImage" style="width: 100%" />
                 </div>
 
                 <div class="modal-footer">
@@ -71,23 +76,31 @@
 <!------------->
 </template>
 
+
+
 <script>
-import axios from 'axios'
+import axios from "axios";
+import Multiselect from '@vueform/multiselect'
+
 export default {
-    name: 'Category-component',
+    name: "Category-component",
+    components: {
+      Multiselect,
+    },
     data() {
         return {
+            selected: null,
             totalPage: 0,
             currentPage: 1,
             detail: {},
-            file: '',
-            url: '',
+            file: "",
+            url: "",
             isEdit: false,
             form: {
                 name: "",
-                image: ''
+                image: "",
             },
-        }
+        };
     },
     watch: {
         currentPage(value) {
@@ -97,9 +110,9 @@ export default {
     },
     methods: {
         addImage: function (evt) {
-            const file = evt.target.files[0]
+            const file = evt.target.files[0];
             this.url = URL.createObjectURL(file);
-            this.files = file
+            this.files = file;
         },
         handlePrev() {
             if (this.currentPage > 1) {
@@ -122,12 +135,12 @@ export default {
             this.form = datum;
         },
         aditData() {
-            console.log('tushar makwana');
+            console.log("tushar makwana");
         },
         addCategory() {
             if (!this.form.name) {
-                console.log(this.form.name);
-                this.error.form.name = ''
+                // console.log(this.form.name);
+                this.error.form.name = "";
             }
             if (this.isEdit) {
                 console.log(this.form);
@@ -137,12 +150,13 @@ export default {
             data = JSON.parse(data);
             let token = data.token;
             let formData = new FormData();
-            formData.append('name', this.form.name)
-            formData.append('image', this.files)
+            formData.append("name", this.form.name);
+            formData.append("image", this.files);
 
             axios
                 .post(
-                    "https://blog-api-dev.octalinfotech.com/api/categories/store", formData, {
+                    "https://blog-api-dev.octalinfotech.com/api/categories/store",
+                    formData, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -160,7 +174,9 @@ export default {
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
             let token = data.token;
-            console.log(id);
+            // console.log(id); 
+            // console.log(data.token);
+            
 
             this.$swal
                 .fire({
@@ -170,7 +186,6 @@ export default {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-
                         axios
                             .delete(
                                 `https://blog-api-dev.octalinfotech.com/api/categories/${id}/delete`, {
@@ -185,48 +200,52 @@ export default {
                                 this.$swal.fire("Deleted successfully!", "", "success");
                                 this.getCategory();
                                 this.detail = data.data.data;
-
                             })
                             .catch((err) => {
                                 console.log(err);
                             });
-
                     } else if (result.isDenied) {
                         this.$swal.fire("Changes are not saved", "", "info");
                     }
                 });
         },
         getCategory(page = 1) {
-            let data = localStorage.getItem("user")
+            let data = localStorage.getItem("user");
             data = JSON.parse(data);
             let token = data.token;
             // console.log(token);
 
-            axios.get('https://blog-api-dev.octalinfotech.com/api/categories?page=' + page, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            }).then(({
-                data
-            }) => {
-                // console.log(data.data.data);
-                this.totalPage = data.data.last_page;
-                this.detail = data.data.data
-            }).catch(err => {
-                console.log(err);
-            });
-        }
+            axios
+                .get(
+                    "https://blog-api-dev.octalinfotech.com/api/categories?page=" + page, {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then(({
+                    data
+                }) => {
+                    // console.log(data.data.data);
+                    this.totalPage = data.data.last_page;
+                    this.detail = data.data.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
     },
     mounted() {
         this.getCategory();
-    }
-}
+    },
+};
 </script>
+
 
 <style scoped>
 img {
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     background-size: cover;
     border-radius: 100%;
 }
@@ -254,7 +273,6 @@ i {
     left: 700px;
     font-size: 18px;
     margin-top: 75px;
-    
 }
 
 .btns {
