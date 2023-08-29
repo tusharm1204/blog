@@ -5,7 +5,6 @@ export default function auth({next}) {
     if (user){
         return next();
     }
-
     return next({
         name:'LoginPage'
     })
