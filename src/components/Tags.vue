@@ -1,23 +1,28 @@
 <template>
   <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tags +
   </button>
-  <table class="table table-bordered">
-    <tr>
-      <th>ID</th>
-      <th>NAME</th>
-      <th>ACTION</th>
-    </tr>
-    <template v-if="tags.length > 0">
-    <tr v-for="(tag, index) in tags" :key="tag">
-      <td>{{ index + 1 }}</td>
-      <td>{{ tag.name }}</td>
-      <td>
-        <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
-        <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
-      </td>
-    </tr>
-  </template>
+  <div class="container">
+    <table class="table table-bordered">
+      <thead>
 
+        <tr>
+          <th>ID</th>
+          <th>NAME</th>
+          <th>ACTION</th>
+        </tr>
+      </thead>
+     <tbody>
+      <template v-if="tags.length > 0">
+        <tr v-for="(tag, index) in tags" :key="tag">
+          <td>{{ index + 1 }}</td>
+          <td>{{ tag.name }}</td>
+          <td>
+            <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
+            <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
+          </td>
+        </tr>
+      </template>
+    </tbody>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item">
@@ -31,7 +36,9 @@
         </li>
       </ul>
     </nav>
-  </table>
+    </table>
+  </div>
+
   <!-- Create modal -->
   <div class="modal fade" id="addData">
     <div class="modal-dialog">
@@ -61,6 +68,8 @@ import axios from "axios";
 import { onMounted, ref,watch} from "vue";
 import { inject } from 'vue'
 const swal = inject('$swal')
+import { createToaster} from "@meforma/vue-toaster";
+const toaster = createToaster({ position: "top-right", type: "success",});
 
 const totalPage = ref(0);
 const currentPage = ref(1);
@@ -120,8 +129,11 @@ const addTag = ()  =>{
             },
           }
         )
-        .then(() => {
-          // console.log(data.data);
+        .then((res) => {
+          toaster.show(res.data.message, {
+                    type: "success",
+                    position: "top-right",
+                    });
           getTags();
         })
         .catch((err) => {
@@ -351,6 +363,7 @@ td {
 }
 
 table {
+  margin-left:-114px ;
   width: 64%;
   position: absolute;
   transform: translate(267px, 55px);
@@ -396,7 +409,9 @@ li {
 .error.message {
   color: red;
 }
-
+i{
+  margin: 10px;
+}
 .pagination {
   position: relative;
   top: 51px;

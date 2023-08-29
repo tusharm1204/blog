@@ -44,12 +44,12 @@
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Date</label>
-                        <input type="date" id="confirmPassword" placeholder="Confirm Password" v-model="date" />
+                        <VueDatePicker v-model="date"  :format="format" style="width: 545px;"></VueDatePicker>
                         <h4 class="error">{{ error.data }}</h4>
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Image</label>
-                        <input type="file" @change="addImage" />
+                        <input type="file" @change="addImage" style="background: white;"/>
                     </div>
                     <div class="user-input-box">
                         <label for="username">status</label>
@@ -63,16 +63,17 @@
                     </div>
                 </div> 
                 <div class="form-submit-btn " >
-                    <button class="btn btn-dark" @click.prevent="addBlog">
+                    <button class="btn btn-success" @click.prevent="addBlog">
                         Save
                     </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-dark" >
+                    <button class="btn btn-danger" @click="backBlog">
                         Cancle 
                     </button>
                 </div>
             </form>
         </div>
     </div>
+    <h1 v-show="ok">Hello!</h1>
     </template>
     
     <script setup>
@@ -80,11 +81,22 @@
 import Multiselect from '@vueform/multiselect'
 import axios from "axios";
 import { useRouter } from 'vue-router';
+import '@vuepic/vue-datepicker/dist/main.css';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { createToaster} from "@meforma/vue-toaster";
+const toaster = createToaster({ position: "top-right", type: "success",});
+import moment from 'moment';
 const router = useRouter();
 
+const format = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
 
+  return `${day}/${month}/${year}`;
+}
     const form = ref(true);
-    // const tags = ref([])
     const slug = ref('');
     const title = ref('');
     const error = ref({});
@@ -133,7 +145,7 @@ const router = useRouter();
          if (!description.value) {
         error.value.description = 'missing a description !!'
          }
-
+         moment(date.value).format('YYYY-MM-DD');
         let data = localStorage.getItem("user");
         data = JSON.parse(data);
          let token = data.token;
@@ -143,10 +155,10 @@ const router = useRouter();
          formData.append("slug",slug.value);
          formData.append("user_id",User.value);
          Tags.value.forEach((tag, index) => {
-            formData.append(`tag_ids[${index}]`,tag.value);
+        formData.append(`tag_ids[${index}]`,tag.value);
         });
          formData.append("category_id",Categories.value);
-         formData.append("date",date.value);
+         formData.append("date",moment(date.value).format('YYYY-MM-DD'));
          formData.append("description",description.value);
          formData.append("status",status.value);
          formData.append("image", files.value);
@@ -159,8 +171,11 @@ const router = useRouter();
                         },
                     }
                 )
-                .then((data) => {
-                    console.log(data.data.data);
+                .then((res) => {
+                    console.log(res.data.data.data);
+                    toaster.show(res.data.message, {
+                    type: "success",
+                     position: "top-right", });
                     router.push({name: 'Blog'});       
                 })
                 .catch((err) => {
@@ -244,6 +259,10 @@ const router = useRouter();
         });
     }
 
+
+    const backBlog = () => {
+        router.push({name: 'Blog'});       
+    }
     onMounted(() => {
         getTags();
         getCategory();
@@ -261,21 +280,19 @@ const router = useRouter();
     .container {
         width: 1200px;
         max-width: 1200px;
-        background-color: rgb(0, 255, 221);
-        background-image: linear-gradient(hsla(240,7%,62%,1), hsla(240,7%,62%,1));
+        background-color: #fff;
+        background-image: linear-gradient(hsla(0,0%,100%,1), #fff);
         padding: 28px;
         margin: 0 28px;
         border-radius: 10px;
-        box-shadow: inset -2px 2px 2px white;
+        box-shadow: inset 0px 0px 5px slategrey;
         background-repeat: no-repeat;
     }
     .form-title {
         font-size: 26px;
-        font-weight: 600;
-        text-align: center;
+        text-align: start;
         padding-bottom: 6px;
-        color: white;
-        text-shadow: 2px 2px 2px black;
+        color: #343a40;
         border-bottom: solid 1px white;
     }
     .main-user-info {

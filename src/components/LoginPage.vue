@@ -1,8 +1,8 @@
 <template>
 <div class="main">
     <div class="body d-md-flex align-items-center justify-content-between">
-        <div class="col-md-6 col-lg-5 d-none d-md-block img">
-            <img src="https://media.licdn.com/dms/image/C4D22AQHT2dQkCmO04w/feedshare-shrink_800/0/1671471150892?e=1693440000&v=beta&t=kgZj6ILerKD6Lokv-TKmJ_csksyOMbfVNCvL-o1hin0" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:633px;background-size: cover;width:500px;" />
+        <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 520px;">
+            <img src="https://media.licdn.com/dms/image/C4D22AQHT2dQkCmO04w/feedshare-shrink_800/0/1671471150892?e=1693440000&v=beta&t=kgZj6ILerKD6Lokv-TKmJ_csksyOMbfVNCvL-o1hin0" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:633px;background-size: cover;width:600px;" />
         </div>  
         <div class="col-md-6 col-lg-7 d-flex align-items-center">
             <div class="card-body p-4 p-lg-5 text-black">
@@ -70,9 +70,7 @@ const login = () => {
             position: "top-right",
 
         });
-        router.push({
-            name: 'Admin'
-        });
+        router.push({name: 'Admin'});
     }).catch(err => {
         console.log(err);
         toaster.show(err.response?.data?.message, {

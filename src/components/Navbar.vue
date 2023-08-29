@@ -5,8 +5,8 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#myModal">Profile</a></li>
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#myModalpassword">Change Password</a></li>
-            <li >
-                <router-link to="/login">Logout</router-link>
+            <li>
+                <router-link to="/login" @click.prevent="logOut">Logout</router-link>
             </li>
         </ul>
     </div>
@@ -16,7 +16,13 @@
 
     
 <script setup>
+import router from '@/Router'
 import Modal from './Modal.vue'
+
+const logOut = () =>{
+    localStorage.clear()
+    router.push({name:'LoginPage'})
+}
 </script>
  
 <style scoped>

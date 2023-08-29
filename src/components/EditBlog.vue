@@ -18,38 +18,39 @@
                         <label for="email">User</label>
                         <Multiselect style="display: flex;
                         margin-left:0px;width:543px;border:1px solid;"
-                        v-model="User"
+                        v-model="users"
                         :options="userOptions" placeholder="select opation" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"   class="w-[11rem]">
-                      </Multiselect>{{ User }}
-                        <h4 class="error">{{ error.User }}</h4>
+                      </Multiselect>
+                        <h4 class="error">{{ error.users }}</h4>
                     </div>
                     <div class="user-input-box">
                         <label for="phoneNumber">Tag</label>
+                
                         <Multiselect style="display: flex;
                         margin-left:29px; width: 545px;border:1px solid;"
-                        v-model="Tags" object
+                        v-model="tags" object
                         :options="tagOptions" placeholder="select opation" :closeOnSelect="true" :searchable="true" mode="tags" :multiple="true"  class="w-[11rem]">
                       </Multiselect>
-                        <h4 class="error">{{ error.Tags }}</h4>
+                        <h4 class="error">{{ error.tags }}</h4>
                     </div>
                
                     <div class="user-input-box">
                         <label for="password">Categories</label>
                         <Multiselect style="display: flex;
                         margin-left:0px;width:543px;border:1px solid;"
-                        v-model="Categories"
+                        v-model="categories"
                         :options="categoryOptions" placeholder="select opation" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" class="w-[11rem]">
                       </Multiselect>
-                        <h4 class="error">{{ error.Categories }}</h4>
+                        <h4 class="error">{{ error.categories }}</h4>
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Date</label>
-                        <VueDatePicker v-model="date" style="width: 545 px;"></VueDatePicker>
+                        <VueDatePicker v-model="date" style="width: 545px;"></VueDatePicker>
                         <h4 class="error">{{ error.data }}</h4>
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Image</label>
-                        <input type="file" @change="addImage" />
+                        <input type="file" @change="addImage" style="background: white;"/>
                     </div>
                     <div class="user-input-box">
                         <label for="username">status</label>
@@ -58,15 +59,15 @@
                     </div>
                     <div class="user-input-box" style="display: contents;">
                         <label for="Description">Description</label>
-                        <textarea v-model="description" id="" cols="30" rows="10" style="width: 100%;border: 2px solid black;border-radius: 10px;"></textarea>
+                        <textarea v-model="description" id="" cols="30" rows="10" style="width: 100%;border: 2px solid black;border-radius: 10px;" v-html="description"></textarea>
                         <h4 class="error">{{ error.description }}</h4>
                     </div>
                 </div> 
                 <div class="form-submit-btn " >
-                    <button class="btn btn-dark" @click.prevent="upadatBlog">
+                    <button class="btn btn-success" @click.prevent="upadatBlog">
                         Update
                     </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-dark">
+                    <button class="btn btn-danger" @click="backBlog">
                         Cancle 
                     </button>
                 </div>
@@ -83,15 +84,29 @@ import { useRoute } from 'vue-router'
 import '@vuepic/vue-datepicker/dist/main.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { useRouter } from 'vue-router';
+import moment from 'moment';
+import { createToaster} from "@meforma/vue-toaster";
+const toaster = createToaster({ position: "top-right", type: "success",});
 
-const route = useRoute()
+
+const addImage = (evt) =>{   
+            const file = evt.target.files[0];
+            url.value = URL.createObjectURL(file);
+            files.value = file;
+    };
+
+     const files  = ref('')
+     const url = ref('')   
+     const router = useRouter();
+    const route = useRoute()
     const form = ref(true);
     const slug = ref('');
     const title = ref('');
     const error = ref({});
-    const User = ref('')
-    const Tags = ref([])
-    const Categories = ref(null)
+    const users = ref('')
+    const tags = ref([])
+    const categories = ref(null)
     const tagOptions = ref([]);
     const userOptions = ref([])
     const categoryOptions = ref([])
@@ -99,11 +114,51 @@ const route = useRoute()
      const description = ref('')
      const status = ref('')
 
+     const upadatBlog = () => {
+        // console.log(route.params.id);
+        date.value = moment(date.value).format('YYYY-MM-DD');
+        let user = localStorage.getItem("user");
+        user = JSON.parse(user);
+        let token = user.token;
+         let data = {
+            category_id  : categories.value,
+            user_id : users.value,
+            tag_id : tags.value[0],
+            title :title.value,
+            description:description.value,
+            status:status.value,
+            date: date.value,
+            Image:files.value
+         }
+         console.log(data);
+        axios.post(`https://blog-api-dev.octalinfotech.com/api/blogs/${route.params.id}/update` ,data,{
+            headers: {
+                      Authorization: `Bearer ${token}`,
+                  },
+        })
+        .then((res) => {
+            console.log(res);
+            console.log(data,'tushar');   
+            toaster.show(res.data.message, {
+            type: "success",
+            position: "top-right",
+        });
+        })
+        .catch((err) => {
+            console.log(err);    
+        })
+        router.push({name: 'Blog'});          
+     } 
 
      onMounted(() => {
-        console.log(route.params.id);
-        title.value = 'tushar'
-        slug.value = 'makwana'
+        getCategory()
+        getTags();
+        getUsers();
+        getBlog();
+        
+     })
+
+     const getBlog = () => {
         let data = localStorage.getItem("user");
         data = JSON.parse(data);
         let token = data.token;
@@ -117,19 +172,93 @@ const route = useRoute()
             console.log(res);
             title.value = res.data.data.title
             slug.value = res.data.data.slug
-            User.value = res.data.data.user_name
-            Tags.value = res.data.data.tag
-            Categories.value = res.data.data.category_name
+            users.value =  res.data.data.user_id
+            tags.value = res.data.data.tag.map((tag) => {return {label: tag.name, value: tag.id}})
+            console.log(tags.value);
+            categories.value = res.data.data.category_id
             date.value = res.data.data.date
             description.value = res.data.data.description
             status.value = res.data.data.status
-            
+            console.log(res.data.data.category_name);
         })
         .catch((err) => {
           console.log(err);
         });
-     })
+     }
 
+     const backBlog = () => {
+        router.push({name: 'Blog'});       
+    }
+
+    const getUsers = () => {
+        let data = localStorage.getItem("user");
+      data = JSON.parse(data);
+      let token = data.token;
+
+      axios
+        .get("https://blog-api-dev.octalinfotech.com/api/users/all", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(({ data }) => {
+            console.log(data);
+            userOptions.value =  [ { "label": "admin", "value": 1 }, { "label": "Kuldip", "value": 2 } ]
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    const getTags = () => {
+        let data = localStorage.getItem("user");
+      data = JSON.parse(data);
+      let token = data.token;
+      axios
+        .get("https://blog-api-dev.octalinfotech.com/api/tages/all", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(({ data }) => {
+            
+          tagOptions.value = data.data.map((value) => {
+            return {
+                label: value.name,
+                value: value.id
+            }
+            
+        })
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+
+    const getCategory = () => {
+        let data = localStorage.getItem("user");
+      data = JSON.parse(data);
+      let token = data.token;
+
+      axios
+        .get("https://blog-api-dev.octalinfotech.com/api/categories/all", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(({ data }) => {
+    
+            categoryOptions.value = data.data.map((value) => {
+            return {
+                label: value.name,
+                value: value.id
+            }
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
     </script>
     
     <style scoped>
@@ -143,21 +272,19 @@ const route = useRoute()
     .container {
         width: 1200px;
         max-width: 1200px;
-        background-color: rgb(0, 255, 221);
-        background-image: linear-gradient(hsla(240,7%,62%,1), hsla(240,7%,62%,1));
+        background-color: #fff;
+        background-image: linear-gradient(hsla(0,0%,100%,1), #fff);
         padding: 28px;
         margin: 0 28px;
         border-radius: 10px;
-        box-shadow: inset -2px 2px 2px white;
+        box-shadow: inset 0px 0px 5px slategrey;
         background-repeat: no-repeat;
     }
     .form-title {
         font-size: 26px;
-        font-weight: 600;
-        text-align: center;
+        text-align: start;
         padding-bottom: 6px;
-        color: white;
-        text-shadow: 2px 2px 2px black;
+        color: #343a40;
         border-bottom: solid 1px white;
     }
     .main-user-info {

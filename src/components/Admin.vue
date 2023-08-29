@@ -79,6 +79,8 @@ body {
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
     top: 0;
+    box-shadow: 0px 0px 10px slategrey;
+
 }
 
 #sidebar header {

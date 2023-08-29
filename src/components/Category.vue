@@ -3,28 +3,27 @@
     <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData">
         Add Category +
     </button>
-    <Multiselect
-    v-model="selected"
-    :options="options" placeholder="select opation" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" mode="tags" :multiple="true"  class="w-[11rem]">
-  </Multiselect>
-
 </div>
-<div class="mt-5">
+<div class="mt-5 container">
     <table class="table table-bordered">
-        <tr>
-            <th>IMAGE</th>
-            <!-- <th>NUMBER</th> -->
-            <th>NAME</th>
-            <th>ACTION</th>
-        </tr>
-        <tr v-for="datum in detail" :key="datum">
-            <td><img :src="datum.image" alt="img" /></td>
-            <td>{{ datum.name }}</td>
-            <td>
-                <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
-                <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(datum.id)"></i>
-            </td>
-        </tr>
+        <thead>
+
+            <tr>
+                <th>IMAGE</th>
+                <th>NAME</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="datum in detail" :key="datum">
+                <td><img :src="datum.image" alt="img" /></td>
+                <td>{{ datum.name }}</td>
+                <td>
+                    <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
+                    <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(datum.id)"></i>
+                </td>
+            </tr>
+        </tbody>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
@@ -80,13 +79,10 @@
 
 <script>
 import axios from "axios";
-import Multiselect from '@vueform/multiselect'
-
+import { createToaster} from "@meforma/vue-toaster";
+const toaster = createToaster({ position: "top-right", type: "success",});
 export default {
     name: "Category-component",
-    components: {
-      Multiselect,
-    },
     data() {
         return {
             selected: null,
@@ -162,9 +158,13 @@ export default {
                         },
                     }
                 )
-                .then((data) => {
-                    console.log(data.data.data);
+                .then((res) => {
+                    console.log(res.data.data.data);
                     this.getCategory();
+                    toaster.show(res.data.message, {
+                    type: "success",
+                    position: "top-right",
+                    });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -194,12 +194,10 @@ export default {
                                     },
                                 }
                             )
-                            .then(({
-                                data
-                            }) => {
+                            .then(({res}) => {         
                                 this.$swal.fire("Deleted successfully!", "", "success");
                                 this.getCategory();
-                                this.detail = data.data.data;
+                                this.detail = res.data.data.data;
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -208,7 +206,7 @@ export default {
                         this.$swal.fire("Changes are not saved", "", "info");
                     }
                 });
-        },
+        },  
         getCategory(page = 1) {
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
@@ -226,7 +224,6 @@ export default {
                 .then(({
                     data
                 }) => {
-                    // console.log(data.data.data);
                     this.totalPage = data.data.last_page;
                     this.detail = data.data.data;
                 })
@@ -261,10 +258,12 @@ table {
     width: 64%;
     position: absolute;
     transform: translate(267px, 55px);
+    margin-left: -114px;
 }
 
 i {
     color: rgb(43, 81, 187);
+    margin: 10px;
 }
 
 .addBtn {
