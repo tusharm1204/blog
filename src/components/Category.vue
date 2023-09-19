@@ -1,31 +1,33 @@
 <template>
-<div>
-    <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData">
-        Add Category +
-    </button>
-</div>
-<div class="mt-5 container">
-    <table class="table table-bordered">
+    <div>
+        <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData">
+            Add Category +
+        </button>
+    </div>
+    <div>
+        <h1 class="categoty">CATEGORIES</h1>
+    </div>
+    <div class=" container">
+    <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400 ">
         <thead>
-
-            <tr>
-                <th>IMAGE</th>
+            <tr scope="row"> 
+                <th style="text-align: center;">IMAGE</th>
                 <th>NAME</th>
                 <th>ACTION</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="datum in detail" :key="datum">
-                <td><img :src="datum.image" alt="img" /></td>
+            <tr  scope="col" v-for="datum in detail" :key="datum">
+                <td style="text-align: center; justify-content: center; align-items: center; display: flex;"><img :src="datum.image" alt="img" /></td>
                 <td>{{ datum.name }}</td>
                 <td>
-                    <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
+                    <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
                     <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(datum.id)"></i>
                 </td>
             </tr>
         </tbody>
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
+            <ul class="pagination" style="top:75px;">
                 <li class="page-item">
                     <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
                 </li>
@@ -39,7 +41,7 @@
                 </li>
             </ul>
         </nav>
-    </table>
+      </table>
 </div>
 
 <!--------create modal------>
@@ -180,9 +182,10 @@ export default {
 
             this.$swal
                 .fire({
-                    title: "Do you want to delete ?",
-                    showCancelButton: true,
-                    confirmButtonText: "Ok!",
+                    title: "Are you sure?",
+                    icon: "warning",
+                    text: "Are you sure that you want to leave this page?",
+                    dangerMode: true,
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
@@ -241,8 +244,8 @@ export default {
 
 <style scoped>
 img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     background-size: cover;
     border-radius: 100%;
 }
@@ -255,10 +258,10 @@ td {
 }
 
 table {
-    width: 64%;
-    position: absolute;
+    margin-left: -301px;
+    width: 83%;
     transform: translate(267px, 55px);
-    margin-left: -114px;
+    position: absolute;
 }
 
 i {
@@ -309,5 +312,16 @@ label {
     position: relative;
     top: 51px;
     justify-content: end;
+}
+
+.categoty{
+    display: flex;
+    justify-content: start;
+    margin-left: 30px;
+    font-size: 27px;
+    font-weight: 800;
+    margin-top: -25px;
+  text-shadow: 0 0 2px;
+
 }
 </style>

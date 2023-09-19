@@ -4,6 +4,16 @@ import middlewarePipeline from '@/components/Middleware/middleware-pipeline'
 const routes = [
 
     {
+        name: 'BlogWeb',
+        path: '/',
+        component: () => import('../components/WebPage/BlogWeb.vue'),
+    },
+    {
+        name: 'BlogShow',
+        path: '/blogs/:id',
+        component: () => import('../components/WebPage/BlogShow.vue'),
+    },
+    {
         name: 'LoginPage',
         path: '/login',
         component: () => import('../components/LoginPage.vue'),
@@ -12,6 +22,7 @@ const routes = [
     {
         name: 'Admin',
         path: '/admin',
+        redirect : '/admin/deshboard',
         meta: {
             middleware: [   
                 auth,   
@@ -24,72 +35,37 @@ const routes = [
                 name: 'Deshboard',
                 path: 'deshboard',
                 component: () => import('../components/DeshBoard.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
 
             },
             {
                 name: 'Blog',
                 path: 'blog',
                 component: () => import('../components/Blog.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
             },
             {
                 name: 'Category',
                 path: 'category',
                 component: () => import('../components/Category.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
             },
             {
                 name: 'User',
                 path: 'user',
                 component: () => import('../components/User.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
             },
             {
                 name: 'Tags',
-                path: 'tags',
-                component: () => import('../components/Tags.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
+                path: 'tag',
+                component: () => import('../components/Tags.vue')
             },
             {
                 name: 'Creatblog',
                 path: 'creatblog',
                 component: () => import('../components/CreatBlog.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
             },
             {
                 name: 'EditBlog',
                 path: 'editBlog/:id',
                 component: () => import('../components/EditBlog.vue'),
-                meta: {
-                    middleware: [   
-                        auth,   
-                    ],
-                },
             },
 
         ]

@@ -12,9 +12,9 @@
         </div>
         <div class="modal-body">
           <label for="name">Name</label>
-          <input type="text" v-model="name" /><br /><br />
+          <input type="text" v-model="profile.name" /><br /><br />
           <label for="email">Email</label>
-          <input type="text" v-model="email" />
+          <input type="text" v-model="profile.email" />
         </div>
         <div class="modal-footer">
           <button
@@ -66,9 +66,18 @@
 <script setup>
 import {ref } from "vue" ;
 
+const profile = ref ({
+  name:'',
+  email:''
+})
+ 
 
-let name = ref ('Tushar Makwana');
-let email = ref ('tusharm.octal8@gmail.com');
+  let data = localStorage.getItem('user')
+    data = JSON.parse(data)
+    console.log(data);
+    profile.value.name = data.name
+    profile.value.email = data.email
+
 </script>
 
 <style scoped>

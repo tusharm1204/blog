@@ -7,37 +7,45 @@
         <div id="sidebar">
             <header class="flex bg-slate-50 px-3 shadow-sm" style="padding: 16px; gap: 5px">
                 <div>
-                    <img src="	https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal" />
+                    <img src="	https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal animate-bounce" />
                 </div>
                 <div>
-                    <h1 href="#" style="color: black">OCTAL INFOTECH</h1>
+                    <h1 href="#" style="color: black" class="text-black text-lg font-bold space-x-3">OCTAL INFOTECH</h1>
                 </div>
             </header>
             <ul class="mt-5">
                 <li style="padding-left: 10px">
-                    <i class="fa-solid fa-house" style="color: rgb(212, 62, 62)"></i>
-                    <router-link to="/admin/category">CATEGORY</router-link>
+                    <i class="fa-solid fa-house" style="color: hsl(11deg 100% 50.86%);"></i>
+                    <router-link to="/admin/deshboard">DASHBOARD </router-link>
+                </li>
+                <li style="padding-left: 10px">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <router-link to="/admin/category">CATEGORIES</router-link>
                 </li>
                 <li style="padding-right: 34px">
-                    <i class="fa-solid fa-envelope" style="color: rgb(74, 65, 199)"></i>
-                    <router-link to="/admin/blog">BLOG</router-link>
+                    <i class="fa-solid fa-cube fa-lg" style="color: rgb(74, 65, 199)"></i>
+                    <router-link to="/admin/blog">BLOGS</router-link>
                 </li>
-                <li style="padding-right: 25px">
+                <li style="padding-right: 37px">
                     <i class="fa-solid fa-user" style="color: rgb(30, 138, 62)"></i>
                     <router-link to="/admin/user">USERS</router-link>
                 </li>
-                <li style="padding-right: 36px">
-                    <i class="fa-solid fa-tag" style="color: rgb(235, 222, 40); font-size: 24px"></i>
-                    <router-link to="/admin/tags">TAGS</router-link>
+                <li style="padding-right: 43px">
+                    <i class="fa-solid fa-tag" style="font-size: 24px;color:DodgerBlue"></i>
+                    <router-link to="/admin/tag">TAGS</router-link>
                 </li>
             </ul>
         </div>
         <router-view></router-view>
     </div>
 </div>
+<div>
+
+</div>
 </template>
 
 <script setup>
+
 import Navbar from "./Navbar.vue";
 
 </script>
@@ -73,7 +81,7 @@ body {
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: hsl(240deg 34.73% 93%);
+    background: #fff;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -84,7 +92,7 @@ body {
 }
 
 #sidebar header {
-    background-color: #f8f9fa;
+    background-color: #fff;
     font-size: 20px;
     line-height: 52px;
     text-align: center;
@@ -120,9 +128,9 @@ body {
 }
 
 .imgOctal {
-    height: 26px;
-    width: 30px;
-    border-radius: 10px;
+    height: 29px;
+    width: 29px;
+    border-radius: 18px;
     background-size: cover;
 }
 
@@ -130,7 +138,7 @@ ul :hover {
     text-align: justify;
     align-items: center;
     text-align: center;
-    background: #f8f9fa;
+    background: #eceff1;
     border-radius: 4px;
     gap: 10px;
     display: flex;

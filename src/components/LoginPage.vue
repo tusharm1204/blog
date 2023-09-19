@@ -1,8 +1,8 @@
 <template>
 <div class="main">
     <div class="body d-md-flex align-items-center justify-content-between">
-        <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 520px;">
-            <img src="https://media.licdn.com/dms/image/C4D22AQHT2dQkCmO04w/feedshare-shrink_800/0/1671471150892?e=1693440000&v=beta&t=kgZj6ILerKD6Lokv-TKmJ_csksyOMbfVNCvL-o1hin0" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:633px;background-size: cover;width:600px;" />
+        <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 553px;">
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOMj-dseZ54sUzotNCrFSHiBnOGUrpI64eCxSzM=s680-w680-h510" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:559px;background-size: cover;width:600px;" />
         </div>  
         <div class="col-md-6 col-lg-7 d-flex align-items-center">
             <div class="card-body p-4 p-lg-5 text-black">
@@ -165,7 +165,7 @@ const login = () => {
     border: 1px solid #dddd;
     border-radius: 18px;
     overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 12px;
     margin-top: 200px;
 }
 

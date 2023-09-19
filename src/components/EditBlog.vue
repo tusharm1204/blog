@@ -25,11 +25,10 @@
                     </div>
                     <div class="user-input-box">
                         <label for="phoneNumber">Tag</label>
-                
                         <Multiselect style="display: flex;
                         margin-left:29px; width: 545px;border:1px solid;"
                         v-model="tags" object
-                        :options="tagOptions" placeholder="select opation" :closeOnSelect="true" :searchable="true" mode="tags" :multiple="true"  class="w-[11rem]">
+                        :options="tagOptions" placeholder="select option" :closeOnSelect="true" :searchable="true" mode="tags" :multiple="true"  class="w-[11rem]">
                       </Multiselect>
                         <h4 class="error">{{ error.tags }}</h4>
                     </div>
@@ -45,7 +44,7 @@
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Date</label>
-                        <VueDatePicker v-model="date" style="width: 545px;"></VueDatePicker>
+                        <VueDatePicker v-model="date" style="width: 545px;border: 1px solid;border-radius:5px;"></VueDatePicker>
                         <h4 class="error">{{ error.data }}</h4>
                     </div>
                     <div class="user-input-box">
@@ -54,12 +53,26 @@
                     </div>
                     <div class="user-input-box">
                         <label for="username">status</label>
-                        <input type="text" id="username" name="username" placeholder="Enter your status" @input="input2" v-model="status"  />
+                        <Multiselect
+                        style="
+                          display: flex;
+                          margin-left: 26px;
+                          width: 543px;
+                          border: 1px solid;"
+                        v-model="status"
+                        :options="statusOpation"
+                        placeholder="select opation"
+                        :closeOnSelect="true"
+                        :clearOnSelect="true"
+                        :searchable="true"
+                        class="w-[11rem]">
+                        class="w-[11rem]">
+                      </Multiselect>
                         <h4 class="error" style="margin-right: 195px;">{{ error.status }}</h4>
                     </div>
                     <div class="user-input-box" style="display: contents;">
                         <label for="Description">Description</label>
-                        <textarea v-model="description" id="" cols="30" rows="10" style="width: 100%;border: 2px solid black;border-radius: 10px;" v-html="description"></textarea>
+                        <vue-editor id="editor" useCustomImageHandler @image-added="handleImageAdded" v-model="description" style="width: 100%;"></vue-editor>
                         <h4 class="error">{{ error.description }}</h4>
                     </div>
                 </div> 
@@ -67,7 +80,7 @@
                     <button class="btn btn-success" @click.prevent="upadatBlog">
                         Update
                     </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-danger" @click="backBlog">
+                    <button class="btn btn-danger" @click.prevent="backBlog">
                         Cancle 
                     </button>
                 </div>
@@ -77,13 +90,14 @@
     </template>
     
     <script setup>
+import { VueEditor } from "vue3-editor";
     import {ref, onMounted} from "vue";
 import Multiselect from '@vueform/multiselect'
 import axios from "axios";
-import { useRoute } from 'vue-router'
 import '@vuepic/vue-datepicker/dist/main.css';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import { createToaster} from "@meforma/vue-toaster";
@@ -113,9 +127,11 @@ const addImage = (evt) =>{
      const date = ref(null)
      const description = ref('')
      const status = ref('')
+    const statusOpation = ref('')
+
 
      const upadatBlog = () => {
-        // console.log(route.params.id);
+        console.log(status.value);
         date.value = moment(date.value).format('YYYY-MM-DD');
         let user = localStorage.getItem("user");
         user = JSON.parse(user);
@@ -126,19 +142,17 @@ const addImage = (evt) =>{
             tag_id : tags.value[0],
             title :title.value,
             description:description.value,
-            status:status.value,
+            status:status.value  === 'publish' ? 1 :2,
             date: date.value,
             Image:files.value
          }
-         console.log(data);
+         
         axios.post(`https://blog-api-dev.octalinfotech.com/api/blogs/${route.params.id}/update` ,data,{
             headers: {
                       Authorization: `Bearer ${token}`,
                   },
         })
-        .then((res) => {
-            console.log(res);
-            console.log(data,'tushar');   
+        .then((res) => {  
             toaster.show(res.data.message, {
             type: "success",
             position: "top-right",
@@ -173,19 +187,18 @@ const addImage = (evt) =>{
             title.value = res.data.data.title
             slug.value = res.data.data.slug
             users.value =  res.data.data.user_id
-            tags.value = res.data.data.tag.map((tag) => {return {label: tag.name, value: tag.id}})
-            console.log(tags.value);
+            tags.value = res.data.data.tag.map((value) => {return {label: value.name , value: value.id}})
             categories.value = res.data.data.category_id
             date.value = res.data.data.date
             description.value = res.data.data.description
-            status.value = res.data.data.status
-            console.log(res.data.data.category_name);
+            status.value  = res.data.data?.status == 1 ? 'publish' : 'unpublish' 
+            console.log(res.data.data.status);
+            statusOpation.value = ['publish','unpublish']
         })
         .catch((err) => {
           console.log(err);
         });
      }
-
      const backBlog = () => {
         router.push({name: 'Blog'});       
     }
@@ -203,7 +216,12 @@ const addImage = (evt) =>{
         })
         .then(({ data }) => {
             console.log(data);
-            userOptions.value =  [ { "label": "admin", "value": 1 }, { "label": "Kuldip", "value": 2 } ]
+            userOptions.value =   data.data.map((value) => {
+        return {
+          label: value.name,
+          value: value.id,
+        };
+      });
         })
         .catch((err) => {
           console.log(err);
@@ -220,14 +238,13 @@ const addImage = (evt) =>{
           },
         })
         .then(({ data }) => {
-            
-          tagOptions.value = data.data.map((value) => {
-            return {
-                label: value.name,
-                value: value.id
-            }
-            
-        })
+            tagOptions.value = data.data.map((value) => {
+                return {
+                    label: value.name,
+                    value: value.id
+                }
+            })
+            console.log(tagOptions.value);
         })
         .catch((err) => {
           console.log(err);

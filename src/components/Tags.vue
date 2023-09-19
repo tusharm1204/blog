@@ -1,12 +1,16 @@
 <template>
+
   <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tags +
   </button>
+  <div>
+    <h1 class="tags">TAGS</h1>
+  </div>
   <div class="container">
-    <table class="table table-bordered">
+    <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400 ">
       <thead>
 
         <tr>
-          <th>ID</th>
+          <th style="text-align: center;">ID</th>
           <th>NAME</th>
           <th>ACTION</th>
         </tr>
@@ -14,17 +18,17 @@
      <tbody>
       <template v-if="tags.length > 0">
         <tr v-for="(tag, index) in tags" :key="tag">
-          <td>{{ index + 1 }}</td>
+          <td style=" text-align: center; justify-content: center; align-items: center;">{{ index + 1 }}</td>
           <td>{{ tag.name }}</td>
           <td>
-            <i class="fa-solid fa-pencil" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
+            <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
             <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
           </td>
         </tr>
       </template>
     </tbody>
     <nav aria-label="Page navigation example">
-      <ul class="pagination">
+      <ul class="pagination" style="top: 70px;">
         <li class="page-item">
           <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
         </li>
@@ -363,10 +367,10 @@ td {
 }
 
 table {
-  margin-left:-114px ;
-  width: 64%;
-  position: absolute;
+  margin-left: -276px;
+  width: 81%;
   transform: translate(267px, 55px);
+  position: absolute;
 }
 
 i {
@@ -416,5 +420,15 @@ i{
   position: relative;
   top: 51px;
   justify-content: end;
+}
+
+.tags{
+  display: flex;
+  justify-content: start;
+  margin-left: 30px;
+  font-size: 27px;
+  font-weight: 800;
+  text-shadow: 0 0 2px;
+  margin-top: -30px;
 }
 </style>
