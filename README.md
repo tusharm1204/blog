@@ -1,14 +1,14 @@
 # used libraries
-1.  vue3-editor
-2.  vue3-carousel
-3.  vue-sweetalert2
-4.  vue-router
-5.  vue 3 axios
-6.  vue-datepicker
-7.  vue-multiselect
-8.  vue-toaster
+* .  vue3-editor
+*.  vue3-carousel
+*.  vue-sweetalert2
+*.  vue-router
+*.  vue 3 axios
+*.  vue-datepicker
+*.  vue-multiselect
+*.  vue-toaster
 9.  vue joi
-10. vue 3 moment
+*. vue 3 moment
 
 ## Project setup
 ```
