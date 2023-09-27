@@ -4,7 +4,7 @@
 <section class="container mt-5" style="margin-left:380px;width: 60%;">
 
       <Carousel :items-to-show="2.5" :wrap-around="true"  >
-        <Slide v-for="categories in categoriesDatas" :key="categories" style="width:27%;height:30%;" class="container">
+        <Slide v-for="categories in categoriesDatas" :key="categories" style="width:26%;height:30%;" class="container">
         <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
             <div class="item ">
                   <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
