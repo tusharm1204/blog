@@ -4,23 +4,22 @@
 <section class="container mt-5" style="margin-left:380px;width: 60%;">
 
       <Carousel :items-to-show="2.5" :wrap-around="true"  >
-      <Slide v-for="categories in categoriesDatas" :key="categories" style="width:35%;height:30%;" class="container">
+        <Slide v-for="categories in categoriesDatas" :key="categories" style="width:27%;height:30%;" class="container">
         <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
             <div class="item ">
-                <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
-            </div>
-            <div class="mt-3 text-base text-center cursor-pointer mt-2">
-                <h1 class="text-xs dark:text-gray-400 hover-underline-animation" style="font-size: 20px;font-weight:700;color: black;">
-                {{ categories.name }}
-                </h1>
-            </div>
-           </div>
-    </Slide>
-    
-        <template #addons>
-          <Navigation />
-        </template>
-      </Carousel>
+                  <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
+              </div>
+              <div class="mt-3 text-base text-center cursor-pointer mt-2">
+                  <h1 class="text-xs dark:text-gray-400 hover-underline-animation" style="font-size: 20px;font-weight:700;color: black;">
+                  {{ categories.name }}
+                  </h1>
+              </div>
+             </div>
+      </Slide>
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
 </section><br><br><br><br><br><br>
 <section class="container" style="margin-left:400px;">
     <div class=" grid grid-cols-3 container">
@@ -122,226 +121,12 @@ import Footer from '../WebPage/Footer.vue';
    i{
     padding: 6px;
    }
-   a{
-    color: white;
-   }
-   .carousel__item {
-    min-height: 200px;
-    width:1000px;
-   
-    color: var(--vc-clr-white);
-    font-size: 20px;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-  }
  .imges{
     width: 130px;
     height: 130px;
     border-radius: 100%;
     border: 1px solid;
  }
- *,
- *::after,
- *::before{
-     box-sizing: border-box;
-     padding: 0;
-     margin: 0;
- }
- .html{
-     font-size: 62.5%;
- }
- .navbar input[type="checkbox"],
- .navbar .hamburger-lines{
-     display: none;
- }
-
- .navbar{
-     box-shadow:0px 5px 10px 0px hsl(240deg 25.57% 75.25%);
-     position: fixed;
-     width: 100%;
-     background: #fff;
-     color: #000;
-     opacity: 0.85;
-     z-index: 1;
- }
- .navbar-container{
-     display: flex;
-     justify-content: space-between;
-     height: 64px;
-     align-items: center;
- }
- .menu-items{
-     order: 2;
-     display: flex;
-     gap: -15px;
- }
- .octal{
-    font-size: 2.25rem;
-    line-height: 1.75rem;
- }
- .menu-items li{
-     list-style: none;
-     margin-left: 1.5rem;
-     font-size: 1.3rem;
- }
- .navbar a{
-     color: #444;
-     text-decoration: none;
-     font-weight: 500;
-     transition: color 0.3s ease-in-out;
- }
- .navbar a:hover{
-     color: #117964;
- }
- @media (max-width: 768px){
-     .navbar{
-         opacity: 0.95;
-     }
-     .navbar-container input[type="checkbox"],
-     .navbar-container .hamburger-lines{
-         display: block;
-     }
-     .navbar-container{
-         display: block;
-         position: relative;
-         height: 64px;
-     }
-     .navbar-container input[type="checkbox"]{
-         position: absolute;
-         display: block;
-         height: 32px;
-         width: 30px;
-         top: 20px;
-         left: 20px;
-         z-index: 5;
-         opacity: 0;
-         cursor: pointer;
-     }
-     .navbar-container .hamburger-lines{
-         display: block;
-         height: 28px;
-         width: 35px;
-         position: absolute;
-         top: 20px;
-         left: 20px;
-         z-index: 2;
-         display: flex;
-         flex-direction: column;
-         justify-content: space-between;
-     }
-     .navbar-container .hamburger-lines .line{
-         display: block;
-         height: 4px;
-         width: 100%;
-         border-radius: 10px;
-         background: #333;
-     }
-     .navbar-container .hamburger-lines .line1{
-         transform-origin: 0% 0%;
-         transition: transform 0.3s ease-in-out;
-     }
-     .navbar-container .hamburger-lines .line2{
-         transition: transform 0.2s ease-in-out;
-     }
-     .navbar-container .hamburger-lines .line3{
-         transform-origin: 0% 100%;
-         transition: transform 0.3s ease-in-out;
-     }
-     .navbar .menu-items{
-         padding-top: 100px;
-         background: #fff;
-         height: 100vh;
-         max-width: 300px;
-         transform: translate(-150%);
-         display: flex;
-         flex-direction: column;
-         margin-left: -40px;
-         padding-left: 40px;
-         transition: transform 0.5s ease-in-out;
-         box-shadow:  5px 0px 10px 0px #aaa;
-         overflow: scroll;
-     }
-     .navbar .menu-items li{
-         margin-bottom: 1.8rem;
-         font-size: 1.1rem;
-         font-weight: 500;
-     }
-     .logo{
-         position: absolute;
-         top: 10px;
-         right: 15px;
-         font-size: 2.5rem;
-     }
-     .navbar-container input[type="checkbox"]:checked ~ .menu-items{
-         transform: translateX(0);
-     }
-     .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line1{
-         transform: rotate(45deg);
-     }
-     .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line2{
-         transform: scaleY(0);
-     }
-     .navbar-container input[type="checkbox"]:checked ~ .hamburger-lines .line3{
-         transform: rotate(-45deg);
-     }
- }
- @media (max-width: 500px){
-     .navbar-container input[type="checkbox"]:checked ~ .logo{
-         display: none;
-     }
- }
- body {
-    background-color: #eee
-  }
-  
-  .card {
-    border: none;
-    border-radius: 10px
-  }
-  
-  .c-details span {
-    font-weight: 300;
-    font-size: 13px
-  }
-  
-  .icon {
-    width: 50px;
-    height: 50px;
-    background-color: #eee;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 39px
-  }
-  
-  .badge span {
-    background-color: #fffbec;
-    width: 60px;
-    height: 25px;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    display: flex;
-    color: #fed85d;
-    justify-content: center;
-    align-items: center
-  }
-  
-  .progress {
-    height: 10px;
-    border-radius: 10px
-  }
-  
-  .text1 {
-    font-size: 14px;
-    font-weight: 600
-  }
-  
-  .text2 {
-    color: #a5aec0
-  }
-
   .description{
     width: 180px;
     height: 18px;

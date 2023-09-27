@@ -3,7 +3,7 @@
   <div class="container">
     <section class="container">
       <div >
-        <div style="display: flex;flex-direction: column;justify-content: center; align-items: flex-start;">
+        <div style="display: flex;flex-direction: column;justify-content: center; align-items:flex-start;">
           <router-link to="/" class="d-flex" style="align-items: baseline;">
               <i class="fa-solid fa-house" @click="backBlog"></i>
               &nbsp;<pre> <b>></b> </pre>
@@ -101,16 +101,6 @@ body {
   background-color: #eee
 }
 
-.card {
-  border: none;
-  border-radius: 10px
-}
-
-.c-details span {
-  font-weight: 300;
-  font-size: 13px
-}
-
 .icon {
   width: 50px;
   height: 50px;
@@ -122,29 +112,6 @@ body {
   font-size: 39px
 }
 
-.badge span {
-  background-color: #fffbec;
-  width: 60px;
-  height: 25px;
-  padding-bottom: 3px;
-  border-radius: 5px;
-  display: flex;
-  color: #fed85d;
-  justify-content: center;
-  align-items: center
-}
 
-.progress {
-  height: 10px;
-  border-radius: 10px
-}
 
-.text1 {
-  font-size: 14px;
-  font-weight: 600
-}
-
-.text2 {
-  color: #a5aec0
-}
 </style>
