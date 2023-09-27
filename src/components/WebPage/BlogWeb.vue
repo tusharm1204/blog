@@ -2,7 +2,7 @@
 
     <Navbar />
 <section class="container mt-5">
-
+    <div>tushar makwana</div>
       <Carousel :items-to-show="1.5"  v-bind="settings" :breakpoints="breakpoints">
         <Slide v-for="categories in categoriesDatas" :key="categories" style="width:35%;height: 35%;" class="container">
             <div style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
