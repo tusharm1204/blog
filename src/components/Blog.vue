@@ -167,17 +167,31 @@ const editBlog = (data) => {
 <style scoped>
 
 .red{
-  background: #eb868f;
-  padding: 6px;
-  border: 1px solid red;
-  box-shadow:2px 2px 2px 1px rgba(170, 17, 12, 0.2); 
+  background-color:#eb868f;
+  border: none;
+  padding: 8px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   
 }
 .green{
-  background: rgb(138, 230, 126);
-  padding:6px;
-  border: 1px solid green;
-  box-shadow:2px 2px 2px 1px rgb(28, 209, 28); 
+  background-color:rgb(138, 230, 126);
+  border: none;
+  padding: 8px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 
 
 }
 .btn {

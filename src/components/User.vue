@@ -114,14 +114,11 @@ const showUsers = () =>{
       }
     })
     .then((res) =>{
-      console.log(res);
       userName.value = res.data.data.data
     }).catch((err) =>{
     console.log(err);
     
   })
-    
-
 }
 
 const addUsers = () =>{
@@ -163,7 +160,7 @@ const delelteusers = (id) =>{
     data = JSON.parse(data);
     let token = data.token 
 
-    swal.fire({
+  swal.fire({
   title: "Are you sure?",
   text: "Are you sure that you want to leave this page?",
   icon: "warning",
@@ -205,9 +202,7 @@ const updateUsers = () =>{
           authorization : `Bearer ${token}`
         }
       }).then((res) =>{
-        console.log(res);
         updateUser.value = res.data.data
-        console.log(usersData);
         toaster.show(res.data.message, {
                     type: "success",
                     position: "top-right",
