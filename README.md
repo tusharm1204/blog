@@ -1,6 +1,5 @@
-# project libraries
+# used libraries
 1.vue3-editor
-
 2.vue3-carousel
 3.vue-sweetalert2
 4.vue-router
