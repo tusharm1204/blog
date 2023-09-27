@@ -74,7 +74,6 @@ const profile = ref ({
 
   let data = localStorage.getItem('user')
     data = JSON.parse(data)
-    console.log(data);
     profile.value.name = data.name
     profile.value.email = data.email
 

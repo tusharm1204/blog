@@ -27,7 +27,7 @@
             </tr>
         </tbody>
         <nav aria-label="Page navigation example">
-            <ul class="pagination" style="top:75px;">
+            <ul class="pagination" style="top:75px;left:740px;">
                 <li class="page-item">
                     <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
                 </li>
@@ -91,7 +91,6 @@ export default {
             totalPage: 0,
             currentPage: 1,
             detail: {},
-            file: "",
             url: "",
             isEdit: false,
             form: {

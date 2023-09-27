@@ -1,5 +1,5 @@
 <template>
-    <div v-if="form" style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center;">
         <div class="container" style="margin-top:95px;">
             <h1 class="form-title">Upadate Blog</h1>
             <form class="was-validated">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="user-input-box">
                         <label for="confirmPassword">Date</label>
-                        <VueDatePicker v-model="date" style="width: 545px;border: 1px solid;border-radius:5px;"></VueDatePicker>
+                        <VueDatePicker v-model="date"  :format="format" style="width: 545px;border: 1px solid;border-radius:5px;"></VueDatePicker>
                         <h4 class="error">{{ error.data }}</h4>
                     </div>
                     <div class="user-input-box">
@@ -102,7 +102,13 @@ import { useRouter } from 'vue-router';
 import moment from 'moment';
 import { createToaster} from "@meforma/vue-toaster";
 const toaster = createToaster({ position: "top-right", type: "success",});
+const format = (date) => {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
 
+  return `${day}/${month}/${year}`;
+};
 
 const addImage = (evt) =>{   
             const file = evt.target.files[0];
@@ -113,46 +119,50 @@ const addImage = (evt) =>{
      const files  = ref('')
      const url = ref('')   
      const router = useRouter();
+     const error = ref({});
     const route = useRoute()
-    const form = ref(true);
     const slug = ref('');
     const title = ref('');
-    const error = ref({});
     const users = ref('')
     const tags = ref([])
     const categories = ref(null)
+    const categoryOptions = ref([])
+    const date = ref(null)
     const tagOptions = ref([]);
     const userOptions = ref([])
-    const categoryOptions = ref([])
-     const date = ref(null)
      const description = ref('')
      const status = ref('')
     const statusOpation = ref('')
 
 
      const upadatBlog = () => {
-        console.log(status.value);
-        date.value = moment(date.value).format('YYYY-MM-DD');
+         date.value = moment(date.value).format("YYYY-MM-DD");
+         tags.value = tags.value.map((item) => item.value);
         let user = localStorage.getItem("user");
         user = JSON.parse(user);
         let token = user.token;
-         let data = {
-            category_id  : categories.value,
-            user_id : users.value,
-            tag_id : tags.value[0],
-            title :title.value,
-            description:description.value,
-            status:status.value  === 'publish' ? 1 :2,
-            date: date.value,
-            Image:files.value
-         }
+
+        let formValue = new FormData();
+         formValue.append("user_id",users.value);
+         formValue.append("title", title.value);
+          tags.value.forEach((tags) => {
+        
+            formValue.append(`tag_ids[]`, tags);
+          });
+          formValue.append("category_id", categories.value);
+          formValue.append("date", date.value);
+          formValue.append("status", status.value === 'publish' ? 1 :2);
+          formValue.append("description",description.value);
+          formValue.append("image", files.value);
+     
          
-        axios.post(`https://blog-api-dev.octalinfotech.com/api/blogs/${route.params.id}/update` ,data,{
+        axios.post(`https://blog-api-dev.octalinfotech.com/api/blogs/${route.params.id}/update` ,formValue,{
             headers: {
                       Authorization: `Bearer ${token}`,
                   },
         })
         .then((res) => {  
+            console.log(res);
             toaster.show(res.data.message, {
             type: "success",
             position: "top-right",
@@ -183,7 +193,6 @@ const addImage = (evt) =>{
                   },
               })
         .then((res) => {
-            console.log(res);
             title.value = res.data.data.title
             slug.value = res.data.data.slug
             users.value =  res.data.data.user_id
@@ -193,7 +202,8 @@ const addImage = (evt) =>{
             description.value = res.data.data.description
             status.value  = res.data.data?.status == 1 ? 'publish' : 'unpublish' 
             console.log(res.data.data.status);
-            statusOpation.value = ['publish','unpublish']
+            statusOpation.value = ['publish','unpublish'];
+            files.value = res.data.data.image
         })
         .catch((err) => {
           console.log(err);
@@ -215,7 +225,6 @@ const addImage = (evt) =>{
           },
         })
         .then(({ data }) => {
-            console.log(data);
             userOptions.value =   data.data.map((value) => {
         return {
           label: value.name,
@@ -264,7 +273,6 @@ const addImage = (evt) =>{
           },
         })
         .then(({ data }) => {
-    
             categoryOptions.value = data.data.map((value) => {
             return {
                 label: value.name,

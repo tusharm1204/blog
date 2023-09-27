@@ -14,7 +14,7 @@
                  <li><a href="#" class="p-4 font-semibold text-gray-600 ">Contact</a></li>
              </ul>
             <div class="head">
-             <img src="https://octalinfotech.com/img/octal-logo.png" style="width: 40px;border-radius: 25px;" class="animate-bounce w-10">
+             <img src="https://octalinfotech.com/img/octal-logo.png" style="width: 40px;border-radius: 25px;" class=" w-10">
              <span class="ml-3 text-xl octal">Octal infotech</span>
             </div>
          </div>

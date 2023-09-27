@@ -1,40 +1,40 @@
 <template>
 
     <Navbar />
-<section class="container mt-5">
+<section class="container mt-5" style="margin-left:380px;width: 60%;">
 
-      <Carousel :items-to-show="1.5"  v-bind="settings" :breakpoints="breakpoints">
-        <Slide v-for="categories in categoriesDatas" :key="categories" style="width:35%;height: 35%;" class="container">
-            <div style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
-                <div class="item ">
-                    <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
-                </div>
-                <div class="mt-3 text-base text-center cursor-pointer mt-2">
-                    <h1 class="text-xs dark:text-gray-400 hover-underline-animation" style="font-size: 20px;font-weight:700;color: black;">
-                    {{ categories.name }}
-                    </h1>
-                </div>
-               </div>
-        </Slide>
+      <Carousel :items-to-show="2.5" :wrap-around="true"  >
+      <Slide v-for="categories in categoriesDatas" :key="categories" style="width:35%;height:30%;" class="container">
+        <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
+            <div class="item ">
+                <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
+            </div>
+            <div class="mt-3 text-base text-center cursor-pointer mt-2">
+                <h1 class="text-xs dark:text-gray-400 hover-underline-animation" style="font-size: 20px;font-weight:700;color: black;">
+                {{ categories.name }}
+                </h1>
+            </div>
+           </div>
+    </Slide>
     
         <template #addons>
           <Navigation />
         </template>
       </Carousel>
 </section><br><br><br><br><br><br>
-<section class="container">
+<section class="container" style="margin-left:400px;">
     <div class=" grid grid-cols-3 container">
       <div v-for="blogs in blogDatas" :key="blogs" class="main mt-5 hover:text-white-500 font-semibold text-base grid-container">
           <div >
             <router-link :to="'/blogs/'+blogs.id">
-                        <img :src="blogs.image" alt="" class="object-cover w-full h-44 dark:bg-gray-500 " style=" width: 220px;height: 220px;border-radius:25px;" @click="showBlogs">
+                        <img :src="blogs.image" alt="" class=" w-full h-44 dark:bg-gray-500 " style=" width:330px;height: 230px;object-fit: contain;margin-left: -73px;" @click="showBlogs">
             </router-link>
           </div>
           <div class="text-base text-center cursor-pointer mt-2 justify-content">
               <h1 class="d-flex justify-content mt-3 hover-underline-animation">
               {{ blogs.name }}
-              <div  style="font-size:12px;font-weight:500;text-align: start;" v-html="blogs.description"></div>
-              </h1>
+            </h1>
+            <div class="description" style="" v-html="blogs.description"></div>
               <img :src="blogs.user_image" alt="" style="width: 50px;height: 50px;border-radius: 100%;margin-top: 5px;margin-left:-11px;">
               <span class="text-xs dark:text-gray-400 user_name" style="margin-left: 46px;top: 1px;margin-top: -33px;display: flex;">{{ blogs.user_name}}</span>
               <span class="text-xs dark:text-gray-400 date" style="    display: flex; margin-left:95px; margin-top: -15px;">   {{ blogs.date }}</span>
@@ -47,7 +47,7 @@
   <div id="carouselExampleControls" class="carousel slide text-center carousel-dark" data-mdb-ride="carousel" style="width: 65%;margin-left:371px;margin-top: 100px;">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class=" shadow-1-strong mb-4 w-10 animate-bounce rounded-full"
+        <img class=" shadow-1-strong mb-4 w-10  rounded-full"
           src="http://octalinfotech.com/img/octal-logo.png" alt="avatar"
           style="width: 150px;margin:50px;margin-left: 543px;" />
         <div class="row d-flex justify-content-center">
@@ -155,11 +155,7 @@ import Footer from '../WebPage/Footer.vue';
  .navbar .hamburger-lines{
      display: none;
  }
- .container{
-     max-width: 1200px;
-     width: 90%;
-     margin: auto;
- }
+
  .navbar{
      box-shadow:0px 5px 10px 0px hsl(240deg 25.57% 75.25%);
      position: fixed;
@@ -295,4 +291,65 @@ import Footer from '../WebPage/Footer.vue';
          display: none;
      }
  }
+ body {
+    background-color: #eee
+  }
+  
+  .card {
+    border: none;
+    border-radius: 10px
+  }
+  
+  .c-details span {
+    font-weight: 300;
+    font-size: 13px
+  }
+  
+  .icon {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 39px
+  }
+  
+  .badge span {
+    background-color: #fffbec;
+    width: 60px;
+    height: 25px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    display: flex;
+    color: #fed85d;
+    justify-content: center;
+    align-items: center
+  }
+  
+  .progress {
+    height: 10px;
+    border-radius: 10px
+  }
+  
+  .text1 {
+    font-size: 14px;
+    font-weight: 600
+  }
+  
+  .text2 {
+    color: #a5aec0
+  }
+
+  .description{
+    width: 180px;
+    height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size:13px;
+    font-weight:500;
+  }
+
  </style>

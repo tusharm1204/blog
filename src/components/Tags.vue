@@ -1,6 +1,6 @@
 <template>
 
-  <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tags +
+  <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tag +
   </button>
   <div>
     <h1 class="tags">TAGS</h1>
@@ -10,16 +10,14 @@
       <thead>
 
         <tr>
-          <th style="text-align: center;">ID</th>
-          <th>NAME</th>
+          <th style="text-align: center;">NAME</th>
           <th>ACTION</th>
         </tr>
       </thead>
      <tbody>
       <template v-if="tags.length > 0">
-        <tr v-for="(tag, index) in tags" :key="tag">
-          <td style=" text-align: center; justify-content: center; align-items: center;">{{ index + 1 }}</td>
-          <td>{{ tag.name }}</td>
+        <tr v-for="(tag) in tags" :key="tag">
+          <td style=" text-align: center; justify-content: center; align-items: center;">{{ tag.name }}</td>
           <td>
             <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
             <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
@@ -28,7 +26,7 @@
       </template>
     </tbody>
     <nav aria-label="Page navigation example">
-      <ul class="pagination" style="top: 70px;">
+      <ul class="pagination" style="top: 70px;left: 400px;">
         <li class="page-item">
           <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
         </li>

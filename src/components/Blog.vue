@@ -5,14 +5,13 @@
     <h1 style="margin-top:60px;" class="blog">BLOGS</h1>
   </div>
   <div>
-
     <router-link to="/admin/creatblog">
       <button class="btn btn-success mt-10 text-end btn" @click="addBlog">Add Blog +</button>
     </router-link>
   </div>
 </div>
 <div>  
-  <Multiselect style="width:18%;margin-top:-29px;margin-right:0;"
+  <Multiselect style="width:18%;margin-top:-35px;margin-right:0;"
   :value="selectedStatus"
   :options="allOptions"  @change="showBlog" placeholder="select status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" class="w-[11rem]">
 </Multiselect>
@@ -21,10 +20,9 @@
     <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400">
       <thead>
         <tr >
-          <th class="padding" >Name</th>
+          <th class="padding" >User Name</th>
           <th class="padding" >Title</th>
           <th class="padding" >Categories </th>
-          <th class="padding">Description</th>
           <th class="padding">Status</th>
           <th class="padding">ACTION</th>
         </tr>
@@ -35,17 +33,18 @@
           <td style="align-items: center;gap:25px;display: flex;margin-left: 89px;"><img :src="datum.image"><div>{{ datum.user_name }}<br>{{ datum.date }}</div></td>
           <td>{{ datum.title}}</td>
           <td>{{ datum.category_name}}</td>
-          <td  v-html=" datum.description" style="font-size: 14px;" class="text-xs text-gray-900 font-normal px-6 py-3 break-words truncate cell-breakword" :title="datum.description"></td>
           <td v-if="datum.status === 0"><button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(datum.id)">Pending</button></td>
           <td td v-else ><span class="badge rounded-pill"  style="color: black;" ><span style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'published':'unpublished'}}</span></span></td>
           <td>
-                <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
-                <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
-            </td>
-          </template>
-        </tr>
-      </tbody>
-    </table>
+            <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
+            <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
+              <router-link :to="`/admin/showBlog/${datum.id}`"><i class="fa-solid fa-eye"></i></router-link>
+          </td>
+        </template>
+      </tr>
+    </tbody>
+  </table>
+  <router-view></router-view>
 </div>
 
 </template>
@@ -183,8 +182,8 @@ const editBlog = (data) => {
 }
 .btn {
     float: right;
-    margin: 61px 68px;
-    padding: 10px;
+    margin: 41px;
+    padding: 8px;
     margin-top: -36px;
 }
 .btns {

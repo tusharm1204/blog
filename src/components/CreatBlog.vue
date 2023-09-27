@@ -31,12 +31,14 @@ const formData = ref({
   image: "",
   status: 0,
   description: "",
+
 });
 
 const tagOptions = ref([]);
+const url = ref('');
+const files = ref('');
 const userOptions = ref([]);
 const categoryOptions = ref([]);
-const url = ref("");
 const formErrors =  ref({});
 const statusOpation = ref(['publish','unpublish'])
 function slugify(str) {
@@ -57,7 +59,7 @@ const slugifyTitle = (event) => {
 const addImage = (evt) => {
   const file = evt.target.files[0];
   url.value = URL.createObjectURL(file);
-  formData.value.image = file;
+  files.value = file;
 };
 
 onMounted(() => {
@@ -184,7 +186,7 @@ const handleAddBlog = () => {
   formValue.append("date", formData.value.date);
   formValue.append("status", formData.value.status === 'publish' ? 1 :2);
   formValue.append("description", formData.value.description);
-  formValue.append("image", formData.value.image);
+  formValue.append("image", files.value);
 
   if(!Object.keys(formErrors.value).length){
     axios
@@ -311,9 +313,8 @@ const handleAddBlog = () => {
             <!-- <h4 class="error">{{ error.data }}</h4> -->
           </div>
           <div class="user-input-box">
-            <label for="confirmPassword"
-              >Image<span class="star">*</span></label
-            >
+            <label for="confirmPassword">Image<span class="star">*</span></label>
+            {{ formData.image }}
             <input type="file" @change="addImage" style="background: white" />
           </div>
           <div class="user-input-box">
