@@ -209,4 +209,12 @@
      justify-content: center;
      align-items: center;
  }
+
+ @media(max-width:770px){
+
+    .head{
+        margin-top: -525px;
+        margin-left: -424px;
+    }
+ }
  </style>

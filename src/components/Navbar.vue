@@ -39,7 +39,7 @@ const logOut = () =>{
     border-radius: 100%;
 }
 .dropdown{
-    background: rgb(55, 99, 194);
+    background: #0d6efd;
     display: flex;
     justify-content: end;
     width: 97%;
@@ -47,5 +47,18 @@ const logOut = () =>{
     padding: 4px;
     position: fixed;
     z-index: 999;
+}
+
+@media (max-width:1000px){
+    .dropdown{
+        background: #0d6efd;
+        display: flex;
+        justify-content: end;
+        width: 97%;
+        left: 46px;
+        padding: 4px;
+        position: fixed;
+        z-index: 999;
+    }
 }
 </style>

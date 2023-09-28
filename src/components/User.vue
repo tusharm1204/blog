@@ -240,7 +240,7 @@ label {
 .buttos {
     float: right;
     margin: 61px 68px;
-    padding: 10px;
+    padding: 8px;
 }
 i {
   color: rgb(59, 112, 226);

@@ -262,6 +262,17 @@ table {
     transform: translate(267px, 55px);
     position: absolute;
 }
+@media (max-width: 1000px){
+    table {
+        margin-left: -216px;
+        width: 95%;
+        transform: translate(267px, 55px);
+        position: absolute;
+    }
+    .addBtn {
+       margin-left: -225px;
+    }
+}
 
 i {
     color: rgb(43, 81, 187);
@@ -275,6 +286,7 @@ i {
     font-size: 18px;
     margin-top: 75px;
 }
+
 
 .btns {
     background: red;

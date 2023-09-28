@@ -5,9 +5,9 @@
     </div>
     <div id="viewport">
         <div id="sidebar">
-            <header class="flex bg-slate-50 px-3 shadow-sm" style="padding: 16px; gap: 5px">
+            <header class="flex bg-slate-50 px-3 shadow-sm" style="padding: 14px; gap: 5px">
                 <div>
-                    <img src="	https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal animate-bounce" />
+                    <img src="https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal" />
                 </div>
                 <div>
                     <h1 href="#" style="color: black" class="text-black text-lg font-bold space-x-3">OCTAL INFOTECH</h1>

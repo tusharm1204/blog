@@ -53,4 +53,16 @@ onMounted(()=>{
    font-size: 30px;
    text-align: center;
  }
+
+ @media (max-width: 1000px) {
+   .grid-container {
+      grid-template-columns: auto;
+      padding: 5px;
+    }
+    .grid-item {
+      font-size: 30px;
+      text-align: center;
+      width: 50%;
+    }
+ }
 </style>

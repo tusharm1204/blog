@@ -20,7 +20,7 @@
     <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400">
       <thead>
         <tr >
-          <th class="padding" >User Name</th>
+          <th class="padding" >User</th>
           <th class="padding" >Title</th>
           <th class="padding" >Categories </th>
           <th class="padding">Status</th>
@@ -34,7 +34,7 @@
           <td>{{ datum.title}}</td>
           <td>{{ datum.category_name}}</td>
           <td v-if="datum.status === 0"><button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(datum.id)">Pending</button></td>
-          <td td v-else ><span class="badge rounded-pill"  style="color: black;" ><span style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'published':'unpublished'}}</span></span></td>
+          <td td v-else ><span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'published':'unpublished'}}</span></span></td>
           <td>
             <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
             <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
@@ -167,28 +167,18 @@ const editBlog = (data) => {
 <style scoped>
 
 .red{
-  background-color:#eb868f;
-  border: none;
-  padding: 8px 25px;
+  background: red;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   transition-duration: 0.4s;
   box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   
 }
 .green{
-  background-color:rgb(138, 230, 126);
-  border: none;
-  padding: 8px 25px;
+  background: green;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   transition-duration: 0.4s;
   box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 

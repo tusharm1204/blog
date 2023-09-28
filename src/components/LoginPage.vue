@@ -2,7 +2,7 @@
 <div class="main">
     <div class="body d-md-flex align-items-center justify-content-between">
         <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 553px;">
-            <img src="https://lh3.googleusercontent.com/p/AF1QipOMj-dseZ54sUzotNCrFSHiBnOGUrpI64eCxSzM=s680-w680-h510" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height:559px;background-size: cover;width:600px;;" />
+            <img src="https://lh3.googleusercontent.com/p/AF1QipOMj-dseZ54sUzotNCrFSHiBnOGUrpI64eCxSzM=s680-w680-h510" alt="login form" class="img-fluid" style="height:559px;background-size: cover;width:600px;;" />
         </div>  
         <div class="col-md-6 col-lg-7 d-flex align-items-center">
             <div class="card-body p-4 p-lg-5 text-black">
@@ -10,7 +10,8 @@
                 <form class="mx-auto col-10 col-md-8 col-lg-6">
 
                     <div class="d-flex align-items-center mb-3 pb-1">
-                        <h1 style="font-size: 35px;font-weight: 600;font-family: cursive;">Octal Infotech</h1>
+                    <img src="https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal animate-bounce"/>
+                        <h1 style="font-size:36px;font-weight: 600;font-family: math;margin-left:22px;">Octal Infotech</h1>
                     </div><br>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17">Email </label><br>
@@ -23,7 +24,7 @@
                     </div>
                     <h1 class="error">{{errors.password}}</h1>
                     <div class="pt-1 mb-4">
-                        <button class="btn btn-dark btn-lg btn-block" type="button" @click="login" style="color:white;background:darkgrey;padding: 12px;margin-left: 30px;">Login</button>
+                        <button class="btn btn-dark btn-lg btn-block loginButton" type="button" @click="login" style="12px;margin-left:30px;">Login</button>
                     </div>
                 </form>
 
@@ -80,65 +81,30 @@ const login = () => {
         });
     });
 }
-
-// const emails = () => {
-//     errors.value.email.value = '';
-// }
-// const passwords = () => {
-//     errors.value.password.value = '';
-// }
-// methods: {
-//     login() {
-//         this.errors = {}
-//         if (!this.email) {
-//             this.errors.email = 'missing a email !!'
-//         }
-
-//         if (!this.password) {
-//             this.errors.password = 'missing a password !!'
-//         }
-
-//         if (Object.keys(this.errors).length > 0) {
-//             return;
-//         }
-
-//         axios.post('https://blog-api-dev.octalinfotech.com/api/login', {
-//             email: this.email,
-//             password: this.password
-//         }).then((response) => {
-//             // console.log(response.data.message);
-//             localStorage.setItem('user', JSON.stringify(response.data.data));
-//             this.successfully = response.data.message
-//             this.$toast.show(response.data.message, {
-//                 type: "success",
-//                 position: "top-right",
-
-//             });
-//             setTimeout(this.$toast.clear, 2000);
-//             this.$router.push({
-//                 name: 'Layout'
-//             });
-//         }).catch(err => {
-//             console.log(err);
-//             this.$toast.show(err.response.data.message, {
-//                 type: "error",
-//                 position: "top-right",
-
-//             });
-//             setTimeout(this.$toast.clear, 2000);
-//         });
-//     },
-//     emails() {
-//         this.errors.email = '';
-//     },
-//     passwords() {
-//         this.errors.password = '';
-//     },
-// },
-// }
 </script>
 
 <style scoped>
+.imgOctal {
+    height: 32px;
+    width: 32px;
+    border-radius: 18px;
+    background-size: cover;
+}
+.loginButton{
+    background-color: hsla(0,0%,13%,1);
+    border: none;
+    color: white;
+    padding: 13px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
 
 .error {
     color: red;
@@ -163,9 +129,9 @@ const login = () => {
     height: 560px;
     margin: 20px auto;
     border: 1px solid #dddd;
-    border-radius: 18px;
+    border-radius: 2px;
     overflow: hidden;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 10px 12px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     margin-top: 200px;
 }
 
