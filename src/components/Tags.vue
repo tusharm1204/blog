@@ -1,10 +1,10 @@
 <template>
-
-  <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tag +
+  <div>TAGS</div>
+  <button class="btn btn-success text-center buttos" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tag +
   </button>
   <div>
-    <h1 class="tags">TAGS</h1>
-  </div>
+    <div class="tags">TAGS</div>
+</div>
   <div class="container">
     <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400 ">
       <thead>
@@ -69,9 +69,12 @@
 import axios from "axios";  
 import { onMounted, ref,watch} from "vue";
 import { inject } from 'vue'
-const swal = inject('$swal')
 import { createToaster} from "@meforma/vue-toaster";
+import {useLoading} from 'vue-loading-overlay'
+    
+const $loading = useLoading({});
 const toaster = createToaster({ position: "top-right", type: "success",});
+const swal = inject('$swal')
 
 const totalPage = ref(0);
 const currentPage = ref(1);
@@ -200,160 +203,12 @@ const deleteTags = (id)=>{
 }
 
 
-onMounted (()=>{
- getTags()
+onMounted (async()=>{
+  const loader = $loading.show({});
+ await getTags()
+ loader.hide();
 })
-// export default {
-//   name: "Tags-component",
-//   data() {
-//     return {
-//       totalPage: 0,
-//       currentPage: 1,
-//       isEdit: false,
-//       name: "",
-//       form: {
-//         name: "",
-//       },
-//       tags: {},
-//       open: true,
-//       error: {},
-//     };
-//   },
-//   props: {
-//     formName: String,
-//   },
-//   watch: {
-//     currentPage(value) {
-//       console.log(value);
-//       this.getTags(value);
-//     },
-//   },
-//   methods: {
-//     conformDlt() {
-//       console.log("conform delete");
-//     },
-//     addData() {
-//       this.isEdit = false;
-//       this.form = {
-//         name: "",
-//       };
-//     },
-//     handleSubmit() {
-//       console.log("submit");
 
-//       this.getTags();
-//     },
-//     handlePrev() {
-//       if (this.currentPage > 1) {
-//         this.currentPage--;
-//       }
-//     },
-//     handleNext() {
-//       if (this.currentPage < this.totalPage) {
-//         this.currentPage++;
-//       }
-//     },
-//     editTag(tag) {
-//       this.isEdit = true;
-//       this.form = tag;
-//     },
-//     addTag() {
-//       if (!this.form.name) {
-//         console.log(this.form.name);
-//         this.error.form.name = "";
-//       }
-//       if (this.isEdit) {
-//         console.log(this.form);
-//         return;
-//       }
-
-//       let data = localStorage.getItem("user");
-//       data = JSON.parse(data);
-//       let token = data.token;
-//       axios
-//         .post(
-//           "https://blog-api-dev.octalinfotech.com/api/tages/store",
-//           {
-//             name: this.form.name,
-//           },
-//           {
-//             headers: {
-//               Authorization: `Bearer ${token}`,
-//             },
-//           }
-//         )
-//         .then((data) => {
-//           console.log(data.data);
-//           this.getTags();
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     },
-//     getTags(page = 1) {
-//       this.tags = "";
-//       let data = localStorage.getItem("user");
-//       data = JSON.parse(data);
-//       let token = data.token;
-
-//       axios
-//         .get("https://blog-api-dev.octalinfotech.com/api/tages?page=" + page, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         })
-//         .then(({ data }) => {
-//           // console.log(data);
-//           this.totalPage = data.data.last_page;
-//           this.tags = data.data.data;
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//       this.tags = "";
-//     },
-//     deleteTags(id) {
-//       let data = localStorage.getItem("user");
-//       data = JSON.parse(data);
-//       let token = data.token;
-//       console.log(id);
-
-//       this.$swal
-//         .fire({
-//           title: "Do you want to delete ?",
-//           showCancelButton: true,
-//           confirmButtonText: "Ok!",
-//         })
-//         .then((result) => {
-//           if (result.isConfirmed) {
-//             axios
-//               .delete(
-//                 `https://blog-api-dev.octalinfotech.com/api/tages/${id}/delete`,
-//                 {
-//                   headers: {
-//                     Authorization: `Bearer ${token}`,
-//                   },
-//                 }
-//               )
-//               .then(({ data }) => {
-//                 this.$swal.fire("Deleted successfully!", "", "success");
-//                 this.getTags();
-//                 this.tags = data.data;
-//               })
-//               .catch((err) => {
-//                 console.log(err);
-//               });
-//           } else if (result.isDenied) {
-//             this.$swal.fire("Changes are not saved", "", "info");
-//           }
-//         });
-//     },
-//   },
-
-//   mounted() {
-//     this.getTags();
-//   },
-// };
 </script>
 
 <style scoped>
@@ -369,6 +224,7 @@ table {
   width: 81%;
   transform: translate(267px, 55px);
   position: absolute;
+  margin-top: 20px;
 }
 
 i {
@@ -400,13 +256,13 @@ li {
   display: flex;
 }
 
-.addBtn {
-  position: relative;
-  padding: 11px;
-  left: 700px;
-  font-size: 18px;
-  margin-top: 75px;
+
+.buttos {
+    float: right;
+    margin: 51px 68px;
+    padding: 8px;
 }
+
 
 .error.message {
   color: red;
@@ -421,12 +277,25 @@ i{
 }
 
 .tags{
-  display: flex;
-  justify-content: start;
-  margin-left: 30px;
-  font-size: 27px;
-  font-weight: 800;
-  text-shadow: 0 0 2px;
-  margin-top: -30px;
+    display: flex;
+    justify-content: start;
+    margin-top: 50px;
+    margin-left: 30px;
+    font-size: 27px;
+    font-weight: 800;
+    text-shadow: 0 0 2px;
+  }
+
+
+@media (max-width:1000px) {
+  .buttos {
+    position: relative;
+    padding: 11px;
+    left: 500px;
+    font-size: 18px;
+    margin-top: 75px;
+    margin-left: 40px;
+  }
 }
+
 </style>

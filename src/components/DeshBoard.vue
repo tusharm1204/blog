@@ -21,6 +21,8 @@
 <script setup>
 import axios from 'axios';
 import {ref, onMounted } from 'vue';
+import {useLoading} from 'vue-loading-overlay'
+const $loading = useLoading({});
 const blogData = ref({});
 
 const showDashboard = () =>{
@@ -38,8 +40,11 @@ const showDashboard = () =>{
 }
 
 
-onMounted(()=>{
-   showDashboard()
+onMounted(async ()=>{
+const loader = $loading.show({});
+ await  showDashboard();
+ loader.hide();
+
 })
 
 </script>   

@@ -10,4 +10,8 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
-createApp(App).use(router).use(VueSweetalert2).use(Toaster).use(VueDatePicker).mount('#app')
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
+
+createApp(App).use(router).use(VueSweetalert2).use(Toaster).use(LoadingPlugin).use(VueDatePicker).mount('#app')

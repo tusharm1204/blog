@@ -6,10 +6,12 @@ import { useRouter } from "vue-router";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { createToaster } from "@meforma/vue-toaster";
-const toaster = createToaster({ position: "top-right", type: "success" });
 import moment from "moment";
-const Joi = require("joi");
 import { ref, onMounted } from "vue";
+import {useLoading} from 'vue-loading-overlay';
+const $loading = useLoading({});
+const toaster = createToaster({ position: "top-right", type: "success" });
+const Joi = require("joi");
 
 const router = useRouter();
 
@@ -62,10 +64,12 @@ const addImage = (evt) => {
   files.value = file;
 };
 
-onMounted(() => {
-  getTags();
-  getCategory();
-  getUsers();
+onMounted(async() => {
+  const loader = $loading.show({});
+ await getTags();
+ await getCategory();
+ await getUsers();
+ loader.hide();
 });
 
 const getTags = () => {

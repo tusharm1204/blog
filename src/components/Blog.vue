@@ -56,15 +56,21 @@ const router = useRouter();
 import axios from "axios";
 import { ref, onMounted} from "vue";
 import { inject } from 'vue'
+import {useLoading} from 'vue-loading-overlay'
+    
+const $loading = useLoading({});
 const swal = inject('$swal')
 const detail = ref ({});
 const selectedStatus = ref('');
 const allOptions = ref(['all','publish','unpublish'])
-  const store = () => {
+
+  const store = async () => {
+
+   
     let data = localStorage.getItem("user");
       data = JSON.parse(data);
       let token = data.token;
-      axios.get("https://blog-api-dev.octalinfotech.com/api/blogs?page=1&tag_id", {
+      await axios.get("https://blog-api-dev.octalinfotech.com/api/blogs?page=1&tag_id", {
                   headers: {
                       Authorization: `Bearer ${token}`,
                   },
@@ -76,6 +82,8 @@ const allOptions = ref(['all','publish','unpublish'])
         .catch((err) => {
           console.log(err);
         });
+
+       
   };
 
   const showBlog = (value) =>{
@@ -128,7 +136,6 @@ const getBlogs = (id) =>{
 })
 .then((res)=>{
   console.log(res);
-  // if(res.isConfirmed){
     let data = localStorage.getItem('user');
   data = JSON.parse(data);
   let token = data.token;
@@ -158,8 +165,10 @@ const editBlog = (data) => {
                     params: {id: data.id}
                 });
 }
-    onMounted (() =>{
-    store();
+    onMounted (async () =>{
+      const loader = $loading.show({});
+      await store();
+       loader.hide()
     })
 
 </script>
@@ -167,8 +176,9 @@ const editBlog = (data) => {
 <style scoped>
 
 .red{
-  background: red;
+  background: rgb(255 151 151);
   text-align: center;
+  color: black;
   text-decoration: none;
   cursor: pointer;
   transition-duration: 0.4s;
@@ -176,9 +186,10 @@ const editBlog = (data) => {
   
 }
 .green{
-  background: green;
+  background: rgb(135, 240, 135);
   text-align: center;
   text-decoration: none;
+  color: black;
   cursor: pointer;
   transition-duration: 0.4s;
   box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 

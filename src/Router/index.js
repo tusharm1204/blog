@@ -20,7 +20,7 @@ const routes = [
         
     },
     {
-        name: 'Admin',
+        name: 'Sidebar',
         path: '/admin',
         redirect : '/admin/deshboard',
         meta: {
@@ -28,7 +28,7 @@ const routes = [
                 auth,   
             ],
         },
-        component: () => import('../components/Admin.vue'),
+        component: () => import('../components/SideBar.vue'),
 
         children: [
             {
@@ -72,7 +72,6 @@ const routes = [
                 path: 'editBlog/:id',
                 component: () => import('../components/EditBlog.vue'),
             },
-
         ]
 
     },
@@ -91,7 +90,6 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
 
-    /** Navigate to next if middleware is not applied */
     if (!to.meta.middleware) {
         return next()
        
@@ -103,7 +101,6 @@ router.beforeEach((to, from, next) => {
       to,
       from,
       next,
-      //   store  | You can also pass store as an argument
     }
   
     return middleware[0]({

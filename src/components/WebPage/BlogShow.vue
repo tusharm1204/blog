@@ -5,7 +5,7 @@
       <div >
         <div style="display: flex;flex-direction: column;justify-content: center; align-items:flex-start;">
           <router-link to="/" class="d-flex" style="align-items: baseline;">
-              <i class="fa-solid fa-house" @click="backBlog"></i>
+              <i class="fa-solid fa-house" @click="backBlog" style="font-size: 21px;"></i>
               &nbsp;<pre> <b>></b> </pre>
               <b style="font-family: 'circular';">{{blogShow.category_name}}</b>
           </router-link>
@@ -68,10 +68,13 @@
 import axios from 'axios';
 import {onMounted ,ref} from 'vue'
 import { useRoute } from 'vue-router'
-const route = useRoute();
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
+import {useLoading} from 'vue-loading-overlay'
+const $loading = useLoading({});
+const route = useRoute();
 const blogShow = ref({})
+
 const showBlogs = () => {
         console.log( route.params.id);
   axios.get(`https://blog-api-dev.octalinfotech.com/blogs/${route.params.id}/show`, {
@@ -89,8 +92,10 @@ const showBlogs = () => {
     });
 };
 
-onMounted (() =>{
-    showBlogs()
+onMounted (async () =>{
+  const loader = $loading.show({});
+ await  showBlogs();
+ loader.hide();
 })
 
 

@@ -82,6 +82,8 @@
 <script>
 import axios from "axios";
 import { createToaster} from "@meforma/vue-toaster";
+import {useLoading} from 'vue-loading-overlay'
+const $loading = useLoading({});
 const toaster = createToaster({ position: "top-right", type: "success",});
 export default {
     name: "Category-component",
@@ -175,9 +177,6 @@ export default {
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
             let token = data.token;
-            // console.log(id); 
-            // console.log(data.token);
-            
 
             this.$swal
                 .fire({
@@ -213,7 +212,6 @@ export default {
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
             let token = data.token;
-            // console.log(token);
 
             axios
                 .get(
@@ -235,7 +233,10 @@ export default {
         },
     },
     mounted() {
+        const loader = $loading.show({});
         this.getCategory();
+        loader.hide();
+
     },
 };
 </script>
@@ -282,7 +283,7 @@ i {
 .addBtn {
     position: relative;
     padding: 8px;
-    left: 700px;
+    left: 500px;
     font-size: 18px;
     margin-top: 75px;
 }

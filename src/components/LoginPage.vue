@@ -14,12 +14,12 @@
                         <h1 style="font-size:36px;font-weight: 600;font-family: math;margin-left:22px;">Octal Infotech</h1>
                     </div><br>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example17">Email </label><br>
+                        <label class="form-label" for="form2Example17" style="font-weight: 600">Email </label><br>
                         <input type="email" id="form2Example17" class="form-control form-control-md" v-model="email" @change="emails" />
                     </div>
                     <h1 class="error">{{errors.email}}</h1>
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form2Example27">Password</label>
+                        <label class="form-label" for="form2Example27" style="font-weight: 600">Password</label>
                         <input type="password" id="form2Example27" class="form-control form-control-md" v-model="password" @change="passwords" />
                     </div>
                     <h1 class="error">{{errors.password}}</h1>
@@ -242,5 +242,6 @@ input{
     width: 320px;
     height: 35px;
     border: 1px solid black;
+    border-radius: 0px;
 }
 </style>

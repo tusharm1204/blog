@@ -91,7 +91,7 @@
     
     <script setup>
 import { VueEditor } from "vue3-editor";
-    import {ref, onMounted} from "vue";
+import {ref, onMounted} from "vue";
 import Multiselect from '@vueform/multiselect'
 import axios from "axios";
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -101,6 +101,8 @@ import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import { createToaster} from "@meforma/vue-toaster";
+import {useLoading} from 'vue-loading-overlay';
+const $loading = useLoading({});
 const toaster = createToaster({ position: "top-right", type: "success",});
 const format = (date) => {
   const day = date.getDate();
@@ -174,12 +176,13 @@ const addImage = (evt) =>{
         router.push({name: 'Blog'});          
      } 
 
-     onMounted(() => {
-        getCategory()
-        getTags();
-        getUsers();
-        getBlog();
-        
+     onMounted(async() => {
+  const loader = $loading.show({});
+      await  getCategory()
+      await  getTags();
+      await  getUsers();
+      await  getBlog();
+      loader.hide();   
      })
 
      const getBlog = () => {

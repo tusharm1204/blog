@@ -29,8 +29,10 @@
 
 import {ref,onMounted} from 'vue';
 import axios from 'axios';
+import { useRoute } from 'vue-router';
+import {useLoading} from 'vue-loading-overlay';
+const $loading = useLoading({});
 const showBlogData = ref({});
-import { useRoute } from 'vue-router'
 const route = useRoute();
 
 const showBlog = () =>{         
@@ -51,8 +53,10 @@ const showBlog = () =>{
 } 
 
 
-onMounted(() =>{
-       showBlog()
+onMounted(async() =>{
+  const loader = $loading.show({});
+      await showBlog();
+      loader.hide();
 })
 </script>
 

@@ -85,9 +85,12 @@
 import axios from "axios";
 import {ref,onMounted} from 'vue';
 import { inject } from 'vue'
-const swal = inject('$swal')
 import { createToaster} from "@meforma/vue-toaster";
+import {useLoading} from 'vue-loading-overlay'
+    
+const $loading = useLoading({});
 const toaster = createToaster({ position: "top-right", type: "success",});
+const swal = inject('$swal')
 
 const userName = ref({});
 const usersData = ref({
@@ -210,8 +213,11 @@ const updateUsers = () =>{
         
       })
 }
-onMounted(() => {
-  showUsers();
+onMounted(async() => {
+  const loader = $loading.show({});
+  await showUsers();
+ loader.hide();
+  
 })
 
 </script>

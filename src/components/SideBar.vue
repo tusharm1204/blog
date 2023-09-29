@@ -46,7 +46,7 @@
 
 <script setup>
 
-import Navbar from "./Navbar.vue";
+import Navbar from '../components/Navbar.vue';
 
 </script>
 

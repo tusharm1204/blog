@@ -77,8 +77,10 @@
    <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-   import { ref,onMounted } from "vue";
-  import axios  from "axios";
+import { ref,onMounted } from "vue";
+import axios  from "axios";
+import {useLoading} from 'vue-loading-overlay'
+const $loading = useLoading({});
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
 
@@ -111,10 +113,12 @@ import Footer from '../WebPage/Footer.vue';
   
   const showBlogs = () =>{
   }
-  onMounted (() =>{
-      showCatagory();
-      showBlog();
-      showBlogs()
+  onMounted (async() =>{
+  const loader = $loading.show({});
+    await  showCatagory();
+    await  showBlog();
+    await  showBlogs();
+ loader.hide();
   })
    </script>
    <style scoped>
