@@ -5,12 +5,12 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import "@vuepic/vue-datepicker/dist/main.css";
 import VueDatePicker from "@vuepic/vue-datepicker";
-import { createToaster } from "@meforma/vue-toaster";
 import moment from "moment";
 import { ref, onMounted } from "vue";
 import {useLoading} from 'vue-loading-overlay';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 const $loading = useLoading({});
-const toaster = createToaster({ position: "top-right", type: "success" });
 const Joi = require("joi");
 
 const router = useRouter();
@@ -91,7 +91,9 @@ const getTags = () => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
     });
 };
 
@@ -115,7 +117,9 @@ const getCategory = () => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
     });
 };
 
@@ -139,7 +143,9 @@ const getUsers = () => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
     });
 };
 
@@ -200,15 +206,16 @@ const handleAddBlog = () => {
       },
     })
     .then((res) => {
-      console.log(res.data.data.data);
-      toaster.show(res.data.message, {
-        type: "success",
-        position: "top-right",
-      });
+      console.log(res.data.message);
+      toast.success(res?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
       router.push({ name: "Blog" });
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
     });
   }
 };

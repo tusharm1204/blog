@@ -52,11 +52,13 @@
 <script setup>
 import Multiselect from '@vueform/multiselect'
 import { useRouter } from 'vue-router';
-const router = useRouter();
 import axios from "axios";
 import { ref, onMounted} from "vue";
 import { inject } from 'vue'
-import {useLoading} from 'vue-loading-overlay'
+import {useLoading} from 'vue-loading-overlay';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+const router = useRouter();
     
 const $loading = useLoading({});
 const swal = inject('$swal')
@@ -80,7 +82,10 @@ const allOptions = ref(['all','publish','unpublish'])
           detail.value = res.data.data.data
         })
         .catch((err) => {
-          console.log(err);
+          toast.error(err.response?.data?.message, {
+                        theme: 'colored',
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
         });
 
        
@@ -111,12 +116,19 @@ const allOptions = ref(['all','publish','unpublish'])
                     Authorization: `Bearer ${token}`,
                   },
                 })
-              .then(() => {
-             swal.fire("Tag Deleted successfully!", "", "success");             
+              .then((res) => {
+             swal.fire("Tag Deleted successfully!", "", "success");
+             toast.success(res?.data?.message, {
+                        theme: 'colored',
+                       position: toast.POSITION.TOP_RIGHT,
+                   });             
              store();
               })
               .catch((err) => {
-                console.log(err);
+                toast.error(err.response?.data?.message, {
+                        theme: 'colored',
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
               });
           } 
         });
@@ -135,7 +147,6 @@ const getBlogs = (id) =>{
         reverseButtons: true,
 })
 .then((res)=>{
-  console.log(res);
     let data = localStorage.getItem('user');
   data = JSON.parse(data);
   let token = data.token;
@@ -152,7 +163,10 @@ const getBlogs = (id) =>{
     swal.fire(res.isConfirmed ? 'Publish!' : 'Unpublished!',message,'success' )
     store();
   }).catch((err)=>{
-    console.log(err);
+    toast.error(err.response?.data?.message, {
+                        theme: 'colored',
+                       position: toast.POSITION.TOP_RIGHT,
+     });
   })
 
 })

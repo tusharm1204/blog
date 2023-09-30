@@ -84,12 +84,12 @@
 <script setup>
 import axios from "axios";
 import {ref,onMounted} from 'vue';
-import { inject } from 'vue'
-import { createToaster} from "@meforma/vue-toaster";
-import {useLoading} from 'vue-loading-overlay'
+import { inject } from 'vue';
+import {useLoading} from 'vue-loading-overlay';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
     
 const $loading = useLoading({});
-const toaster = createToaster({ position: "top-right", type: "success",});
 const swal = inject('$swal')
 
 const userName = ref({});
@@ -119,7 +119,9 @@ const showUsers = () =>{
     .then((res) =>{
       userName.value = res.data.data.data
     }).catch((err) =>{
-    console.log(err);
+      toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
     
   })
 }
@@ -145,15 +147,15 @@ const addUser = () => {
       Authorization : `Bearer ${token}`
     }
   }).then((res) =>{
-    console.log(res);
-    toaster.show(res.data.message, {
-                    type: "success",
-                    position: "top-right",
-                    });
+    toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
                     showUsers();
     
   }).catch((err) =>{
-    console.log(err);
+    toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
     
   })
 }
@@ -179,12 +181,17 @@ const delelteusers = (id) =>{
                   },
                 }
               )
-              .then(() => {
+              .then((res) => {
              swal.fire("Tag Deleted successfully!", "", "success");
+             toast.success(res.data.message, {
+                position: toast.POSITION.TOP_RIGHT,
+               });
              showUsers();   
               })
               .catch((err) => {
-                console.log(err);
+                toast.error(err.response?.data?.message, {
+                position: toast.POSITION.TOP_RIGHT,
+               });
               });
           } 
         });
@@ -206,11 +213,14 @@ const updateUsers = () =>{
         }
       }).then((res) =>{
         updateUser.value = res.data.data
-        toaster.show(res.data.message, {
-                    type: "success",
-                    position: "top-right",
-                    });
-        
+        toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
+  
+      }).catch((err) =>{
+           toast.error(err.res?.data?.message, {
+                position: toast.POSITION.TOP_RIGHT,
+               });
       })
 }
 onMounted(async() => {

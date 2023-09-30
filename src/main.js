@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './Router'
 import './assets/index.css';
 import Toaster from "@meforma/vue-toaster";
+import Vue3Toastify from 'vue3-toastify';
 
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -14,4 +15,4 @@ import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 
-createApp(App).use(router).use(VueSweetalert2).use(Toaster).use(LoadingPlugin).use(VueDatePicker).mount('#app')
+createApp(App).use(router).use(VueSweetalert2).use(Toaster).use(Vue3Toastify).use(LoadingPlugin).use(VueDatePicker).mount('#app')

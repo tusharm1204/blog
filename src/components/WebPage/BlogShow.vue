@@ -70,7 +70,9 @@ import {onMounted ,ref} from 'vue'
 import { useRoute } from 'vue-router'
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
-import {useLoading} from 'vue-loading-overlay'
+import {useLoading} from 'vue-loading-overlay';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 const $loading = useLoading({});
 const route = useRoute();
 const blogShow = ref({})
@@ -88,7 +90,9 @@ const showBlogs = () => {
       blogShow.value = res.data.data
     })
     .catch((err) => {
-      console.log(err);
+      toast.error(err.response?.data?.message, {
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
     });
 };
 

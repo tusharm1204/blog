@@ -69,11 +69,11 @@
 import axios from "axios";  
 import { onMounted, ref,watch} from "vue";
 import { inject } from 'vue'
-import { createToaster} from "@meforma/vue-toaster";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 import {useLoading} from 'vue-loading-overlay'
     
 const $loading = useLoading({});
-const toaster = createToaster({ position: "top-right", type: "success",});
 const swal = inject('$swal')
 
 const totalPage = ref(0);
@@ -135,14 +135,15 @@ const addTag = ()  =>{
           }
         )
         .then((res) => {
-          toaster.show(res.data.message, {
-                    type: "success",
-                    position: "top-right",
-                    });
+          toast.success(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
           getTags();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((err) => {     
+          toast.error(err.response?.data?.message, {
+           position: toast.POSITION.TOP_RIGHT,
+          });
         });
 };
 
@@ -159,12 +160,13 @@ const getTags =  (page = 1) =>{
           },
         })
         .then(({ data }) => {
-          // console.log(data);
           totalPage.value = data.data.last_page;
           tags.value = data.data.data;
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((err) => {  
+          toast.error(err.response?.data?.message, {
+          position: toast.POSITION.TOP_RIGHT,
+         });
         });
       tags.value = [];
 };
@@ -191,12 +193,17 @@ const deleteTags = (id)=>{
                   },
                 }
               )
-              .then(() => {
+              .then((res) => {
              swal.fire("Tag Deleted successfully!", "", "success");
+             toast.success(res?.data?.message, {
+               position: toast.POSITION.TOP_RIGHT,
+              });
                 getTags();   
               })
-              .catch((err) => {
-                console.log(err);
+              .catch((err) => {  
+                toast.error(err.response?.data?.message, {
+               position: toast.POSITION.TOP_RIGHT,
+              });
               });
           } 
         });

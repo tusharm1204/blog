@@ -83,6 +83,8 @@ import {useLoading} from 'vue-loading-overlay'
 const $loading = useLoading({});
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
   const categoriesDatas = ref({});
   const blogDatas = ref({});
@@ -95,6 +97,10 @@ import Footer from '../WebPage/Footer.vue';
       })
       .then((res) =>{
           categoriesDatas.value = res.data.data.data
+      }).catch((err)=>{
+        toast.error(err.response?.data?.message, {
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
       })
   }
   
@@ -106,9 +112,12 @@ import Footer from '../WebPage/Footer.vue';
       }
   })
   .then((res) =>{
-      blogDatas.value = res.data.data.data
-      
-  })
+      blogDatas.value = res.data.data.data 
+  }).catch((err)=>{
+        toast.error(err.response?.data?.message, {
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
+      })
   }
   
   const showBlogs = () =>{

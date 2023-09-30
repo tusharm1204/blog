@@ -81,10 +81,11 @@
 
 <script>
 import axios from "axios";
-import { createToaster} from "@meforma/vue-toaster";
 import {useLoading} from 'vue-loading-overlay'
 const $loading = useLoading({});
-const toaster = createToaster({ position: "top-right", type: "success",});
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 export default {
     name: "Category-component",
     data() {
@@ -138,12 +139,10 @@ export default {
         },
         addCategory() {
             if (!this.form.name) {
-                // console.log(this.form.name);
                 this.error.form.name = "";
             }
             if (this.isEdit) {
                 console.log(this.form);
-                // return;
             }
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
@@ -162,15 +161,16 @@ export default {
                     }
                 )
                 .then((res) => {
-                    console.log(res.data.data.data);
                     this.getCategory();
-                    toaster.show(res.data.message, {
-                    type: "success",
-                    position: "top-right",
-                    });
+                    toast.success(res.data.message, {
+                        theme: 'colored',
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err.response?.data?.message, {
+                     position: toast.POSITION.TOP_RIGHT,
+                 });
                 });
         },
         deleteCategory(id) {
@@ -199,9 +199,12 @@ export default {
                                 this.$swal.fire("Deleted successfully!", "", "success");
                                 this.getCategory();
                                 this.detail = res.data.data.data;
+                                console.log(res.data.message);
                             })
                             .catch((err) => {
-                                console.log(err);
+                                toast.error(err.response?.data?.message, {
+                                 position: toast.POSITION.TOP_RIGHT,
+                             });
                             });
                     } else if (result.isDenied) {
                         this.$swal.fire("Changes are not saved", "", "info");
@@ -228,7 +231,9 @@ export default {
                     this.detail = data.data.data;
                 })
                 .catch((err) => {
-                    console.log(err);
+                    toast.error(err.response?.data?.message, {
+                       position: toast.POSITION.TOP_RIGHT,
+                   });
                 });
         },
     },
@@ -283,7 +288,7 @@ i {
 .addBtn {
     position: relative;
     padding: 8px;
-    left: 500px;
+    left: 700px;
     font-size: 18px;
     margin-top: 75px;
 }

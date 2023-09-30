@@ -100,10 +100,10 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router';
 import moment from 'moment';
-import { createToaster} from "@meforma/vue-toaster";
 import {useLoading} from 'vue-loading-overlay';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 const $loading = useLoading({});
-const toaster = createToaster({ position: "top-right", type: "success",});
 const format = (date) => {
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -165,13 +165,14 @@ const addImage = (evt) =>{
         })
         .then((res) => {  
             console.log(res);
-            toaster.show(res.data.message, {
-            type: "success",
-            position: "top-right",
-        });
+            toast.error(res.data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+    });
         })
         .catch((err) => {
-            console.log(err);    
+            toast.error(err, {
+         position: toast.POSITION.TOP_RIGHT,
+         });   
         })
         router.push({name: 'Blog'});          
      } 
@@ -209,7 +210,9 @@ const addImage = (evt) =>{
             files.value = res.data.data.image
         })
         .catch((err) => {
-          console.log(err);
+            toast.error(err.response?.data?.message, {
+         position: toast.POSITION.TOP_RIGHT,
+        });
         });
      }
      const backBlog = () => {
@@ -236,7 +239,9 @@ const addImage = (evt) =>{
       });
         })
         .catch((err) => {
-          console.log(err);
+            toast.error(err.response?.data?.message, {
+         position: toast.POSITION.TOP_RIGHT,
+        });
         });
     }
     const getTags = () => {
@@ -259,7 +264,9 @@ const addImage = (evt) =>{
             console.log(tagOptions.value);
         })
         .catch((err) => {
-          console.log(err);
+            toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+         });
         });
     };
 
@@ -284,7 +291,9 @@ const addImage = (evt) =>{
           })
         })
         .catch((err) => {
-          console.log(err);
+            toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
         });
     }
     </script>

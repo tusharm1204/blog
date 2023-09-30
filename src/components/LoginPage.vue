@@ -36,12 +36,12 @@
 
 <script setup>
 import { ref} from "vue";
-import { createToaster} from "@meforma/vue-toaster";
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 const router = useRouter();
-const toaster = createToaster({ position: "top-right", type: "success",});
 
 let email = ref('');
 let password = ref('');
@@ -65,20 +65,15 @@ const login = () => {
         password: password.value
     }).then((response) => {
         localStorage.setItem('user', JSON.stringify(response.data.data));
-        console.log(response.data.data);
-        toaster.show(response.data.message, {
-            type: "success",
-            position: "top-right",
-
-        });
-        router.push({name: 'Admin'});
+        toast.success(response?.data?.message, {
+                     position: toast.POSITION.TOP_RIGHT,
+                 },6000);
+        router.push({name: 'Sidebar'});
     }).catch(err => {
         console.log(err);
-        toaster.show(err.response?.data?.message, {
-            type: "error",
-            position: "top-right",
-
-        });
+        toast.error(err.response?.data?.message, {
+                     position: toast.POSITION.TOP_RIGHT,
+                 });
     });
 }
 </script>

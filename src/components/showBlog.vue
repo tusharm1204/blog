@@ -34,7 +34,8 @@ import {useLoading} from 'vue-loading-overlay';
 const $loading = useLoading({});
 const showBlogData = ref({});
 const route = useRoute();
-
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 const showBlog = () =>{         
    let data = localStorage.getItem('user');
    data = JSON.parse(data);
@@ -46,8 +47,11 @@ const showBlog = () =>{
           }
    })
    .then((res)=>{
-       console.log(res.data.data);
           showBlogData.value = res.data.data   
+   }).catch((err) =>{
+    toast.error(err.response?.data?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+       });
    })
 
 } 
