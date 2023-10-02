@@ -15,4 +15,12 @@ import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 
-createApp(App).use(router).use(VueSweetalert2).use(Toaster).use(Vue3Toastify).use(LoadingPlugin).use(VueDatePicker).mount('#app')
+const app = createApp(App);
+
+app.use(router);
+app.use(VueSweetalert2);
+app.use(Toaster);
+app.use(Vue3Toastify);
+app.use(LoadingPlugin);
+app.use(VueDatePicker);
+app.mount('#app');
