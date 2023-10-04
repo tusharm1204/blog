@@ -165,7 +165,7 @@ const addImage = (evt) =>{
         })
         .then((res) => {  
             console.log(res);
-            toast.error(res.data.message, {
+            toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
     });
         })

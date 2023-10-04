@@ -134,9 +134,6 @@ export default {
             this.isEdit = true;
             this.form = datum;
         },
-        aditData() {
-            console.log("tushar makwana");
-        },
         addCategory() {
             if (!this.form.name) {
                 this.error.form.name = "";
@@ -161,9 +158,9 @@ export default {
                     }
                 )
                 .then((res) => {
+                    console.log(res.data.message);
                     this.getCategory();
                     toast.success(res.data.message, {
-                        theme: 'colored',
                        position: toast.POSITION.TOP_RIGHT,
                    });
                 })
@@ -178,8 +175,7 @@ export default {
             data = JSON.parse(data);
             let token = data.token;
 
-            this.$swal
-                .fire({
+            this.$swal.fire({
                     title: "Are you sure?",
                     icon: "warning",
                     text: "Are you sure that you want to leave this page?",
@@ -187,21 +183,22 @@ export default {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        axios
-                            .delete(
-                                `https://blog-api-dev.octalinfotech.com/api/categories/${id}/delete`, {
+                        axios.delete(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/delete`, {
                                     headers: {
                                         Authorization: `Bearer ${token}`,
                                     },
                                 }
                             )
-                            .then(({res}) => {         
+                            .then((res) => {    
                                 this.$swal.fire("Deleted successfully!", "", "success");
+                                this.detail = res.data.data;
                                 this.getCategory();
-                                this.detail = res.data.data.data;
-                                console.log(res.data.message);
-                            })
+                                toast.success(res?.data?.message, {
+                                 position: toast.POSITION.TOP_RIGHT,
+                                });
+                               })
                             .catch((err) => {
+                                console.log(err);
                                 toast.error(err.response?.data?.message, {
                                  position: toast.POSITION.TOP_RIGHT,
                              });
@@ -337,8 +334,11 @@ label {
     margin-left: 30px;
     font-size: 27px;
     font-weight: 800;
-    margin-top: -25px;
+    margin-top: -35px;
   text-shadow: 0 0 2px;
 
 }
+th{
+    font-weight: 800;
+  }
 </style>

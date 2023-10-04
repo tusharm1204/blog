@@ -274,4 +274,7 @@ i {
   word-break: break-all;
   max-width: 5px;
 }
+th{
+  font-weight: 800;
+}
 </style>

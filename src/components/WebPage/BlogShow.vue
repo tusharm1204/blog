@@ -25,7 +25,7 @@
         </div>
        <div class="d-flex">
         <div>
-          <img :src="blogShow.image" style="width:1020px;height:500px;margin-top:30px;object-fit: cover;" >
+          <img :src="blogShow.image" style="width:1020px;height:500px;margin-top:30px;object-fit:contain;" >
         </div>
         <div>
           <p class="text-justify" style="font-size:23px;font-family: circular;margin:23px 0px 0px 161px;width: 54%;" v-html="blogShow.description"></p>

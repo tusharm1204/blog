@@ -270,4 +270,7 @@ i {
   font-weight: 800;
   text-shadow: 0 0 2px;
 }
+th{
+  font-weight: 800;
+}
 </style>
