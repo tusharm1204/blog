@@ -18,9 +18,10 @@
 <script setup>
 import router from '@/Router'
 import Modal from './Modal.vue'
+import store from '../Vuex/store'
 
 const logOut = () =>{
-    localStorage.clear()
+    store.commit('logOut')
     router.push({name:'LoginPage'})
 }
 </script>

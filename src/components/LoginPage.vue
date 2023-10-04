@@ -35,17 +35,19 @@
 </template>
 
 <script setup>
-import { ref} from "vue";
-import axios from 'axios';
-import { useRouter } from 'vue-router';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+    import { ref} from "vue";
+    import axios from 'axios';
+    import { useRouter } from 'vue-router';
+    import store from "../Vuex/store";
+    import { useToast } from "vue-toastification";
+    const  toast = useToast();
+    const router = useRouter();
+  
 
-const router = useRouter();
-
-let email = ref('');
-let password = ref('');
-let errors = ref({});
+    let email = ref('');
+    let password = ref('');
+    let errors = ref({});
+    
 
 const login = () => {
    errors.value = {}
@@ -64,16 +66,18 @@ const login = () => {
         email: email.value,
         password: password.value
     }).then((response) => {
-        localStorage.setItem('user', JSON.stringify(response.data.data));
-        toast.success(response?.data?.message, {
-                     position: toast.POSITION.TOP_RIGHT,
-                 },6000);
+        store.commit('loginUser', response.data.data);
+         toast.success(response.data.message, {
+         position: "top-right",
+         timeout: 5000,
+         });
         router.push({name: 'Sidebar'});
     }).catch(err => {
         console.log(err);
-        toast.error(err.response?.data?.message, {
-                     position: toast.POSITION.TOP_RIGHT,
-                 });
+        toast.error(err.response.data.message, {
+           position: "top-right",
+           timeout: 5000,
+         });
     });
 }
 </script>

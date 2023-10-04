@@ -14,6 +14,8 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 
 const app = createApp(App);
 
@@ -23,4 +25,5 @@ app.use(Toaster);
 app.use(Vue3Toastify);
 app.use(LoadingPlugin);
 app.use(VueDatePicker);
+app.use(Toast);
 app.mount('#app');

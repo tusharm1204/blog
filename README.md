@@ -9,6 +9,8 @@
 * vue toaster
 * vue joi
 * vue 3 moment
+* vue 3 toastify
+* vuex
 
 ## Project setup
 ```
