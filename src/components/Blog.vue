@@ -92,8 +92,8 @@ const allOptions = ref(['all','Publish','Unpublish'])
   };
 
   const showBlog = (value) =>{
-    if (value === 'publish') selectedStatus.value = 1
-    if (value === 'unpublish') selectedStatus.value = 2
+    if (value === 'Publish') selectedStatus.value = 1
+    if (value === 'Unpublish') selectedStatus.value = 2
     if (value === 'all') selectedStatus.value = 0
   }
   const deleteBlog = async(id)=>{
