@@ -20,6 +20,9 @@
             <Navigation />
           </template>
         </Carousel>
+                <div class="item ">
+                    <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
+                  </div>
 </section><br><br><br><br><br><br>
 <section class="container" style="margin-left:400px;">
     <div class=" grid grid-cols-3 container">
