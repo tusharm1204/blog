@@ -101,8 +101,8 @@ import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router';
 import moment from 'moment';
 import {useLoading} from 'vue-loading-overlay';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 const $loading = useLoading({});
 const format = (date) => {
   const day = date.getDate();
@@ -164,15 +164,16 @@ const addImage = (evt) =>{
                   },
         })
         .then((res) => {  
-            console.log(res);
             toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
         })
         .catch((err) => {
-            toast.error(err, {
-         position: toast.POSITION.TOP_RIGHT,
-         });   
+            toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });   
         })
         router.push({name: 'Blog'});          
      } 
@@ -210,9 +211,10 @@ const addImage = (evt) =>{
             files.value = res.data.data.image
         })
         .catch((err) => {
-            toast.error(err.response?.data?.message, {
-         position: toast.POSITION.TOP_RIGHT,
-        });
+            toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
         });
      }
      const backBlog = () => {
@@ -239,9 +241,10 @@ const addImage = (evt) =>{
       });
         })
         .catch((err) => {
-            toast.error(err.response?.data?.message, {
-         position: toast.POSITION.TOP_RIGHT,
-        });
+            toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
         });
     }
     const getTags = () => {
@@ -264,9 +267,10 @@ const addImage = (evt) =>{
             console.log(tagOptions.value);
         })
         .catch((err) => {
-            toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-         });
+            toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
         });
     };
 
@@ -291,9 +295,10 @@ const addImage = (evt) =>{
           })
         })
         .catch((err) => {
-            toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+            toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
         });
     }
     </script>

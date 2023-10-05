@@ -34,7 +34,7 @@
           <td>{{ datum.title}}</td>
           <td>{{ datum.category_name}}</td>
           <td v-if="datum.status === 0"><button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(datum.id)">Pending</button></td>
-          <td td v-else ><span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'published':'unpublished'}}</span></span></td>
+          <td td v-else ><span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'Published':'Unpublished'}}</span></span></td>
           <td>
             <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
             <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
@@ -56,15 +56,15 @@ import axios from "axios";
 import { ref, onMounted} from "vue";
 import { inject } from 'vue'
 import {useLoading} from 'vue-loading-overlay';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 const router = useRouter();
     
 const $loading = useLoading({});
 const swal = inject('$swal')
 const detail = ref ({});
 const selectedStatus = ref('');
-const allOptions = ref(['all','publish','unpublish'])
+const allOptions = ref(['all','Publish','Unpublish'])
 
   const store = async () => {
 
@@ -82,10 +82,10 @@ const allOptions = ref(['all','publish','unpublish'])
           detail.value = res.data.data.data
         })
         .catch((err) => {
-          toast.error(err.response?.data?.message, {
-                        theme: 'colored',
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+          toast.error(err.response.data.message, {
+              position: "top-right",
+              timeout: 5000,
+              });
         });
 
        
@@ -118,17 +118,17 @@ const allOptions = ref(['all','publish','unpublish'])
                 })
               .then((res) => {
              swal.fire("Tag Deleted successfully!", "", "success");
-             toast.success(res?.data?.message, {
-                        theme: 'colored',
-                       position: toast.POSITION.TOP_RIGHT,
-                   });             
+                 toast.success(res.data.message, {
+             position: "top-right",
+             timeout: 5000,
+             });             
              store();
               })
               .catch((err) => {
-                toast.error(err.response?.data?.message, {
-                        theme: 'colored',
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+                toast.error(err.response.data.message, {
+               position: "top-right",
+               timeout: 5000,
+               });
               });
           } 
         });
@@ -163,10 +163,10 @@ const getBlogs = (id) =>{
     swal.fire(res.isConfirmed ? 'Publish!' : 'Unpublished!',message,'success' )
     store();
   }).catch((err)=>{
-    toast.error(err.response?.data?.message, {
-                        theme: 'colored',
-                       position: toast.POSITION.TOP_RIGHT,
-     });
+    toast.error(err.response.data.message, {
+         position: "top-right",
+         timeout: 5000,
+         });
   })
 
 })

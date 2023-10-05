@@ -86,8 +86,8 @@ import axios from "axios";
 import {ref,onMounted} from 'vue';
 import { inject } from 'vue';
 import {useLoading} from 'vue-loading-overlay';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
     
 const $loading = useLoading({});
 const swal = inject('$swal')
@@ -119,9 +119,10 @@ const showUsers = () =>{
     .then((res) =>{
       userName.value = res.data.data.data
     }).catch((err) =>{
-      toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+      toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     
   })
 }
@@ -148,14 +149,16 @@ const addUser = () => {
     }
   }).then((res) =>{
     toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                     showUsers();
     
   }).catch((err) =>{
-    toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     
   })
 }
@@ -184,14 +187,16 @@ const delelteusers = (id) =>{
               .then((res) => {
              swal.fire("Tag Deleted successfully!", "", "success");
              toast.success(res.data.message, {
-                position: toast.POSITION.TOP_RIGHT,
-               });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
              showUsers();   
               })
               .catch((err) => {
-                toast.error(err.response?.data?.message, {
-                position: toast.POSITION.TOP_RIGHT,
-               });
+                toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
               });
           } 
         });
@@ -214,13 +219,15 @@ const updateUsers = () =>{
       }).then((res) =>{
         updateUser.value = res.data.data
         toast.success(res.data.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
   
       }).catch((err) =>{
-           toast.error(err.res?.data?.message, {
-                position: toast.POSITION.TOP_RIGHT,
-               });
+        toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
       })
 }
 onMounted(async() => {

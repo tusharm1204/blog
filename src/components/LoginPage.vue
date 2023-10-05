@@ -73,11 +73,10 @@ const login = () => {
          });
         router.push({name: 'Sidebar'});
     }).catch(err => {
-        console.log(err);
         toast.error(err.response.data.message, {
-           position: "top-right",
-           timeout: 5000,
-         });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     });
 }
 </script>

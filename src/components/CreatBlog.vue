@@ -8,8 +8,8 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import moment from "moment";
 import { ref, onMounted } from "vue";
 import {useLoading} from 'vue-loading-overlay';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 const $loading = useLoading({});
 const Joi = require("joi");
 
@@ -91,9 +91,10 @@ const getTags = () => {
       });
     })
     .catch((err) => {
-      toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+      toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     });
 };
 
@@ -117,9 +118,10 @@ const getCategory = () => {
       });
     })
     .catch((err) => {
-      toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+      toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     });
 };
 
@@ -143,9 +145,10 @@ const getUsers = () => {
       });
     })
     .catch((err) => {
-      toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+      toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     });
 };
 
@@ -207,15 +210,17 @@ const handleAddBlog = () => {
     })
     .then((res) => {
       console.log(res.data.message);
-      toast.success(res?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+      toast.success(res.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
       router.push({ name: "Blog" });
     })
     .catch((err) => {
-      toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-    });
+      toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
     });
   }
 };

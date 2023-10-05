@@ -83,8 +83,8 @@
 import axios from "axios";
 import {useLoading} from 'vue-loading-overlay'
 const $loading = useLoading({});
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 
 export default {
     name: "Category-component",
@@ -161,13 +161,15 @@ export default {
                     console.log(res.data.message);
                     this.getCategory();
                     toast.success(res.data.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 })
                 .catch((err) => {
-                    toast.error(err.response?.data?.message, {
-                     position: toast.POSITION.TOP_RIGHT,
-                 });
+                    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 });
         },
         deleteCategory(id) {
@@ -193,15 +195,16 @@ export default {
                                 this.$swal.fire("Deleted successfully!", "", "success");
                                 this.detail = res.data.data;
                                 this.getCategory();
-                                toast.success(res?.data?.message, {
-                                 position: toast.POSITION.TOP_RIGHT,
+                                toast.success(res.data.message, {
+                                position: "top-right",
+                                timeout: 5000,
                                 });
                                })
                             .catch((err) => {
-                                console.log(err);
-                                toast.error(err.response?.data?.message, {
-                                 position: toast.POSITION.TOP_RIGHT,
-                             });
+                                toast.error(err.response.data.message, {
+                               position: "top-right",
+                               timeout: 5000,
+                               });
                             });
                     } else if (result.isDenied) {
                         this.$swal.fire("Changes are not saved", "", "info");
@@ -228,9 +231,10 @@ export default {
                     this.detail = data.data.data;
                 })
                 .catch((err) => {
-                    toast.error(err.response?.data?.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+                    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 });
         },
     },
