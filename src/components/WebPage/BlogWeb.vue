@@ -3,7 +3,7 @@
     <Navbar />
 <section class="container mt-5" style="margin-left:380px;width: 60%;">
 
-      <Carousel :items-to-show="3" :wrap-around="true"  >
+      <Carousel :items-to-show="4" :wrap-around="true"  >
         <Slide v-for="categories in categoriesDatas" :key="categories" class="containers">
         <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
             <div class="item ">
