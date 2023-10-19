@@ -257,7 +257,7 @@ const handleAddBlog = () => {
             <h4 class="error" style="margin-right: 320px;">{{ formErrors?.slug }}</h4>
           </div>
           <div class="user-input-box">
-            <label for="email">User<span class="star">*</span></label>
+            <label for="user_id">User<span class="star">*</span></label>
             <Multiselect
               style="
                 display: flex;
@@ -277,7 +277,7 @@ const handleAddBlog = () => {
             <h6 class="error">{{ formErrors?.user_id }}</h6>
           </div>
           <div class="user-input-box">
-            <label for="phoneNumber">Tag<span class="star">*</span></label>
+            <label for="tag_ids">Tag<span class="star">*</span></label>
             <Multiselect
               style="
                 display: flex;
@@ -300,7 +300,7 @@ const handleAddBlog = () => {
           </div>
 
           <div class="user-input-box">
-            <label for="password">Categories<span class="star">*</span></label>
+            <label for="Categories">Categories<span class="star">*</span></label>
             <Multiselect
               style="
                 display: flex;
