@@ -35,7 +35,7 @@
           <td>{{ datum.category_name}}</td>
           <td v-if="datum.status === 0"><button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(datum.id)">Pending</button></td>
           <td td v-else ><span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'Published':'Unpublished'}}</span></span></td>
-          <td>4
+          <td>
             <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
             <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
               <router-link :to="`/admin/showBlog/${datum.id}`"><i class="fa-solid fa-eye"></i></router-link>
@@ -51,13 +51,13 @@
 
 <script setup>
 import Multiselect from '@vueform/multiselect'
-import { useRouter } from 'vue-router';
 import axios from "axios";
 import { ref, onMounted} from "vue";
 import { inject } from 'vue'
 import {useLoading} from 'vue-loading-overlay';
 import { useToast } from "vue-toastification";
 const  toast = useToast();
+import { useRouter } from 'vue-router';
 const router = useRouter();
     
 const $loading = useLoading({});
