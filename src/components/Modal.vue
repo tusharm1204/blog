@@ -1,33 +1,33 @@
 <template>
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Profile</h4>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <label for="name">Name</label>
-          <input type="text" v-model="profile.name" /><br /><br />
-          <label for="email">Email</label>
-          <input type="text" v-model="profile.email" />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-danger btns"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Profile</h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <label for="name">Name</label>
+            <input type="text" v-model="profile.name" /><br /><br />
+            <label for="email">Email</label>
+            <input type="text" v-model="profile.email" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger btns"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   <div class="modal fade" id="myModalpassword">
     <div class="modal-dialog">
       <div class="modal-content">

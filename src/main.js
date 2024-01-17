@@ -16,6 +16,7 @@ import 'vue-loading-overlay/dist/css/index.css';
 
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import './registerServiceWorker'
 
 const app = createApp(App);
 

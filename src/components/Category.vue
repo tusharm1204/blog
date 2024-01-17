@@ -1,48 +1,60 @@
 <template>
-    <div>
-        <button class="btn btn-success text-center addBtn" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData">
-            Add Category +
-        </button>
+    <div class=" mx-auto max-w-full px-2 sm:px-6 md:px-8">
+    <div class="py-5 px-2">
+        <div class="px-2 lg:px-2">
+            <div class="flow-root pb-10 px-2 bg-white shadow-sm h-auto rounded p-4">
+                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-end lg:mr-5 items-center flex-col gap-2">
+                  <button class="bg-slate-950 text-white rounded-sm text-center p-2" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData" >Add Category
+                    </button>
+               </div>
+                <div class="overflow-x-auto">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 overflow-x-auto">
+                        <div class="overflow-x-auto sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-300">
+                                <thead class="border-b border-black/20">
+                                    <tr>
+                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900 w-[5%] text-center">Avtar</th>
+                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900">Name</th>
+                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="detail && detail.length > 0" class="divide-y divide-gray-200 bg-white">
+                                    <tr v-for="catagory in detail" :key="catagory.id">
+                                        <td class="whitespace-nowrap px-5 py-3 text-md text-gray-500 flex justify-center"><img :src="catagory.image" alt="img" class="w-10 h-10 rounded-full"/></td>
+                                        <td class="whitespace-nowrap px-5 py-3 text-md text-gray-500">{{ catagory.name }}</td>
+                                        <td class="relative whitespace-nowrap py-2 px-5 gap-2 flex justify-center  text-sm font-medium space-x-2 text-center">
+                                          <i class="fa-solid fa-pen-to-square text-indigo-500" data-bs-toggle="modal" data-bs-target="#addCategory"  @click="editCategory(catagory)"></i>
+                                           <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(catagory.id)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="11" class="text-center min-w-full h-12 text-2xl font-semibold">No matching records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                          <div class="flex justify-end mt-3">
+                            <ul class="pagination  flex justify-end">
+                          <li class="page-item">
+                          <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
+                          </li>
+                          <li class="page-item" v-for="page in totalPage" :key="page">
+                          <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
+                          </li>
+                          <li class="page-item">
+                          <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
+                          </li>
+                          </ul>
+                              </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+        </div>
     </div>
-    <div>
-        <h1 class="categoty">CATEGORIES</h1>
-    </div>
-    <div class=" container">
-    <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400 ">
-        <thead>
-            <tr scope="row"> 
-                <th style="text-align: center;">IMAGE</th>
-                <th>NAME</th>
-                <th>ACTION</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr  scope="col" v-for="datum in detail" :key="datum">
-                <td style="text-align: center; justify-content: center; align-items: center; display: flex;"><img :src="datum.image" alt="img" /></td>
-                <td>{{ datum.name }}</td>
-                <td>
-                    <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addCategory" @click="editCategory(datum)"></i>
-                    <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteCategory(datum.id)"></i>
-                </td>
-            </tr>
-        </tbody>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination" style="top:75px;left:740px;">
-                <li class="page-item">
-                    <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
-                </li>
-                <li class="page-item" v-for="page in totalPage" :key="page">
-                    <a class="page-link" href="#" @click.prevent="currentPage = page">{{
-              page
-            }}</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
-                </li>
-            </ul>
-        </nav>
-      </table>
-</div>
+  </div>
 
 <!--------create modal------>
 <div>
@@ -248,52 +260,6 @@ export default {
 
 
 <style scoped>
-img {
-    width: 80px;
-    height: 80px;
-    background-size: cover;
-    border-radius: 100%;
-}
-
-th,
-td {
-    padding: 15px;
-    text-align: left;
-    font-weight: bold;
-}
-
-table {
-    margin-left: -301px;
-    width: 83%;
-    transform: translate(267px, 55px);
-    position: absolute;
-}
-@media (max-width: 1000px){
-    table {
-        margin-left: -216px;
-        width: 95%;
-        transform: translate(267px, 55px);
-        position: absolute;
-    }
-    .addBtn {
-       margin-left: -225px;
-    }
-}
-
-i {
-    color: rgb(43, 81, 187);
-    margin: 10px;
-}
-
-.addBtn {
-    position: relative;
-    padding: 8px;
-    left: 700px;
-    font-size: 18px;
-    margin-top: 75px;
-}
-
-
 .btns {
     background: red;
 }
@@ -315,30 +281,4 @@ label {
     font-size: 27px;
 }
 
-.imaprev {
-    width: 250px;
-    height: 250px;
-    display: block;
-    cursor: pointer;
-    margin: 0 auto 30px;
-    background-size: cover;
-    background-position: center center;
-}
-
-.pagination {
-    position: relative;
-    top: 51px;
-    justify-content: end;
-}
-
-.categoty{
-    display: flex;
-    justify-content: start;
-    margin-left: 30px;
-    font-size: 27px;
-    font-weight: 800;
-    margin-top: -25px;
-  text-shadow: 0 0 2px;
-
-}
 </style>

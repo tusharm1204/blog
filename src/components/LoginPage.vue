@@ -1,4 +1,39 @@
 <template>
+<!-- https://play.tailwindcss.com/MIwj5Sp9pw -->
+<!-- <div class="py-16 px-5 mt-5">
+    <div class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl sm:max-w-2xl py-5 mt-5 px-5">
+        <div class="hidden lg:block lg:w-1/2 bg-cover"
+            style="background-image:url('https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80')">
+        </div>
+        <div class="w-1/2 ml-8">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center">Octal Infotech</h2>
+            <div class="mt-4 flex items-center justify-between">
+                <span class="border-b w-1/5 lg:w-1/4"></span>
+                <a href="#" class="text-xs text-center text-gray-500 uppercase">or login with email</a>
+                <span class="border-b w-1/5 lg:w-1/4"></span>
+            </div>
+            <div class="mt-4 ml-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2 ">Email Address</label>
+                <input class="bg-gray-200 text-gray-700 focus:outline-none  focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email" />
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <a href="#" class="text-xs text-gray-500">Forget Password?</a>
+                </div>
+                <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password" />
+            </div>
+            <div class="mt-8">
+                <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600" @click="login">Login</button>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+                <span class="border-b w-1/5 md:w-1/4"></span>
+                <a href="#" class="text-xs text-gray-500 uppercase">or sign up</a>
+                <span class="border-b w-1/5 md:w-1/4"></span>
+            </div>
+        </div>
+    </div>
+</div> -->
 <div class="main">
     <div class="body d-md-flex align-items-center justify-content-between">
         <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 553px;">
@@ -9,18 +44,18 @@
 
                 <form class="mx-auto col-10 col-md-8 col-lg-6">
 
-                    <div class="d-flex align-items-center mb-3 pb-1">
-                    <img src="https://octalinfotech.com/img/octal-logo.png" alt="octal" class="imgOctal animate-bounce"/>
-                        <h1 style="font-size:36px;font-weight: 600;font-family: math;margin-left:22px;">Octal Infotech</h1>
-                    </div><br>
+                    <div class="flex flex-row md:flex-col align-items-center mb-3 pb-1 gap-3 items-center">
+                    <img src="https://octalinfotech.com/img/octal-logo.png" alt="octal" class="w-8 h-8 rounded-full"/>
+                        <h1 class="text-4xl">Octal Infotech</h1>
+                    </div>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17" style="font-weight: 600">Email </label><br>
-                        <input type="email" id="form2Example17" class="form-control form-control-md" v-model="email" @change="emails" />
+                        <input type="email" id="form2Example17" class="form-control form-control-md w-[17rem] py-1" v-model="email" @change="emails" />
                     </div>
                     <h1 class="error">{{errors.email}}</h1>
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example27" style="font-weight: 600">Password</label>
-                        <input type="password" id="form2Example27" class="form-control form-control-md" v-model="password" @change="passwords" />
+                        <input type="password" id="form2Example27" class="form-control form-control-md w-[17rem] py-1" v-model="password" @change="passwords" />
                     </div>
                     <h1 class="error">{{errors.password}}</h1>
                     <div class="pt-1 mb-4">
@@ -83,12 +118,6 @@ const login = () => {
 </script>
 
 <style scoped>
-.imgOctal {
-    height: 32px;
-    width: 32px;
-    border-radius: 18px;
-    background-size: cover;
-}
 .loginButton{
     background-color: hsla(0,0%,13%,1);
     border: none;
@@ -118,129 +147,6 @@ const login = () => {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
-    margin: 50px auto;
-}
-
-.body {
-    position: relative;
-    width: 1116px;
-    height: 560px;
-    margin: 20px auto;
-    border: 1px solid #dddd;
-    border-radius: 2px;
-    overflow: hidden;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    margin-top: 200px;
-}
-
-.box-1 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.box-2 {
-    padding: 10px;
-}
-
-.box-1,
-.box-2 {
-    width: 50%;
-}
-
-.h-1 {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.text-muted {
-    font-size: 14px;
-}
-
-.container .box {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid transparent;
-    text-decoration: none;
-    color: #615f5fdd;
-}
-
-.box:active,
-.box:visited {
-    border: 2px solid #ee82ee;
-}
-
-.box:hover {
-    border: 2px solid #ee82ee;
-}
-
-.btn.btn-primary {
-    background-color: transparent;
-    color: #ee82ee;
-    border: 0px;
-    padding: 0;
-    font-size: 14px;
-}
-
-.btn.btn-primary .fas.fa-chevron-right {
-    font-size: 12px;
-}
-
-.footer .p-color {
-    color: #ee82ee;
-}
-
-.footer.text-muted {
-    font-size: 10px;
-}
-
-.fas.fa-times {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    height: 20px;
-    width: 20px;
-    background-color: #f3cff379;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.fas.fa-times:hover {
-    color: #ff0000;
-}
-
-@media (max-width:767px) {
-    body {
-        padding: 10px;
-    }
-
-    .body {
-        width: 100%;
-        height: 100%;
-    }
-
-    .box-1 {
-        width: 100%;
-    }
-
-    .box-2 {
-        width: 100%;
-        height: 440px;
-    }
-}
 
 
-input{
-    width: 320px;
-    height: 35px;
-    border: 1px solid black;
-    border-radius: 0px;
-}
 </style>

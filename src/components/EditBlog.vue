@@ -1,5 +1,70 @@
 <template>
-    <div style="display: flex; justify-content: center;">
+    <div class="mt-5 p-4 rounded border border-gray-200 bg-white shadow-sm  h-auto mx-3">
+        <form>
+            <div class="mt-8 grid lg:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="text-sm  text-gray-700  mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500  flex">Title</label>
+                    <input type="text" name="name" id="name" class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500
+                    focus:border-blue-500 text-gray-700 w-full"  v-model="title" placeholder="Enter your name" @input="slugifyTitle"/>
+
+                    <!-- Error Message -->
+                    <div class="input-errors text-red-700" >
+                        <div class="error-msg">{{error?.title}}</div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Slug</label>
+                    <input type="email" name="email" id="email" class="bg-gray-100 border border-gray-200 rounded py-1 px-3 flex focus:ring-blue-500
+                    focus:border-blue-500 text-gray-700 w-full" v-model="slug" placeholder="Enter Your Slug" />
+
+                    <!-- Error Message -->
+                    <div class="input-errors text-red-700">
+                        <div class="error-msg">{{ error?.slug }}</div>
+                    </div>
+                </div>
+                <div>
+                    <label for="password" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">User</label>
+                    <Multiselect v-model="users" :options="userOptions" placeholder="Select User" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                </div>
+                   <div>
+                    <label for="tag" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Tag</label>
+                    <Multiselect v-model="tags" object :options="tagOptions" placeholder="Select Tag" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" mode="tags"></Multiselect>
+                </div>
+                  
+                  <div>
+                    <label for="brithday" class="text-sm text-gray-700 flex mb-1 font-medium">Category</label>
+                    <Multiselect v-model="categories" :options="categoryOptions" placeholder="Select Catagory" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                  </div>
+                  
+                  <div>
+                    <label for="firstmobile " class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Date</label>
+                    <VueDatePicker v-model="date" :format="format"></VueDatePicker>
+                  </div>
+                  
+                  <div>
+                    <label for="Status" class="text-sm text-gray-700 flex mb-1 font-medium">Status</label>
+                    <Multiselect v-model="status" :options="statusOpation" placeholder="Select Status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-700 flex mb-1 font-medium">File</label>
+                    <input class="bg-gray-100 border-2 rounded px-3 block focus:ring-blue-500 focus:border-blue-500 w-full" type="file" @change="addImage" />
+
+                </div>
+              </div>
+              <div>
+                  <vue-editor id="editor" useCustomImageHandler @image-added="handleImageAdded" v-model="description" class="mt-4"></vue-editor>
+              </div> 
+
+            <div class="space-x-4 mt-8 flex justify-end md:flex-col  flex-row">
+              <button @click.prevent="upadatBlog" class="bg-slate-950 text-white rounded-sm text-center p-2">Submit</button>
+                <router-link to="/admin/blog">
+              <button class="bg-slate-950 text-white rounded-sm text-center p-2">Cancle</button>
+                </router-link>
+            </div>
+        </form>
+    </div>
+    <!-- <div style="display: flex; justify-content: center;">
         <div class="container" style="margin-top:95px;">
             <h1 class="form-title">Upadate Blog</h1>
             <form class="was-validated">
@@ -86,7 +151,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
     </template>
     
     <script setup>
@@ -165,7 +230,7 @@ const addImage = (evt) =>{
         })
         .then((res) => {  
             console.log(res);
-            toast.error(res.data.message, {
+            toast.success(res.data.message, {
         position: toast.POSITION.TOP_RIGHT,
     });
         })
@@ -215,9 +280,6 @@ const addImage = (evt) =>{
         });
         });
      }
-     const backBlog = () => {
-        router.push({name: 'Blog'});       
-    }
 
     const getUsers = () => {
         let data = localStorage.getItem("user");

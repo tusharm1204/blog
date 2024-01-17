@@ -74,8 +74,7 @@
      width: 100%;
      background: #fff;
      color: #000;
-     opacity: 0.85;
-     z-index: 1;
+     z-index: 999;
  }
  .navbar-container{
      display: flex;

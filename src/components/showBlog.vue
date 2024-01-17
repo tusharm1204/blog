@@ -1,5 +1,63 @@
 <template>
-       <h1>BLOG</h1>
+  <div class="p-5 rounded border border-gray-200 bg-white shadow-sm h-auto w-4/5 px-5 py-5 flex justify-center mx-auto mt-5">
+<div  class="w-full sm:px-6 lg:px-8">
+    <div class="p-3">
+                    <div class="flex flex-col gap-3 px-5 py-2">
+                      <div class="-mt-14 h-[90px] w-[90px] overflow-hidden rounded-full border-4 border-white shadow-md text-center">
+                        <img :src="showBlogData.image" class="h-full w-full rounded-full object-cover object-center" />
+                      </div>
+                      <!-- <div class=""> -->
+                      <h3 class="flex text-xl font-bold leading-6 text-slate-900">{{ showBlogData.category_name }}</h3>
+                    <!-- </div> -->
+
+                <div class="flex flex-col gap-3"> 
+                  <div class="flex w-full items-center gap-3 rounded border bg-white px-2 py-3">
+                    <EnvelopeIcon class="w-6 h-6"/>
+                    <div class="leading-3">
+                        <p class="text-sm font-bold text-slate-700">CategoryName</p>
+                  </div>
+                        <p class="ml-auto self-start text-sm text-slate-500 mr-[1rem]">{{ showBlogData.category_name }}</p>
+                  </div> <div class="flex w-full items-center gap-3 rounded border bg-white px-2 py-3">
+                    <EnvelopeIcon class="w-6 h-6"/>
+                    <div class="leading-3">
+                        <p class="text-sm font-bold text-slate-700">Title</p>
+                  </div>
+                        <p class="ml-auto self-start text-sm text-slate-500 mr-[1rem]">{{ showBlogData.title }}</p>
+                  </div>
+                  <div class="flex w-full items-center gap-3 rounded border bg-white px-2 py-3">
+                    <DevicePhoneMobileIcon class="w-6 h-6"/>
+                    <div class="leading-3">
+                        <p class="text-sm font-bold text-slate-700">User Name</p>
+                  </div>
+                        <p class="ml-auto self-start text-sm text-slate-500 mr-[1rem]">{{ showBlogData.user_name }}</p>
+                  </div>
+                   <div class="flex w-full items-center gap-3 rounded border bg-white px-2 py-3">
+                    <CakeIcon class="w-6 h-6"/>
+                    <div class="leading-3">
+                      <p class="text-sm font-bold text-slate-700">Date</p>
+                    </div>
+                    <p class="ml-auto self-start text-sm text-slate-500 mr-[1rem]">{{ showBlogData.date }}</p>
+                  </div>
+                  <div class="flex w-full items-center gap-3 rounded border bg-white px-2 py-3">
+                    <CakeIcon class="w-6 h-6"/>
+                    <div class="leading-3">
+                      <p class="text-sm font-bold text-slate-700">Description</p>
+                    </div>
+                    <p class="ml-auto self-start text-sm text-slate-500 mr-[1rem]" v-html="showBlogData.description"></p>
+                  </div>
+                </div>
+                <div class="mt-3 flex items-center justify-end gap-x-6">
+                    <router-link to="/admin/blog">
+                        <button  class="bg-slate-950 text-white rounded-sm text-center p-2">Cancel</button>
+                    </router-link>
+                </div>
+              </div>  
+              <div class="relative overflow-x-auto sm:rounded-lg mt-4 mx-auto px-5">
+</div>
+        </div>
+  </div>
+  </div>
+       <!-- <h1>BLOG</h1>
        <div class="container">
               <div style="display: flex;flex-direction: column;justify-content: center; align-items: flex-start;">
                      <router-link to="/admin/blog" class="d-flex" style="align-items: baseline;">
@@ -23,7 +81,7 @@
                    </div>
                    </div>
                   </div>
-       </div>
+       </div> -->
 </template>
 <script setup>
 

@@ -1,48 +1,64 @@
 <template>
-  <div>TAGS</div>
-  <button class="btn btn-success text-center buttos" data-bs-toggle="modal" data-bs-target="#addData" @click="addData" >Add Tag +
-  </button>
-  <div>
-    <div class="tags">TAGS</div>
-</div>
-  <div class="container">
-    <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400 ">
-      <thead>
 
-        <tr>
-          <th style="text-align: center;">NAME</th>
-          <th>ACTION</th>
-        </tr>
-      </thead>
-     <tbody>
-      <template v-if="tags.length > 0">
-        <tr v-for="(tag) in tags" :key="tag">
-          <td style=" text-align: center; justify-content: center; align-items: center;">{{ tag.name }}</td>
-          <td>
-            <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addData" @click="editTag(tag)"></i>
-            <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
-          </td>
-        </tr>
-      </template>
-    </tbody>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination" style="top: 70px;left: 400px;">
-        <li class="page-item">
-          <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
-        </li>
-        <li class="page-item" v-for="page in totalPage" :key="page">
-          <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
-        </li>
+<div class=" mx-auto max-w-full px-2 sm:px-6 md:px-8">
+    <div class="py-5 px-2">
+        <div class="px-2 lg:px-2">
+            <div class="flow-root pb-10 px-2 bg-white shadow-sm w-auto h-auto rounded p-4">
+                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-end lg:mr-5 items-center flex-col gap-2">
+                  <button class="bg-slate-950 text-white rounded-sm text-center p-2" data-bs-toggle="modal" data-bs-target="#addTag" @click="addData" >Add Tag
+                    </button>
+               </div>
+                <div class="overflow-x-auto">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 overflow-x-auto">
+                        <div class="overflow-x-auto sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-300">
+                                <thead class="border-b border-black/20">
+                                    <tr>
+                                        <th class="py-3.5 px-2 text-base font-semibold text-gray-900">Name</th>
+                                        <th class="py-3.5 px-2 text-base font-semibold text-gray-900 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="tags && tags.length > 0" class="divide-y divide-gray-200 bg-white">
+                                    <tr v-for="tag in tags" :key="tag.id">
+                                        <td class="whitespace-nowrap px-2 py-3 text-md text-gray-500">
+                                            {{ tag.name }}</td>
+                                        <td class="relative whitespace-nowrap py-2 pl-3 pr-6  text-sm font-medium space-x-2 text-center">
+                                          <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addTag" @click="editTag(tag)"></i>
+                                           <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="11" class="text-center min-w-full h-12 text-2xl font-semibold">No matching records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                          <div class="flex justify-end mt-3">
+                            <ul class="pagination  flex justify-end">
+      <li class="page-item">
+      <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
+      </li>
+      <li class="page-item" v-for="page in totalPage" :key="page">
+      <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
+      </li>
+      <li class="page-item">
+      <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
+      </li>
       </ul>
-    </nav>
-    </table>
+                              </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+        </div>
+    </div>
   </div>
 
-  <!-- Create modal -->
-  <div class="modal fade" id="addData">
+  <!-- <----------- modal -----> 
+
+  <div class="modal fade" id="addTag">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -62,7 +78,6 @@
       </div>
     </div>
   </div>
-  <!--  -->
 </template>
 
 <script setup>
@@ -227,11 +242,10 @@ td {
 }
 
 table {
-  margin-left: -276px;
-  width: 81%;
-  transform: translate(267px, 55px);
-  position: absolute;
-  margin-top: 20px;
+  /* width: 81%; */
+  /* transform: translate(267px, 55px); */
+  /* position: absolute; */
+  margin-top: 27px;
 }
 
 i {
@@ -264,11 +278,6 @@ li {
 }
 
 
-.buttos {
-    float: right;
-    margin: 51px 68px;
-    padding: 8px;
-}
 
 
 .error.message {
@@ -278,9 +287,11 @@ i{
   margin: 10px;
 }
 .pagination {
-  position: relative;
+
+  /* margin-left: 50px; */
+  /* position: relative;
   top: 51px;
-  justify-content: end;
+  justify-content: end; */
 }
 
 .tags{

@@ -35,12 +35,23 @@ const routes = [
                 name: 'Deshboard',
                 path: 'deshboard',
                 component: () => import('../components/DeshBoard.vue'),
-
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Dashboard'
+                },
             },
             {
                 name: 'Blog',
                 path: 'blog',
                 component: () => import('../components/Blog.vue'),
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Blogs'
+                },
             },
             {
                 name: 'showBlog',
@@ -51,16 +62,34 @@ const routes = [
                 name: 'Category',
                 path: 'category',
                 component: () => import('../components/Category.vue'),
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Categories'
+                },
             },
             {
                 name: 'User',
                 path: 'user',
                 component: () => import('../components/User.vue'),
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Users'
+                },
             },
             {
                 name: 'Tags',
                 path: 'tag',
-                component: () => import('../components/Tags.vue')
+                component: () => import('../components/Tags.vue'),
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Tags'
+                },
             },
             {
                 name: 'Creatblog',

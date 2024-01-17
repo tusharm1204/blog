@@ -1,59 +1,88 @@
 <template>
-    <h1>BLOG</h1>
-<div>
-  <div>
-    <h1 style="margin-top:60px;" class="blog">BLOGS</h1>
+  <div class=" mx-auto max-w-full px-2 sm:px-6 md:px-8">
+    <div class="py-5 px-2">
+        <div class="px-2 lg:px-2">
+            <div class="flow-root pb-10 px-2 bg-white shadow-md h-auto rounded p-2">
+                <div class="xl:flex-row xl:justify-between lg:flex-row lg:justify-between flex flex-col  gap-3 items-center bg-white md:p-4 p-3">
+               <div class="w-[14rem] ml-1">
+                <Multiselect :value="selectedStatus"
+                  :options="allOptions"  @change="showBlog" placeholder="select status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" >
+                </Multiselect>
+               </div>
+                  <div class="mr-2">
+                    <router-link to="/admin/creatblog">
+                      <button class="bg-slate-950 text-white rounded-sm p-2" @click="addBlog">Add Blog</button>
+                     </router-link>
+                  </div>
+               </div>
+                <div class="overflow-x-auto w-full py-5">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 overflow-x-auto pb-3">
+                        <div class="overflow-hidden sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-300 mt-5">
+                                <thead >
+                                    <tr class="border-b border-black/20">
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900" >Avtar</th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900" >User</th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900" >Date</th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900" >Title</th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900" >Categories </th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900">Status</th>
+                                        <th class="py-3.5 px-6 text-base font-semibold text-gray-900 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                               <tbody>
+                                <tr  v-for="(blogs) in blog" :key="blogs.id" class="border-b  bg-white">
+                                    <template  v-if="blogs.status === selectedStatus || !selectedStatus">
+                                      <td class="whitespace-nowrap px-4 py-3 text-md text-gray-500 items-center text-center justify-center flex">
+                                        <img :src="blogs.image" class="w-8 h-8 rounded-full"></td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-md text-gray-500">
+                                            {{ blogs.user_name }}</td>
+                                        <td class="whitespace-nowrap px-4 py-3 text-md text-gray-500">
+                                            {{ blogs.date }}</td>
+                                             <td class="whitespace-nowrap px-4 py-3 text-md text-gray-500">
+                                            {{ blogs.title }}</td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-md text-gray-500">
+                                            {{ blogs.category_name }}</td>
+                                            <td class="whitespace-nowrap px-4 py-4 text-md text-gray-500" v-if="blogs.status ===0">
+                                              <button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(blogs.id)">Pending</button></td>
+                                              <td v-else class="whitespace-nowrap px-4  text-md text-gray-500">
+                                                <span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="blogs.status === 1 ? 'green' : 'red'">{{ blogs.status === 1 ?'published':'unpublished'}}</span></span></td>
+                                        <td class="relative whitespace-nowrap  text-sm font-medium space-x-2 text-center">
+                                          <i class="fa-solid fa-pen-to-square text-indigo-500"  @click="editBlog(blogs)"></i>
+                                           <i class="fa-solid fa-trash" style="color: red"   @click.prevent="deleteBlog(blogs.id)"></i>
+                                           <router-link :to="`/admin/showBlog/${blogs.id}`"><i class="fa-solid fa-eye"></i></router-link>
+                                        </td>
+                                        </template>
+                                    </tr>
+                               </tbody>
+                            </table>
+                          </div>
+                          <div class="flex justify-end mt-3">
+                            <ul class="pagination  flex justify-end">
+                              <li class="page-item">
+                              <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
+                              </li>
+                              <li class="page-item" v-for="page in totalPage" :key="page">
+                              <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
+                              </li>
+                              <li class="page-item">
+                              <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
+                              </li>
+                              </ul>
+                              </div>
+                        </div>
+                      </div>
+                    </div>
+        </div>
+    </div>
   </div>
-  <div>
-    <router-link to="/admin/creatblog">
-      <button class="btn btn-success mt-10 text-end btn" @click="addBlog">Add Blog +</button>
-    </router-link>
-  </div>
-</div>
-<div>  
-  <Multiselect style="width:18%;margin-top:-35px;margin-right:0;"
-  :value="selectedStatus"
-  :options="allOptions"  @change="showBlog" placeholder="select status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" class="w-[11rem]">
-</Multiselect>
-</div>
-  <div class="container">
-    <table class="table divide-y divide-gray-200 rounded-lg bg-white shadow border-slate-400">
-      <thead>
-        <tr >
-          <th class="padding" >User</th>
-          <th class="padding" >Title</th>
-          <th class="padding" >Categories </th>
-          <th class="padding">Status</th>
-          <th class="padding">ACTION</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(datum) in detail" :key="datum"  style="margin-top: 5px;">
-          <template v-if="datum.status === selectedStatus || !selectedStatus">
-          <td style="align-items: center;gap:25px;display: flex;margin-left: 89px;"><img :src="datum.image"><div>{{ datum.user_name }}<br>{{ datum.date }}</div></td>
-          <td>{{ datum.title}}</td>
-          <td>{{ datum.category_name}}</td>
-          <td v-if="datum.status === 0"><button style="background: rgb(62, 149, 236);padding:7px;" @click="getBlogs(datum.id)">Pending</button></td>
-          <td td v-else ><span class=""  style="color: black;" ><span class="badge rounded-pill" style="font-size: 14px;" :class="datum.status === 1 ? 'green' : 'red'">{{ datum.status === 1 ?'published':'unpublished'}}</span></span></td>
-          <td>
-            <i class="fa-solid fa-pen-to-square"  @click.prevent="editBlog(datum)"></i>
-            <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteBlog(datum.id)"></i>
-              <router-link :to="`/admin/showBlog/${datum.id}`"><i class="fa-solid fa-eye"></i></router-link>
-          </td>
-        </template>
-      </tr>
-    </tbody>
-  </table>
-  <router-view></router-view>
-</div>
-
 </template>
 
 <script setup>
 import Multiselect from '@vueform/multiselect'
 import { useRouter } from 'vue-router';
 import axios from "axios";
-import { ref, onMounted} from "vue";
+import { ref, onMounted,watch} from "vue";
 import { inject } from 'vue'
 import {useLoading} from 'vue-loading-overlay';
 import { toast } from 'vue3-toastify';
@@ -62,24 +91,46 @@ const router = useRouter();
     
 const $loading = useLoading({});
 const swal = inject('$swal')
-const detail = ref ({});
+const blog = ref ({});
+const totalPage = ref(0);
+const currentPage = ref(1);
 const selectedStatus = ref('');
 const allOptions = ref(['all','publish','unpublish'])
 
-  const store = async () => {
+
+watch (currentPage,(value) =>{
+  console.log(value); 
+      getBlog(value);
+});
+
+const handlePrev =() =>{
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const handleNext =() =>{
+  if (currentPage.value < totalPage.value) {
+        currentPage.value++;
+      }
+
+};
+
+  const getBlog = async (page = 1) => {
 
    
     let data = localStorage.getItem("user");
       data = JSON.parse(data);
       let token = data.token;
-      await axios.get("https://blog-api-dev.octalinfotech.com/api/blogs?page=1&tag_id", {
+      await axios.get("https://blog-api-dev.octalinfotech.com/api/blogs?page=" + page, {
                   headers: {
                       Authorization: `Bearer ${token}`,
                   },
               }
           )
         .then((res) => {
-          detail.value = res.data.data.data
+          totalPage.value = res.data.data.last_page;
+          blog.value = res.data.data.data
         })
         .catch((err) => {
           toast.error(err.response?.data?.message, {
@@ -122,7 +173,7 @@ const allOptions = ref(['all','publish','unpublish'])
                         theme: 'colored',
                        position: toast.POSITION.TOP_RIGHT,
                    });             
-             store();
+                   getBlog();
               })
               .catch((err) => {
                 toast.error(err.response?.data?.message, {
@@ -161,7 +212,7 @@ const getBlogs = (id) =>{
     console.log(res);
     let message = res.isConfirmed ? 'Your file has been Publish.' : 'Your file has been Unpublish.'
     swal.fire(res.isConfirmed ? 'Publish!' : 'Unpublished!',message,'success' )
-    store();
+    getBlog();
   }).catch((err)=>{
     toast.error(err.response?.data?.message, {
                         theme: 'colored',
@@ -181,7 +232,7 @@ const editBlog = (data) => {
 }
     onMounted (async () =>{
       const loader = $loading.show({});
-      await store();
+      await getBlog();
        loader.hide()
     })
 
@@ -209,12 +260,6 @@ const editBlog = (data) => {
   box-shadow: 0 5px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 
 
 }
-.btn {
-    float: right;
-    margin: 41px;
-    padding: 8px;
-    margin-top: -36px;
-}
 .btns {
     background: red;
   }
@@ -233,12 +278,6 @@ const editBlog = (data) => {
     font-size: 16px;
   }
 
- img {
-    width: 70px;
-    height: 70px;
-    background-size: cover;
-    border-radius: 100%;
-}
 i {
     color: rgb(43, 81, 187);
     margin: 5px;
@@ -249,29 +288,6 @@ i {
 .reds{
   color: red;
 }
-.blog{
-  display: flex;
-  justify-content: start;
-  margin-top: 50px;
-  margin-left: 30px;
-  font-size: 27px;
-  font-weight: 700;
-  text-shadow: 0 0 2px;
 
-}
 
-.table{
-  display: table;
-  width: 82%;
-  position: absolute;
-  margin-left: -23px;
-  margin-top: 33px;
-}
-.padding{
- padding: 20px;
-}
-.cell-breakword{
-  word-break: break-all;
-  max-width: 5px;
-}
 </style>

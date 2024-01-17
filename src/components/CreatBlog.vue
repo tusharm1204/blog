@@ -149,9 +149,9 @@ const getUsers = () => {
     });
 };
 
-const backBlog = () => {
-  router.push({ name: "Blog" });
-};
+// const backBlog = () => {
+//   router.push({ name: "Blog" });
+// };
 
 const handleAddBlog = () => {
   formData.value.date = moment(formData.value.date).format("YYYY-MM-DD");
@@ -223,147 +223,71 @@ const handleAddBlog = () => {
     
 
 <template>
-  <div style="display: flex; justify-content: center">
-    <div class="container" style="margin-top: 95px">
-      <h1 class="form-title">New Blog</h1>
-      <form class="was-validated">
-        <div class="main-user-info">
-          <div class="user-input-box">
-            <label for="fullName">Title<span class="star">*</span></label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              placeholder="Enter your title"
-              v-model="formData.title"
-              @input="slugifyTitle"
-            />
-            <h6 class="error">{{ formErrors?.title }}</h6>
-          </div>
-          <div class="user-input-box">
-            <label for="username">Slug<span class="star">*</span></label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Enter your slug"
-              v-model="formData.slug"
-            />
-            <h4 class="error" style="margin-right: 320px;">{{ formErrors?.slug }}</h4>
-          </div>
-          <div class="user-input-box">
-            <label for="email">User<span class="star">*</span></label>
-            <Multiselect
-              style="
-                display: flex;
-                margin-left: 0px;
-                width: 543px;
-                border: 1px solid;
-              "
-              v-model="formData.user_id"
-              :options="userOptions"
-              placeholder="select opation"
-              :closeOnSelect="true"
-              :clearOnSelect="true"
-              :searchable="true"
-              class="w-[11rem]"
-            >
-            </Multiselect>
-            <h6 class="error">{{ formErrors?.user_id }}</h6>
-          </div>
-          <div class="user-input-box">
-            <label for="phoneNumber">Tag<span class="star">*</span></label>
-            <Multiselect
-              style="
-                display: flex;
-                margin-left: 29px;
-                width: 545px;
-                border: 1px solid;
-              "
-              v-model="formData.tag_ids"
-              object
-              :options="tagOptions"
-              placeholder="select opation"
-              :closeOnSelect="true"
-              :searchable="true"
-              mode="tags"
-              :multiple="true"
-              class="w-[11rem]"
-            >
-            </Multiselect>
-            <h4 class="error" style="margin-right:430px;">{{ formErrors?.tag_id }}</h4>
-          </div>
+   <div class="mt-5 p-4 rounded border border-gray-200 bg-white shadow-sm  h-auto mx-3">
+        <form>
+            <div class="mt-8 grid lg:grid-cols-2 gap-4">
+                <div>
+                    <label for="name" class="text-sm  text-gray-700  mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500  flex">Title</label>
+                    <input type="text" name="name" id="name" class="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500
+                    focus:border-blue-500 text-gray-700 w-full"  v-model="formData.title" placeholder="Enter your name" @input="slugifyTitle"/>
 
-          <div class="user-input-box">
-            <label for="password">Categories<span class="star">*</span></label>
-            <Multiselect
-              style="
-                display: flex;
-                margin-left: 0px;
-                width: 543px;
-                border: 1px solid;
-              "
-              v-model="formData.category_id"
-              :options="categoryOptions"
-              placeholder="select opation"
-              :closeOnSelect="true"
-              :clearOnSelect="true"
-              :searchable="true"
-              class="w-[11rem]"
-            >
-            </Multiselect>
-            <h4 class="error">{{ formErrors?.category_id }}</h4>
-          </div>
-          <div class="user-input-box">
-            <label for="confirmPassword">Date<span class="star">*</span></label>
-            <VueDatePicker
-              v-model="formData.date"
-              :format="format"
-              style="width: 545px;border: 1px solid;height: 44px;margin-top: 0px;border-radius: 5px;"
-            ></VueDatePicker>
-            <!-- <h4 class="error">{{ error.data }}</h4> -->
-          </div>
-          <div class="user-input-box">
-            <label for="confirmPassword">Image<span class="star">*</span></label>
-            {{ formData.image }}
-            <input type="file" @change="addImage" style="background: white" />
-          </div>
-          <div class="user-input-box">
-            <label for="username">status<span class="star">*</span></label>
-            <Multiselect
-            style="
-              display: flex;
-              margin-left: 26px;
-              width: 543px;
-              border: 1px solid;"
-            v-model="formData.status"
-            :options="statusOpation"
-            placeholder="select opation"
-            :closeOnSelect="true"
-            :clearOnSelect="true"
-            :searchable="true"
-            class="w-[11rem]">
-            class="w-[11rem]">
-          </Multiselect>
-            <h4 class="error" style="margin-right: 310px;">{{ formErrors?.status}}</h4>
-          </div>
-          <div class="user-input-box" style="display: contents">
-            <label for="Description"
-              >Description<span class="star">*</span></label>
-            <vue-editor id="editor" useCustomImageHandler @image-added="handleImageAdded" v-model="formData.description"  style="width: 100%;"></vue-editor>
-            <h4 class="error" >{{ formErrors?.description }}</h4>
-          </div>
-        </div>
-        <div class="form-submit-btn">
-          <button class="btn btn-success" @click.prevent="handleAddBlog">
-            Save</button
-          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button class="btn btn-danger" @click="backBlog">Cancle</button>
-        </div>
-      </form>
+                    <!-- Error Message -->
+                    <div class="input-errors text-red-700" >
+                        <div class="error-msg">{{formErrors?.title}}</div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Slug</label>
+                    <input type="email" name="email" id="email" class="bg-gray-100 border border-gray-200 rounded py-1 px-3 flex focus:ring-blue-500
+                    focus:border-blue-500 text-gray-700 w-full" v-model="formData.slug" placeholder="Enter Your Slug" />
+
+                    <!-- Error Message -->
+                    <div class="input-errors text-red-700">
+                        <div class="error-msg">{{ formErrors?.slug }}</div>
+                    </div>
+                </div>
+                <div>
+                    <label for="password" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">User</label>
+                    <Multiselect v-model="formData.user_id" :options="userOptions" placeholder="Select User" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                </div>
+                   <div>
+                    <label for="tag" class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Tag</label>
+                    <Multiselect v-model="formData.tag_ids" object :options="tagOptions" placeholder="Select Tag" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" mode="tags"></Multiselect>
+                </div>
+                  
+                  <div>
+                    <label for="brithday" class="text-sm text-gray-700 flex mb-1 font-medium">Category</label>
+                    <Multiselect v-model="formData.category_id" :options="categoryOptions" placeholder="Select Catagory" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                  </div>
+                  
+                  <div>
+                    <label for="firstmobile " class="text-sm text-gray-700 flex mb-1 font-medium after:content-['*'] after:ml-0.5 after:text-red-500">Date</label>
+                    <VueDatePicker v-model="formData.date" :format="format"></VueDatePicker>
+                  </div>
+                  
+                  <div>
+                    <label for="Status" class="text-sm text-gray-700 flex mb-1 font-medium">Status</label>
+                    <Multiselect v-model="formData.status" :options="statusOpation" placeholder="Select Status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"></Multiselect>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-700 flex mb-1 font-medium">File</label>
+                    <input class="bg-gray-100 border-2 rounded px-3 block focus:ring-blue-500 focus:border-blue-500 w-full" type="file" @change="addImage" />
+
+                </div>
+              </div>
+              <div>
+                  <vue-editor id="editor" useCustomImageHandler @image-added="handleImageAdded" v-model="formData.description" class="mt-4"></vue-editor>
+              </div> 
+
+            <div class="space-x-4 mt-8 flex justify-end md:flex-col  flex-row">
+              <button @click.prevent="handleAddBlog" class="bg-slate-950 text-white rounded-sm text-center p-2">Submit</button>
+                <router-link to="/admin/blog">
+              <button class="bg-slate-950 text-white rounded-sm text-center p-2">Cancle</button>
+                </router-link>
+            </div>
+        </form>
     </div>
-  </div>
-  <h1 v-show="ok">Hello!</h1>
 </template>
     
     <style scoped>
@@ -372,17 +296,7 @@ const handleAddBlog = () => {
   font-size: 15px;
   margin-top: 11px;
 }
-.container {
-  width: 1200px;
-  max-width: 1200px;
-  background-color: #fff;
-  background-image: linear-gradient(hsla(0, 0%, 100%, 1), #fff);
-  padding: 28px;
-  margin: 0 28px;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px slategrey;
-  background-repeat: no-repeat;
-}
+
 .form-title {
   font-size: 26px;
   text-align: start;
