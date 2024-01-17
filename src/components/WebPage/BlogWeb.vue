@@ -3,7 +3,7 @@
     <Navbar />
 <section class="container mt-5" style="margin-left:380px;width: 60%;">
 
-      <Carousel :items-to-show="2.5" :wrap-around="true"  >
+      <Carousel :items-to-show="4" :wrap-around="true"  >
         <Slide v-for="categories in categoriesDatas" :key="categories" class="containers">
         <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
             <div class="item ">
@@ -69,6 +69,11 @@
       </div>
     </div>
   </div>
+  <section class="container mt-5">
+    <div style="width: 100%;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.914081130329!2d72.85587637518222!3d21.23525538046629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f30b7912685%3A0x96e904c8eb74102e!2sOctal%20Infotech!5e0!3m2!1sen!2sin!4v1696482035861!5m2!1sen!2sin" width="1500" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</section>
   <div style="margin-top: 80px;">
     <Footer />
   </div>
@@ -83,8 +88,8 @@ import {useLoading} from 'vue-loading-overlay'
 const $loading = useLoading({});
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 
   const categoriesDatas = ref({});
   const blogDatas = ref({});
@@ -98,9 +103,10 @@ import 'vue3-toastify/dist/index.css';
       .then((res) =>{
           categoriesDatas.value = res.data.data.data
       }).catch((err)=>{
-        toast.error(err.response?.data?.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+        toast.error(err.response.data.message, {
+              position: "top-right",
+              timeout: 5000,
+              });
       })
   }
   
@@ -114,9 +120,10 @@ import 'vue3-toastify/dist/index.css';
   .then((res) =>{
       blogDatas.value = res.data.data.data 
   }).catch((err)=>{
-        toast.error(err.response?.data?.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+    toast.error(err.response.data.message, {
+              position: "top-right",
+              timeout: 5000,
+              });
       })
   }
   
@@ -148,10 +155,6 @@ import 'vue3-toastify/dist/index.css';
     text-overflow: ellipsis;
     font-size:13px;
     font-weight:500;
-  }
-  .containers{
-    width:26%;
-    height:30%;
   }
   @media only screen and (max-width:1200px) {
     #carouselExampleControls{

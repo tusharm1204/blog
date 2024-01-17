@@ -95,8 +95,8 @@
 import axios from "axios";
 import {useLoading} from 'vue-loading-overlay'
 const $loading = useLoading({});
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 
 export default {
     name: "Category-component",
@@ -146,9 +146,6 @@ export default {
             this.isEdit = true;
             this.form = datum;
         },
-        aditData() {
-            console.log("tushar makwana");
-        },
         addCategory() {
             if (!this.form.name) {
                 this.error.form.name = "";
@@ -173,16 +170,18 @@ export default {
                     }
                 )
                 .then((res) => {
+                    console.log(res.data.message);
                     this.getCategory();
                     toast.success(res.data.message, {
-                        theme: 'colored',
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 })
                 .catch((err) => {
-                    toast.error(err.response?.data?.message, {
-                     position: toast.POSITION.TOP_RIGHT,
-                 });
+                    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 });
         },
         deleteCategory(id) {
@@ -190,8 +189,7 @@ export default {
             data = JSON.parse(data);
             let token = data.token;
 
-            this.$swal
-                .fire({
+            this.$swal.fire({
                     title: "Are you sure?",
                     icon: "warning",
                     text: "Are you sure that you want to leave this page?",
@@ -199,24 +197,26 @@ export default {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        axios
-                            .delete(
-                                `https://blog-api-dev.octalinfotech.com/api/categories/${id}/delete`, {
+                        axios.delete(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/delete`, {
                                     headers: {
                                         Authorization: `Bearer ${token}`,
                                     },
                                 }
                             )
-                            .then(({res}) => {         
+                            .then((res) => {    
                                 this.$swal.fire("Deleted successfully!", "", "success");
+                                this.detail = res.data.data;
                                 this.getCategory();
-                                this.detail = res.data.data.data;
-                                console.log(res.data.message);
-                            })
+                                toast.success(res.data.message, {
+                                position: "top-right",
+                                timeout: 5000,
+                                });
+                               })
                             .catch((err) => {
-                                toast.error(err.response?.data?.message, {
-                                 position: toast.POSITION.TOP_RIGHT,
-                             });
+                                toast.error(err.response.data.message, {
+                               position: "top-right",
+                               timeout: 5000,
+                               });
                             });
                     } else if (result.isDenied) {
                         this.$swal.fire("Changes are not saved", "", "info");
@@ -243,9 +243,10 @@ export default {
                     this.detail = data.data.data;
                 })
                 .catch((err) => {
-                    toast.error(err.response?.data?.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+                    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
                 });
         },
     },

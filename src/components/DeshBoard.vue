@@ -158,8 +158,8 @@
 </template>
 
 <script setup>
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 import axios from 'axios';
 import {ref, onMounted } from 'vue';
 import {useLoading} from 'vue-loading-overlay'
@@ -179,9 +179,10 @@ const showDashboard = () =>{
       }).then((res) =>{
          blogData.value = res.data.data
       }).catch((err) =>{
-         toast.error(err.response?.data?.message, {
-           position: toast.POSITION.TOP_RIGHT,
-          });
+         toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
       })
 }
 

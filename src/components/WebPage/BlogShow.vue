@@ -25,7 +25,7 @@
         </div>
        <div class="d-flex">
         <div>
-          <img :src="blogShow.image" style="width:1020px;height:500px;margin-top:30px;object-fit: cover;" >
+          <img :src="blogShow.image" style="width:1020px;height:500px;margin-top:30px;object-fit:contain;" >
         </div>
         <div>
           <p class="text-justify" style="font-size:23px;font-family: circular;margin:23px 0px 0px 161px;width: 54%;" v-html="blogShow.description"></p>
@@ -71,8 +71,8 @@ import { useRoute } from 'vue-router'
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
 import {useLoading} from 'vue-loading-overlay';
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 const $loading = useLoading({});
 const route = useRoute();
 const blogShow = ref({})
@@ -90,9 +90,10 @@ const showBlogs = () => {
       blogShow.value = res.data.data
     })
     .catch((err) => {
-      toast.error(err.response?.data?.message, {
-                       position: toast.POSITION.TOP_RIGHT,
-                   });
+      toast.error(err.response.data.message, {
+              position: "top-right",
+              timeout: 5000,
+              });
     });
 };
 

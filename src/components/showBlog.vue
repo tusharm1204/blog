@@ -74,7 +74,7 @@
                    <div>
                   <div class="d-flex">
                    <div>
-                     <img :src="showBlogData.image" style="width:1125px;height:500px;margin-top:30px;object-fit: cover;" >
+                     <img :src="showBlogData.image" style="width:1125px;height:500px;margin-top:30px;object-fit: contain;" >
                    </div>
                    <div>
                      <p class="text-justify" style="font-size:23px;font-family: circular;margin:23px 0px 0px 161px;width: 54%;" v-html="showBlogData.description"></p>
@@ -92,8 +92,8 @@ import {useLoading} from 'vue-loading-overlay';
 const $loading = useLoading({});
 const showBlogData = ref({});
 const route = useRoute();
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
+import { useToast } from "vue-toastification";
+const  toast = useToast();
 const showBlog = () =>{         
    let data = localStorage.getItem('user');
    data = JSON.parse(data);
@@ -107,9 +107,10 @@ const showBlog = () =>{
    .then((res)=>{
           showBlogData.value = res.data.data   
    }).catch((err) =>{
-    toast.error(err.response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-       });
+    toast.error(err.response.data.message, {
+                    position: "top-right",
+                    timeout: 5000,
+                    });
    })
 
 } 
