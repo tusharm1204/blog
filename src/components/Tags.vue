@@ -23,8 +23,8 @@
                                         <td class="whitespace-nowrap px-2 py-3 text-md text-gray-500">
                                             {{ tag.name }}</td>
                                         <td class="relative whitespace-nowrap py-2 pl-3 pr-6  text-sm font-medium space-x-2 text-center">
-                                          <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#addTag" @click="updateTags(tag)"></i>
-                                           <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleltetag(tag.id)"></i>
+                                          <i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#updateTags" @click="updateTag=tag"></i>
+                                           <i class="fa-solid fa-trash" style="color: red" @click.prevent="deleteTags(tag.id)"></i>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -58,19 +58,41 @@
 
   <!-- <----------- modal -----> 
 
+  
+  <div class="modal fade" id="updateTags">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Tag</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <label for="name">Name</label>
+        <input type="text" v-model="updateTag.name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success buttons" data-bs-dismiss="modal" @click.prevent="updateTags">Update
+        </button>
+        <button
+          type="button" class="btn btn-danger btns" data-bs-dismiss="modal" > Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <div class="modal fade" id="addTag">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{ isEdit ? "Update tag" : "Add tag" }}</h4>
+          <h4 class="modal-title">Add Tag</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <label for="name" style="font-size: 20px">Name</label>
-          <input  type="text"  v-model="form.name" id="username" name="username" />{{ error.name }}<br /><br />
+          <input  type="text"  v-model="form.name" id="username" name="username" /><br /><br />
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success buttons" data-bs-dismiss="modal" @click="addTag" > {{ isEdit ? "Update" : "Add" }}
+          <button type="button" class="btn btn-success buttons" data-bs-dismiss="modal" @click="addTag" >Add
           </button>
           <button
             type="button" class="btn btn-danger btns" data-bs-dismiss="modal" @click="conformDlt"> Cancel</button>
@@ -96,11 +118,9 @@ const currentPage = ref(1);
 const isEdit = ref(false);
 const form = ref ({name:''});
 const tags = ref([]);
-const error = ref([]);
+// const error = ref([]);
 
-const updateTag = ref({
-  name:''
-})
+const updateTag = ref({name:''})
 
 watch (currentPage,(value) =>{
   console.log(value);
@@ -152,46 +172,6 @@ const getTags = (page=1) =>{
       tags.value = [];
   
 };
-
-  
-  const deleltetag = (id) =>{
-    let data = localStorage.getItem('user');
-      data = JSON.parse(data);
-      let token = data.token 
-  
-    swal.fire({
-    title: "Are you sure?",
-    text: "Are you sure that you want to leave this page?",
-    icon: "warning",
-    dangerMode: true,
-  })
-  
-     .then((result) => {
-            if (result.isConfirmed) {
-              axios
-                .delete(`https://blog-api-dev.octalinfotech.com/api/tages/${id}/delete`,{
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                )
-                .then((res) => {
-               swal.fire("Tag Deleted successfully!", "", "success");
-               toast.success(res.data.message, {
-                    position: "top-right",
-                    timeout: 5000,
-                    });
-                    getTags();   
-                })
-                .catch((err) => {
-                  toast.error(err.response.data.message, {
-                    position: "top-right",
-                    timeout: 5000,
-                    });
-                });
-            } 
-          });
-  }
   
   const updateTags = () =>{
   
@@ -221,43 +201,72 @@ const getTags = (page=1) =>{
         
 };
 
-// const deleteTags = (id)=>{
-//   let data = localStorage.getItem("user");
-//       data = JSON.parse(data);
-//       let token = data.token;
+const addTag = () =>{
+  
+  let user = localStorage.getItem('user');
+  user = JSON.parse(user);
+  let token = user.token ;
+    let data = {
+      name:form.value.name  ,
+    }
+      axios.post("https://blog-api-dev.octalinfotech.com/api/tages/store" ,data,  {
+        headers : {
+          authorization : `Bearer ${token}`
+        }
+      }).then((res) =>{
+        form.value = res.data.data
+        toast.success(res.data.message, {
+                  position: "top-right",
+                  timeout: 5000,
+                  });
+                getTags()
+  
+      }).catch((err) =>{
+        toast.error(err.response.data.message, {
+                  position: "top-right",
+                  timeout: 5000,
+                  });
+      })
+      
+};
 
-//       swal.fire({
-//   title: "Are you sure?",
-//   text: "Are you sure that you want to leave this page?",
-//   icon: "warning",
-//   dangerMode: true,
-// })
-//         .then((result) => {
-//           if (result.isConfirmed) {
-//             axios
-//               .delete(
-//                 `https://blog-api-dev.octalinfotech.com/api/tages/${id}/delete`,
-//                 {
-//                   headers: {
-//                     Authorization: `Bearer ${token}`,
-//                   },
-//                 }
-//               )
-//               .then((res) => {
-//              swal.fire("Tag Deleted successfully!", "", "success");
-//              toast.success(res?.data?.message, {
-//                position: toast.POSITION.TOP_RIGHT,
-//               });
-//                 getTags();   
-//               })
-//               .catch((err) => {  
-//                 toast.error(err.response?.data?.message, {
-//                position: toast.POSITION.TOP_RIGHT,
-//               });
-//               });
-//           } 
-//         });
-// }
+const deleteTags = (id)=>{
+  let data = localStorage.getItem("user");
+      data = JSON.parse(data);
+      let token = data.token;
+
+      swal.fire({
+  title: "Are you sure?",
+  text: "Are you sure that you want to leave this page?",
+  icon: "warning",
+  dangerMode: true,
+})
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .delete(
+                `https://blog-api-dev.octalinfotech.com/api/tages/${id}/delete`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                }
+              )
+              .then((res) => {
+             swal.fire("Tag Deleted successfully!", "", "success");
+             toast.success(res?.data?.message, {
+               position: toast.POSITION.TOP_RIGHT,
+              });
+                getTags();   
+              })
+              .catch((err) => {  
+                toast.error(err.response?.data?.message, {
+               position: toast.POSITION.TOP_RIGHT,
+              });
+              });
+          } 
+        });
+}
 
 
 onMounted (async()=>{

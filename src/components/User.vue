@@ -265,7 +265,7 @@ const updateUser = () =>{
   let user = localStorage.getItem('user');
   user = JSON.parse(user);
   let token = user.token ;
-    let data = {
+  let data = {
       name : updateUserField.value.name,
       email : updateUserField.value.email,
       password : updateUserField.value.password,
