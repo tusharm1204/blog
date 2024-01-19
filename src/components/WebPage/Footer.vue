@@ -1,7 +1,8 @@
 <template>
-<footer class=" text-center text-white footer" style="background: #212121">
+<div class=""> 
+  <footer class="w-[100%] sm:w-[100%] text-center text-white   xl:w-[100%] lg:w-[100%] md:w-[100%]" style="background: #212121">
     <div class="container p-4">
-      <section class="mb-4" style="gap: 12px;justify-content: center;display: flex;">
+      <section class="mb-4 flex gap-2 justify-center">
         <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
           ><i class="fab fa-facebook-f"></i
         ></a>
@@ -24,26 +25,26 @@
         <div class="d-flex justify-content-center">
             <div class="col-sm-4 col-md-3 item mt-1">
                 <h1>SERVICES</h1>
-                <ul class="mt-2">
-                    <li><a href="#" >Web design</a></li>
-                    <li><a href="#">Development</a></li>
-                    <li><a href="#">Hosting</a></li>
+                <ul class="mt-2 text-white">
+                    <li><a href="#" class="text-white" >Web design</a></li>
+                    <li><a href="#" class="text-white">Development</a></li>
+                    <li><a href="#" class="text-white">Hosting</a></li>
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 item">
                 <h1>ABOUT</h1>
                 <ul class="mt-2">
-                    <li><a href="#">Company</a></li>
-                    <li><a href="#">Team</a></li>
-                    <li><a href="#">Legacy</a></li>
+                    <li><a href="#" class="text-white">Company</a></li>
+                    <li><a href="#" class="text-white">Team</a></li>
+                    <li><a href="#" class="text-white">Legacy</a></li>
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 item">
                 <h1>CAREERS</h1>
                 <ul class="mt-2">
-                    <li><a href="#">Job openings</a></li>
-                    <li><a href="#">Employee success</a></li>
-                    <li><a href="#">Benefits</a></li>
+                    <li><a href="#" class="text-white">Job openings</a></li>
+                    <li><a href="#" class="text-white">Employee success</a></li>
+                    <li><a href="#" class="text-white">Benefits</a></li>
                 </ul>
             </div>
         </div>
@@ -58,6 +59,7 @@
     </div>
    
   </footer>
+</div>
 
 
  </template>
@@ -66,32 +68,3 @@
 
  
    </script>
-   <style scoped>
-   i{
-    padding: 6px;
-   }
-   a{
-    color: white;
-   }
-   .carousel__item {
-    min-height: 200px;
-    width:1000px;
-   
-    color: var(--vc-clr-white);
-    font-size: 20px;
-    border-radius: 8px;
-    justify-content: center;
-    align-items: center;
-  }
- .img{
-    width: 130px;
-    height: 130px;
-    border-radius: 100%;
-    border: 1px solid;
- }
-@media (max-width: 1200px){
-    .footer{
-        width: 145%;
-    }
-}
- </style>

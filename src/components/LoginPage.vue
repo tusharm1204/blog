@@ -1,4 +1,52 @@
 <template>
+
+    <!-- component -->
+<div class="bg-gray-300 h-screen w-screen">
+    <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
+        <div class="flex shadow-lg w-full h-full md:h-[400px] md:w-full  lg:h-[400px] lg:w-full xl:h-[450px] xl:w-3/5 bg-white sm:mx-0">
+            <div class="hidden md:block md:w-1/2" style="background: url('https://lh3.googleusercontent.com/p/AF1QipOMj-dseZ54sUzotNCrFSHiBnOGUrpI64eCxSzM=s680-w680-h510'); background-size: cover; background-position: center center;"></div>
+            <div class="flex flex-col w-full md:w-1/2 p-4">
+                <div class="flex flex-col flex-1 justify-center mb-8 items-center">
+          <div class="flex gap-3 items-center">
+            <div>
+                        <img src="https://octalinfotech.com/img/octal-logo.png" alt="" class="h-8 w-8 rounded-full">
+                    </div>
+                 <div>
+                    <h1 class="text-4xl text-center font-thin">Octal Infotech</h1>
+                 </div>
+          </div>
+                    <div class="w-full mt-4">
+                        <form class="form-horizontal w-3/4 mx-auto" method="POST" action="#">
+                            <div class="flex flex-col mt-4">
+                                <input id="email" type="text" class="flex-grow h-8 px-2 border rounded border-grey-400" name="email"  placeholder="Email" v-model="email" @change="emails">
+                            </div>
+                            <h1 class="error">{{errors.email}}</h1>
+                            <div class="flex flex-col mt-4">
+                                <input id="password" type="password" class="flex-grow h-8 px-2 rounded border border-grey-400" name="password" v-model="password" @change="passwords" placeholder="Password">
+                            </div>
+                    <h1 class="error">{{errors.password}}</h1>
+                            <div class="flex items-center mt-4 gap-2">
+                                <input type="checkbox" name="remember" id="remember" class="mr-2"> <label for="remember" class="text-sm text-grey-dark">Remember Me</label>
+                            </div>
+                        </form>
+                   <div class="flex items-center mt-5 gap-3 justify-end">
+                    <div class="">
+                            <a class="no-underline hover:underline text-blue-dark text-md" href="#">
+                                Forgot Your Password?
+                            </a>
+                        </div>
+                        <div class="flex flex-col">
+                            <button class="bg-black hover:bg-black w-24 py-2 p-3  text-white text-sm font-semibold rounded-sm" @click="login">
+                                Login
+                            </button>
+                        </div>
+                   </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- https://play.tailwindcss.com/MIwj5Sp9pw -->
 <!-- <div class="py-16 px-5 mt-5">
     <div class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl sm:max-w-2xl py-5 mt-5 px-5">
@@ -34,7 +82,7 @@
         </div>
     </div>
 </div> -->
-<div class="main">
+<!-- <div class="main">
     <div class="body d-md-flex align-items-center justify-content-between">
         <div class="col-md-6 col-lg-5 d-none d-md-block img" style="width: 553px;">
             <img src="https://lh3.googleusercontent.com/p/AF1QipOMj-dseZ54sUzotNCrFSHiBnOGUrpI64eCxSzM=s680-w680-h510" alt="login form" class="img-fluid" style="height:559px;background-size: cover;width:600px;;" />
@@ -66,7 +114,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 </template>
 
 <script setup>

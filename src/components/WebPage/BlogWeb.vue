@@ -1,16 +1,15 @@
 <template>
-
     <Navbar />
-<section class="container mt-5" style="margin-left:380px;width: 60%;">
-
-      <Carousel :items-to-show="4" :wrap-around="true"  >
-        <Slide v-for="categories in categoriesDatas" :key="categories" class="containers">
-        <div  style="display: flex;justify-content: center;flex-direction: column;align-items: center;">
-            <div class="item ">
-                  <img :src="categories.image" alt="" class="imges " style="width:145px;border: 4px solid;height: 145px;">
+    <div class="mx-auto max-w-full px-2 sm:px-6 md:px-8">
+<section class="container mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
+      <Carousel :items-to-show="3" :wrap-around="true"  >
+        <Slide v-for="categories in categoriesDatas" :key="categories">
+        <div>
+            <div class="item">
+                  <img :src="categories.image" alt="" class="rounded-full w-[300px] md:w-[145px] xl:w-[145px] lg:w-[145px] border-2 h-[145px] md:h-[145px] lg:h-[145px] xl:h-[145px]">
               </div>
-              <div class="mt-3 text-base text-center cursor-pointer mt-2">
-                  <h1 class="text-xs dark:text-gray-400 hover-underline-animation" style="font-size: 20px;font-weight:700;color: black;">
+              <div class="mt-3 text-base text-center cursor-pointer">
+                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black">
                   {{ categories.name }}
                   </h1>
               </div>
@@ -20,13 +19,13 @@
             <Navigation />
           </template>
         </Carousel>
-</section><br><br><br><br><br><br>
-<section class="container" style="margin-left:400px;">
-    <div class=" grid grid-cols-3 container">
-      <div v-for="blogs in blogDatas" :key="blogs" class="main mt-5 hover:text-white-500 font-semibold text-base grid-container">
+</section>
+<section class="container mt-5 justify-center flex">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 md:grid-cols-2">
+    <div v-for="blogs in blogDatas" :key="blogs" class="main mt-5 hover:text-white-500 font-semibold text-base grid-container"> 
           <div >
             <router-link :to="'/blogs/'+blogs.id">
-                        <img :src="blogs.image" alt="" class=" w-full h-44 dark:bg-gray-500 " style=" width:330px;height: 230px;object-fit: contain;margin-left: -73px;" @click="showBlogs">
+                        <img :src="blogs.image" alt="" class=" w-[330px] h-[230px] object-contain" @click="showBlogs">
             </router-link>
           </div>
           <div class="text-base text-center cursor-pointer mt-2 justify-content">
@@ -34,12 +33,18 @@
               {{ blogs.name }}
             </h1>
             <div class="description" style="" v-html="blogs.description"></div>
-              <img :src="blogs.user_image" alt="" style="width: 50px;height: 50px;border-radius: 100%;margin-top: 5px;margin-left:-11px;">
-              <span class="text-xs dark:text-gray-400 user_name" style="margin-left: 46px;top: 1px;margin-top: -33px;display: flex;">{{ blogs.user_name}}</span>
-              <span class="text-xs dark:text-gray-400 date" style="    display: flex; margin-left:95px; margin-top: -15px;">   {{ blogs.date }}</span>
-              <span class="text-xs dark:text-gray-400" style="display: flex; margin-left: 54px; margin-top: 5px;">{{ blogs.slug }}</span>
+         <div class="flex justify-center gap-2 items-center">
+          <div>
+            <img :src="blogs.user_image" alt="" class="w-8 h-8 rounded-full">
           </div>
-      </div>
+              <div class="flex gap-3">
+                <span class="text-xs dark:text-gray-400 flex">{{ blogs.user_name}}</span>
+                <span class="text-xs dark:text-gray-400 date">   {{ blogs.date }}</span>
+              </div>
+            </div>
+            <span class="text-xs dark:text-gray-400">{{ blogs.slug }}</span>
+          </div> 
+      </div> 
     </div>
 
   </section><br><br><br><br>
@@ -74,6 +79,7 @@
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3718.914081130329!2d72.85587637518222!3d21.23525538046629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f30b7912685%3A0x96e904c8eb74102e!2sOctal%20Infotech!5e0!3m2!1sen!2sin!4v1696482035861!5m2!1sen!2sin" width="1500" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </section>
+</div>
   <div style="margin-top: 80px;">
     <Footer />
   </div>
@@ -138,34 +144,5 @@ const  toast = useToast();
   })
    </script>
    <style scoped>
-   i{
-    padding: 6px;
-   }
- .imges{
-    width: 130px;
-    height: 130px;
-    border-radius: 100%;
-    border: 1px solid;
- }
-  .description{
-    width: 180px;
-    height: 18px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size:13px;
-    font-weight:500;
-  }
-  @media only screen and (max-width:1200px) {
-    #carouselExampleControls{
-      margin-left: 50px;
-    }
-    .containers{
-      width:40%;
-      height:30%;
-    }
-    .imges{
-     display: none;
-   }
-  }
+
  </style>
