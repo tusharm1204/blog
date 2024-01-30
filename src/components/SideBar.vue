@@ -54,7 +54,7 @@
    </div>
    </div>
 <div class="md:flex">
-   <aside id="default-sidebar" class=" fixed top-0 left-0 z-[999] w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+   <aside id="default-sidebar" class="fixed top-0 left-0 z-[999] w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div class="flex gap-3 h-16 flex-shrink-0 items-center bg-slate-50 px-3 shadow-xl z-50">
                             <img class="h-8 w-8 rounded-full object-cover" src="http://octalinfotech.com/img/octal-logo.png" alt="Your Company" />
                             <h1 class="text-black text-lg font-bold space-x-3">OCTAL INFOTECH</h1>

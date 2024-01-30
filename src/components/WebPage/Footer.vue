@@ -24,7 +24,7 @@
       </section>
         <div class="d-flex justify-content-center">
             <div class="col-sm-4 col-md-3 item mt-1">
-                <h1>SERVICES</h1>
+                <h1>Services</h1>
                 <ul class="mt-2 text-white">
                     <li><a href="#" class="text-white" >Web design</a></li>
                     <li><a href="#" class="text-white">Development</a></li>
@@ -32,7 +32,7 @@
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 item">
-                <h1>ABOUT</h1>
+                <h1>About</h1>
                 <ul class="mt-2">
                     <li><a href="#" class="text-white">Company</a></li>
                     <li><a href="#" class="text-white">Team</a></li>
@@ -40,12 +40,13 @@
                 </ul>
             </div>
             <div class="col-sm-4 col-md-3 item">
-                <h1>CAREERS</h1>
-                <ul class="mt-2">
-                    <li><a href="#" class="text-white">Job openings</a></li>
-                    <li><a href="#" class="text-white">Employee success</a></li>
-                    <li><a href="#" class="text-white">Benefits</a></li>
-                </ul>
+                <h1>Categories</h1>
+                <ul class="mt-2 text-sm flex justify-center flex-col">
+            <li v-for="category in categoryCount" :key="category" class="flex gap-3">
+                <div class="text-white">{{category.name}}</div>
+                <div class="text-white">({{category.blog_count}})</div>
+            </li>
+          </ul>
             </div>
         </div>
         <div class="mt-3">
@@ -65,6 +66,30 @@
  </template>
  
    <script setup>
+  import {ref,onMounted} from 'vue';
+  import axios from 'axios';
 
+ const categoryCount = ref('')
+  onMounted(()=>{
+    getCategories();
+  })
+
+  const getCategories  = (id) => {
+    let data = localStorage.getItem("user");
+  data = JSON.parse(data);
+  let token = data.token;
+
+  console.log(id);
+  axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/count` ,{
+    headers: {
+        Authorization: `Bearer ${token}`,
+      },
+})
+.then((res) =>{
+  categoryCount.value = res.data.data.data
+}).catch((error)=>{
+console.log(error);
+})
+}
  
    </script>

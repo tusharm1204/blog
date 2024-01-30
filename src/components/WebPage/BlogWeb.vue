@@ -1,7 +1,28 @@
 <template>
     <Navbar />
     <div class="mx-auto max-w-full px-2 sm:px-6 md:px-8">
-<section class="container mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
+      <section class="mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
+      <Carousel :items-to-show="11" :wrap-around="true"  >
+        <Slide v-for="category in categories" :key="category">
+        <div>
+            <div class="item">
+              <router-link :to="'/categories/'+category.id+'/blogs'">
+                <img :src="category.image" alt="" class="rounded-full w-[50px] h-[40px] md:w-[145px] xl:w-[40px] lg:w-[145px] border-2 md:h-[145px] lg:h-[145px] xl:h-[40px]">
+              </router-link>
+              <div class="mt-3 text-base text-center cursor-pointer">
+                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black">
+                  {{ category.name }}
+                  </h1>
+              </div>
+              </div>
+             </div>
+      </Slide>
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
+</section>
+<!-- <section class="container mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
       <Carousel :items-to-show="3" :wrap-around="true"  >
         <Slide v-for="categories in categoriesDatas" :key="categories">
         <div>
@@ -19,7 +40,7 @@
             <Navigation />
           </template>
         </Carousel>
-</section>
+</section> -->
 <section class="container mt-5 justify-center flex">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 md:grid-cols-2">
     <div v-for="blogs in blogDatas" :key="blogs" class="main mt-5 hover:text-white-500 font-semibold text-base grid-container"> 
@@ -32,7 +53,7 @@
               <h1 class="d-flex justify-content mt-3 hover-underline-animation">
               {{ blogs.name }}
             </h1>
-            <div class="description" style="" v-html="blogs.description"></div>
+            <div class="description cell-breakword truncate" style="" v-html="blogs.description"></div>
          <div class="flex justify-center gap-2 items-center">
           <div>
             <img :src="blogs.user_image" alt="" class="w-8 h-8 rounded-full">
@@ -86,8 +107,8 @@
  </template>
  
    <script setup>
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Navigation, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
 import { ref,onMounted } from "vue";
 import axios  from "axios";
 import {useLoading} from 'vue-loading-overlay'
@@ -97,7 +118,7 @@ import Footer from '../WebPage/Footer.vue';
 import { useToast } from "vue-toastification";
 const  toast = useToast();
 
-  const categoriesDatas = ref({});
+  const categories = ref({});
   const blogDatas = ref({});
   const showCatagory = () =>{
 
@@ -107,7 +128,7 @@ const  toast = useToast();
          }
       })
       .then((res) =>{
-          categoriesDatas.value = res.data.data.data
+        categories.value = res.data.data.data
       }).catch((err)=>{
         toast.error(err.response.data.message, {
               position: "top-right",
@@ -144,5 +165,14 @@ const  toast = useToast();
   })
    </script>
    <style scoped>
+.cell-breakword {
+    word-break: break-all;
+    max-width:300px;
+}
 
+.cell-breakword:hover {
+    overflow: visible;
+    white-space: normal;
+    height: auto;
+}
  </style>

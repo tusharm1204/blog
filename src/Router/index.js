@@ -14,6 +14,11 @@ const routes = [
         component: () => import('../components/WebPage/BlogShow.vue'),
     },
     {
+        path: "/categories/:id/blogs",
+        name: "ShowCategory",
+        component: () => import('../components/ShowCategory.vue'),
+      },
+    {
         name: 'LoginPage',
         path: '/login',
         component: () => import('../components/LoginPage.vue'),

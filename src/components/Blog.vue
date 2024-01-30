@@ -79,7 +79,7 @@
 </template>
 
 <script setup>
-import Multiselect from '@vueform/multiselect'
+import Multiselect from '@vueform/multiselect';
 import { useRouter } from 'vue-router';
 import axios from "axios";
 import { ref, onMounted,watch} from "vue";
