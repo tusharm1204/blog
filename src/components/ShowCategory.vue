@@ -1,14 +1,14 @@
 <template>
     <Navbar />
     <section class="mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center sticky bottom-0">
-      <Carousel :items-to-show="11" :wrap-around="true"  >
+      <Carousel :items-to-show="9">
         <Slide v-for="category in categories" :key="category">
         <div @click="changeCategory(category.id)"> 
             <div>
               <router-link :to="`/categories/${category.id}/blogs`">
                 <img :src="category.image" alt="" class="rounded-full w-[50px] h-[40px] md:w-[145px] xl:w-[40px] lg:w-[145px] border-2 md:h-[145px] lg:h-[145px] xl:h-[40px]">
                 <div class="mt-3 text-base text-center cursor-pointer">
-                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black"  :class="category.id === currentActiveId ? 'active' :''">
+                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black"  :class="category.id == currentActiveId ? 'active' :''">
                     {{ category.name }}
                   </h1>
                 </div>
@@ -58,7 +58,7 @@
       
     </section>
 
-<div class="mt-64">
+    <div class="mt-64" @click="showBlog">
     <Footer />
 </div>
 </template>
@@ -68,13 +68,10 @@ import Navbar from '../components/WebPage/Navbar.vue';
 import Footer from '../components/WebPage/Footer.vue';
 import { ref,onMounted  } from 'vue';
 import axios  from "axios";
-import {useRouter } from 'vue-router';
-// import { useStore } from 'vuex';
+import {useRoute } from 'vue-router';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
-// import { useToast } from "vue-toastification";
-// const  toast = useToast();
-const router = useRouter();
+const route = useRoute();
 
 
 
@@ -83,40 +80,45 @@ let Blogs = ref({});
 let currentActiveId = ref(null);
 
 onMounted(() => {
-    // getBlog(1);
-    getCategories(1);    
+    getBlog(1);
+    getCategories(1); 
+    changeCategory(1);   
     // getBlog(1)
 });
 
 const getBlog = () => {
-    let data = localStorage.getItem("user");
-  data = JSON.parse(data);
-  let token = data.token;
-    console.log(router.params.id);
-    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${router.params.id}/blogs` ,{
-        headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs` ,{
+
 })
 .then((res) =>{
+  currentActiveId.value = route.params.id;
     Blogs.value = res.data.data.data
-    console.log(res);
+    console.log(route.params.id);
 }).catch((error)=>{
 console.log(error);
 });
 }
 
+
+
+
+const showBlog = () => {
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
+.then((res) =>{
+  currentActiveId.value = route.params.id;
+    Blogs.value = res.data.data.data
+    console.log(route.params.id);
+}).catch((error)=>{
+console.log(error);
+});
+}
+
+
+
 const changeCategory  = (id) => {
-    let data = localStorage.getItem("user");
-  data = JSON.parse(data);
-  let token = data.token;
   currentActiveId.value = id;
   console.log(id);
-  axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/blogs` ,{
-    headers: {
-        Authorization: `Bearer ${token}`,
-      },
-})
+  axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/blogs`)
 .then((res) =>{
     Blogs.value = res.data.data.data
 }).catch((error)=>{
@@ -147,12 +149,6 @@ console.log(error);
 .cell-breakword {
     word-break: break-all;
     max-width:300px;
-}
-
-.cell-breakword:hover {
-    overflow: visible;
-    white-space: normal;
-    height: auto;
 }
 .active{
   border-bottom:3px solid black;

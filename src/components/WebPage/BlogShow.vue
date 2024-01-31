@@ -23,24 +23,20 @@
           <button class="gap-2 inline-flex items-center px-8 text-white text-sm py-1 bg-[#55acef]"> <i class="fa-solid fa-envelope"></i>envelope</button>
           <button class="gap-2 inline-flex items-center px-8 text-white text-sm py-1 bg-[#3330fb] ">   <i class="fa-brands fa-linkedin"></i>in.</button>
         </div>
-       <div class="d-flex">
-        <div>
-          <img :src="blogShow.image" style="width:1020px;height:500px;margin-top:30px;object-fit:contain;" >
-        </div>
-        <div>
-          <p class="text-justify" style="font-size:23px;font-family: circular;margin:23px 0px 0px 161px;width: 54%;" v-html="blogShow.description"></p>
-        </div>
-        </div>
+        <div class="flex justify-between">
+                    <p v-html="blogShow.description" class="w-[60%]"></p>
+                    <img :src="blogShow?.image" alt="" class="object-cover rounded w-[20%] h-[4 00px] lg:col-span-7 dark:bg-gray-500">
+                </div>
        </div>
       </div>
       
-    </section><br><br><br><br>
+    </section>
   </div>
   <div id="carouselExampleControls" class="carousel slide text-center carousel-dark" data-mdb-ride="carousel" style="width: 65%;margin-left:371px;margin-top:50px;">
     <div class="carousel-inner">
       <div class="carousel-item active">
         
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center mt-16">
           <div class="col-lg-8">
             <p style="font-size: 25px;font-weight: 700;">Octal Infotech</p>
             <p class="text-muted" style="font-family: 'circular';">

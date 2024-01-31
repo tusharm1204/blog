@@ -2,11 +2,11 @@
     <Navbar />
     <div class="mx-auto max-w-full px-2 sm:px-6 md:px-8">
       <section class="mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
-      <Carousel :items-to-show="11" :wrap-around="true"  >
+      <Carousel :items-to-show="9">
         <Slide v-for="category in categories" :key="category">
         <div>
             <div class="item">
-              <router-link :to="'/categories/'+category.id+'/blogs'">
+              <router-link :to="`/categories/${category.id}/blogs`">
                 <img :src="category.image" alt="" class="rounded-full w-[50px] h-[40px] md:w-[145px] xl:w-[40px] lg:w-[145px] border-2 md:h-[145px] lg:h-[145px] xl:h-[40px]">
               </router-link>
               <div class="mt-3 text-base text-center cursor-pointer">
@@ -53,7 +53,7 @@
               <h1 class="d-flex justify-content mt-3 hover-underline-animation">
               {{ blogs.name }}
             </h1>
-            <div class="description cell-breakword truncate" style="" v-html="blogs.description"></div>
+            <div class="description cell-breakword truncate" style="" v-html="blogs.category_name"></div>
          <div class="flex justify-center gap-2 items-center">
           <div>
             <img :src="blogs.user_image" alt="" class="w-8 h-8 rounded-full">

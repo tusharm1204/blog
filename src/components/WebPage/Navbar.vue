@@ -8,15 +8,19 @@
                  <span class="line line3"></span>
              </div>
              <ul class="menu-items">
-                 <li><a href="#" class="p-4 font-semibold text-gray-600 ">Home</a></li>
+            <router-link to="/">
+                <li><a href="#" class="p-4 font-semibold text-gray-600 ">Home</a></li>
+            </router-link>
                  <li><a href="#" class="p-4font-semibold text-gray-600 ">Category</a></li>
                  <li><a href="#" class="p-4 font-semibold text-gray-600 ">Blog</a></li>
                  <li><a href="#" class="p-4 font-semibold text-gray-600 ">Contact</a></li>
              </ul>
              <router-link to="/">
-            <div class="head">
+            <div class="head flex">
+           <router-link to="/" class="flex items-center gap-2">
             <img src="https://octalinfotech.com/img/octal-logo.png" style="width: 40px;border-radius: 25px;" class=" w-10">
              <span class="ml-3 text-xl octal">Octal infotech</span>
+           </router-link>
             </div>
         </router-link>
          </div>
