@@ -4,7 +4,8 @@
     <div class="py-5 px-2">
         <div class="px-2 lg:px-2">
             <div class="flow-root pb-10 px-2 bg-white shadow-sm w-auto h-auto rounded p-4">
-                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-end lg:mr-5 items-center flex-col gap-2">
+                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-between lg:mr-5 items-center flex-col gap-3">
+                  <SearchBox @search="handleSeach"/>
                   <button class="bg-slate-950 text-white rounded-sm text-center p-2" data-bs-toggle="modal" data-bs-target="#addTag" @click="addData" >Add Tag
                     </button>
                </div>
@@ -35,7 +36,8 @@
                                 </tbody>
                             </table>
                           </div>
-                          <div class="flex justify-end mt-3">
+                          <div class="flex justify-between items-center mt-3 mx-3">
+                            <PageEvent @onChange="pageChange" />
                             <ul class="pagination  flex justify-end">
                                   <li class="page-item">
                                   <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
@@ -87,7 +89,10 @@ import { inject } from 'vue'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import {useLoading} from 'vue-loading-overlay'
-    
+import SearchBox from "./SearchBox.vue";
+import { PERPAGE } from '@/Constance/constance';
+import PageEvent from "./PageEvent.vue";
+
 const $loading = useLoading({});
 const swal = inject('$swal')
 
@@ -97,7 +102,7 @@ const isEdit = ref(false);
 const form = ref ({name:''});
 const tags = ref([]);
 const error = ref([]);
-
+let perPage = ref(PERPAGE);
 const updateTag = ref({
   name:''
 })
@@ -106,6 +111,16 @@ watch (currentPage,(value) =>{
   console.log(value);
       getTags(value);
 });
+
+const handleSeach = (value) => {
+getTags(1,value)
+}
+
+const pageChange = (value) => {
+    perPage.value = parseInt(value);
+    console.log(value);
+    getTags(1);
+};
 
 const addData = () => {
   isEdit.value = false;
@@ -130,13 +145,13 @@ const handleNext =() =>{
 
 };
 
-const getTags = (page=1) =>{
+const getTags = (page,search = '') =>{
   
   let user = localStorage.getItem('user');
   user = JSON.parse(user);
   let token = user.token ;
 
-      axios.get("https://blog-api-dev.octalinfotech.com/api/tages?page=" + page ,{
+      axios.get(`https://blog-api-dev.octalinfotech.com/api/tages?page=${page}&per_page=${perPage.value}&search=${search}`,{
         headers : {
           authorization : `Bearer ${token}`
         }

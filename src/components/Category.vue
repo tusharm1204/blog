@@ -3,7 +3,8 @@
     <div class="py-5 px-2">
         <div class="px-2 lg:px-2">
             <div class="flow-root pb-10 px-2 bg-white shadow-sm h-auto rounded p-4">
-                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-end lg:mr-5 items-center flex-col gap-2">
+                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-between lg:mr-5 xl:justify-between items-center flex-col gap-3">
+                    <SearchBox @search="handleSeach"/>
                   <button class="bg-slate-950 text-white rounded-sm text-center p-2" data-bs-toggle="modal" data-bs-target="#addCategory" @click="aadData" >Add Category
                     </button>
                </div>
@@ -35,20 +36,21 @@
                                 </tbody>
                             </table>
                           </div>
-                          <div class="flex justify-end mt-3">
-                            <ul class="pagination  flex justify-end">
-                          <li class="page-item">
-                          <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
-                          </li>
-                          <li class="page-item" v-for="page in totalPage" :key="page">
-                          <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
-                          </li>
-                          <li class="page-item">
-                          <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
-                          </li>
-                          </ul>
-                              </div>
                         </div>
+                        <div class="flex justify-between items-center mt-3 mx-3">
+              <PageEvent @onChange="pageChange" />
+                          <ul class="pagination  flex justify-end">
+                        <li class="page-item">
+                        <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
+                        </li>
+                        <li class="page-item" v-for="page in totalPage" :key="page">
+                        <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
+                        </li>
+                        <li class="page-item">
+                        <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
+                        </li>
+                        </ul>
+                            </div>
                       </div>
                       
                     </div>
@@ -93,13 +95,17 @@
 
 <script>
 import axios from "axios";
-import {useLoading} from 'vue-loading-overlay'
-const $loading = useLoading({});
+import {useLoading} from 'vue-loading-overlay';
 import { useToast } from "vue-toastification";
+import SearchBox from "./SearchBox.vue";
+import { PERPAGE } from '@/Constance/constance';
+import PageEvent from "./PageEvent.vue";
+const $loading = useLoading({});
 const  toast = useToast();
 
 export default {
     name: "Category-component",
+    components:{SearchBox,PageEvent},
     data() {
         return {
             selected: null,
@@ -108,10 +114,12 @@ export default {
             detail: {},
             url: "",
             isEdit: false,
+            page:1,
             form: {
                 name: "",
                 image: "",
             },
+            perPage : PERPAGE,
         };
     },
     watch: {
@@ -121,6 +129,15 @@ export default {
         },
     },
     methods: {
+        handleSeach(value){
+            this.getCategory(1,value)
+        },
+
+        pageChange(value){
+            this.perPage =  parseInt(value)
+            this.getCategory(1);
+            console.log(value);
+        },
         addImage: function (evt) {
             const file = evt.target.files[0];
             this.url = URL.createObjectURL(file);
@@ -223,14 +240,13 @@ export default {
                     }
                 });
         },  
-        getCategory(page = 1) {
+        getCategory(page,search = '') {
             let data = localStorage.getItem("user");
             data = JSON.parse(data);
             let token = data.token;
 
             axios
-                .get(
-                    "https://blog-api-dev.octalinfotech.com/api/categories?page=" + page, {
+                .get(`https://blog-api-dev.octalinfotech.com/api/categories?page=${page}&per_page=${this.perPage}&search=${search}`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },

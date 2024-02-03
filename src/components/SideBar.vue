@@ -60,50 +60,41 @@
                             <h1 class="text-black text-lg font-bold space-x-3">OCTAL INFOTECH</h1>
    </div>
    <div class="h-full px-3 py-4 overflow-y-auto flex flex-1 flex-col bg-gray-50 dark:bg-gray-800 shadow-xl fixed z-50 w-64">
-      <ul class="space-y-2 font-semibold  text-black">
-         <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/deshboard">
-                        <div class="flex gap-3 mr-11"><div>
-                            <i class="fa-solid fa-house" style="color: hsl(11deg 100% 50.86%);"></i>
-                        </div><div>
-                        <span>DASHBOARD</span> 
-                        </div> </div>
+      <ul class="font-medium  text-black text-lg">
+                 <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/dashboard" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-house text-red-500 text-[20px]"></i>
+                      <div>Dashboard</div>
+                    </router-link>
+                </li> 
+                  <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/category" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-graduation-cap text-yellow-900	 text-[20px]"></i>
+                      <div>Categories</div>
+                    </router-link>
+                </li>  
+                   <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/blog" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-cube text-purple-500 text-[20px]"></i>
+                      <div>Blogs</div>
+                    </router-link>
+                </li>  
+                   <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/user" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-user text-green-600 text-[20px]"></i>
+                      <div>Users</div>
                     </router-link>
                 </li>
-                <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/category">
-                        <div class="flex gap-3 mr-11"><div>
-                            <i class="fa-solid fa-graduation-cap" style="color:rgb(141, 104, 9);"></i>
-                        </div><div>
-                        <span>CATEGORIES</span> 
-                        </div> </div>
+                     <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/tag" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-tag text-blue-500 text-[20px]"></i>
+                      <div>Tags</div>
                     </router-link>
-                </li>
-                <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/blog">
-                        <div class="flex gap-3 mr-[91px]"><div>
-                            <i class="fa-solid fa-cube" style="color: rgb(74, 65, 199)"></i>
-                        </div><div>
-                        <span>BLOGS</span> 
-                        </div> </div>
-                    </router-link>
-                </li>
-                <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/user">
-                        <div class="flex gap-3 mr-[91px]"><div>
-                            <i class="fa-solid fa-user" style="color: rgb(30, 138, 62)"></i>
-                        </div><div>
-                        <span>USERS</span> 
-                        </div> </div>
-                    </router-link>
-                </li>
-                <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/tag">
-                        <div class="flex gap-3 mr-[97px]"><div>
-                            <i class="fa-solid fa-tag" style="font-size:22px;color:DodgerBlue"></i>
-                        </div><div>
-                        <span>TAGS</span> 
-                        </div> </div>
+                </li>   
+                  <li  class="flex hover:bg-gray-400 hove rounded-md">  
+                    <router-link to="/admin/contact" class="flex gap-3 items-center">
+                      <i class="fa-solid fa-clipboard text-[20px] text-gray-500"></i>
+                      <div>Contacts</div>
                     </router-link>
                 </li>
       </ul>

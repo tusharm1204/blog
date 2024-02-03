@@ -1,5 +1,5 @@
 <template>
-    <Navbar />
+    <Navbar @search="search"/>
     <section class="mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center sticky bottom-0">
       <Carousel :items-to-show="9">
         <Slide v-for="category in categories" :key="category">
@@ -24,30 +24,21 @@
     <section class="mt-5 justify-center flex">
       <template v-if="Blogs.length > 0">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 md:grid-cols-2">
-        <div v-for="blogs in Blogs" :key="blogs" class="main mt-5 hover:text-white-500 font-semibold text-base grid-container"> 
+      <div v-for="blogs in Blogs" :key="blogs"  class="main mt-5 hover:text-white-500 font-semibold text-base grid-container bg-white shadow-md rounded-lg"> 
           <div >
             <router-link :to="'/blogs/'+blogs.id">
                         <img :src="blogs.image" alt="" class=" w-[330px] h-[230px] object-contain">
-        
+            </router-link>
+          </div>
           <div class="text-base text-center cursor-pointer mt-2 justify-content">
-              <h1 class="d-flex justify-content mt-3 hover-underline-animation">
-              {{ blogs.name }}
-            </h1>
-            <div class="description cell-breakword truncate" style="" v-html="blogs.description"></div>
-         <div class="flex justify-center gap-2 items-center">
-          <div>
-            <img :src="blogs.user_image" alt="" class="w-8 h-8 rounded-full">
-          </div>
-              <div class="flex gap-3">
-                <span class="text-xs dark:text-gray-400 flex">{{ blogs.user_name}}</span>
-                <span class="text-xs dark:text-gray-400 date">   {{ blogs.date }}</span>
-              </div>
+            <div class="flex justify-between items-center mx-7 mt-1">
+                <span class="text-xs dark:text-gray-400 flex gap-1"><i class="fa-solid fa-user h-4 w-4"></i>{{ blogs.user_name}}</span>
+                <span class="text-xs dark:text-gray-400 flex gap-1"><i class="fa-solid fa-calendar-days h-4 w-4"></i>{{ blogs.date }}</span>
             </div>
-            <span class="text-xs dark:text-gray-400">{{ blogs.slug }}</span>
+            <div class="text-md text-gray-900 font-bold flex justify-center mt-3 mb-3" v-html="blogs.title"></div>
+
           </div> 
-		</router-link>
-          </div>
-      </div>
+      </div> 
     </div>
       </template> 
       <template v-else>
@@ -82,12 +73,14 @@ let currentActiveId = ref(null);
 onMounted(() => {
     getBlog(1);
     getCategories(1); 
-    changeCategory(1);   
-    // getBlog(1)
 });
 
-const getBlog = () => {
-    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs` ,{
+const search = (value) => {
+  getBlog(1,value)
+}
+
+const getBlog = (page,search = '') => {
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs?page=${page}&search=${search}` ,{
 
 })
 .then((res) =>{
@@ -102,8 +95,8 @@ console.log(error);
 
 
 
-const showBlog = () => {
-    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
+const showBlog = (page,search = '') => {
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs?page=${page}&search=${search}`)
 .then((res) =>{
   currentActiveId.value = route.params.id;
     Blogs.value = res.data.data.data
@@ -120,7 +113,7 @@ const changeCategory  = (id) => {
   console.log(id);
   axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/blogs`)
 .then((res) =>{
-    Blogs.value = res.data.data.data
+    Blogs.value = res.data.data.data;
 }).catch((error)=>{
 console.log(error);
 })
@@ -136,7 +129,6 @@ axios.get('https://blog-api-dev.octalinfotech.com/categories?page=1&search' ,{
 })
 .then((res) =>{
     categories.value = res.data.data.data;
-    getBlog(1);
 }).catch((error)=>{
 console.log(error);
 })

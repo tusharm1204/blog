@@ -23,11 +23,17 @@ const routes = [
         path: '/login',
         component: () => import('../components/LoginPage.vue'),
         
+    },   
+    {
+        name: 'Contact Us',
+        path: '/contact',
+        component: () => import('../components/WebPage/Contact.vue'),
+        
     },
     {
         name: 'Sidebar',
         path: '/admin',
-        redirect : '/admin/deshboard',
+        redirect : '/admin/dashboard',
         meta: {
             middleware: [   
                 auth,   
@@ -38,13 +44,24 @@ const routes = [
         children: [
             {
                 name: 'Deshboard',
-                path: 'deshboard',
+                path: 'dashboard',
                 component: () => import('../components/DeshBoard.vue'),
                 meta: {
                     middleware: [   
                         auth,   
                     ],
                     title:'Dashboard'
+                },
+            },
+             {
+                name: 'Contact Us',
+                path: 'contact',
+                component: () => import('../components/Contact.vue'),
+                meta: {
+                    middleware: [   
+                        auth,   
+                    ],
+                    title:'Contact us'
                 },
             },
             {

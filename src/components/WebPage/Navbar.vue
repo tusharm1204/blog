@@ -11,9 +11,11 @@
             <router-link to="/">
                 <li><a href="#" class="p-4 font-semibold text-gray-600 ">Home</a></li>
             </router-link>
-                 <li><a href="#" class="p-4font-semibold text-gray-600 ">Category</a></li>
                  <li><a href="#" class="p-4 font-semibold text-gray-600 ">Blog</a></li>
-                 <li><a href="#" class="p-4 font-semibold text-gray-600 ">Contact</a></li>
+                 <router-link to="/contact">
+                    <li><a href="#" class="p-4 font-semibold text-gray-600 ">Contact</a></li>
+                 </router-link>
+                 <SearchBox @search="handleSeach"/>
              </ul>
              <router-link to="/">
             <div class="head flex">
@@ -29,7 +31,14 @@
  </template>
  
    <script setup>
+   import SearchBox from '../SearchBox.vue';
+   import defineEmits from 'vue';
 
+   const emit = defineEmits(['search']);
+
+   const handleSeach = (value) => {
+    emit('search' , value)
+   }
  
    </script>
    <style scoped>
@@ -81,6 +90,7 @@
      background: #fff;
      color: #000;
      z-index: 999;
+     padding: 5px;
  }
  .navbar-container{
      display: flex;

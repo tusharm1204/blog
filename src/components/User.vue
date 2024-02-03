@@ -3,7 +3,8 @@
     <div class="py-5 px-2">
         <div class="px-2 lg:px-2">
             <div class="flow-root pb-10 px-2 bg-white shadow-sm  h-auto rounded p-4">
-                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-end lg:mr-5 items-center flex-col gap-2">
+                <div class="lg:flex-row md:flex-col sm:mt-0 sm:flex-none flex lg:justify-between lg:mr-5 items-center flex-col gap-3">
+                  <SearchBox @search="handleSeach"/>
                   <button class="bg-slate-950 text-white rounded-sm text-center p-2" data-bs-toggle="modal" data-bs-target="#addUsers" @click="addUsers" >Add User
                     </button>
                </div>
@@ -13,18 +14,14 @@
                             <table class="min-w-full divide-y divide-gray-300">
                                 <thead class="border-b border-black/20">
                                     <tr>
-                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900 w-[5%] text-center">Sr No.</th>
-                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900">Name</th>
-                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900">Email</th>
+                                        <th class="py-3.5 px-2 text-base font-semibold text-gray-900 text-start">Name</th>
+                                        <th class="py-3.5 px-5 text-base font-semibold text-gray-900 ">Email</th>
                                         <th class="py-3.5 px-5 text-base font-semibold text-gray-900 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody v-if="userName && userName.length > 0" class="divide-y divide-gray-200 bg-white">
-                                    <tr v-for="(user,index) in userName" :key="user.id">
-                                        <td class="whitespace-nowrap px-2 py-3 text-sm text-gray-500 text-center">
-
-                                            {{ (index + 1) }}</td>
-                                        <td class="whitespace-nowrap px-2 py-3 text-md text-gray-500">
+                                    <tr v-for="user in userName" :key="user.id">
+                                        <td class="whitespace-nowrap px-2 py-3 text-md text-gray-500 text-start">
                                             {{ user.name }}</td>
                                             <td class="whitespace-nowrap px-2 py-3 text-md text-gray-500">
                                             {{ user.email }}</td>
@@ -41,7 +38,8 @@
                                 </tbody>
                             </table>
 
-                            <div class="flex justify-end mt-3">
+                            <div class="flex justify-between items-center mt-3 mx-3">
+                            <PageEvent @onChange="pageChange" />
                       <ul class="pagination  flex justify-end">
                           <li class="page-item">
                             <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
@@ -119,11 +117,14 @@
 </template>
 
 <script setup>
+import SearchBox from "./SearchBox.vue";
 import axios from "axios";
 import {ref,onMounted,watch} from 'vue';
 import { inject } from 'vue';
 import {useLoading} from 'vue-loading-overlay';
 import { useToast } from "vue-toastification";
+import { PERPAGE } from '@/Constance/constance';
+import PageEvent from "./PageEvent.vue";
 const  toast = useToast();
     
 const $loading = useLoading({});
@@ -131,6 +132,7 @@ const swal = inject('$swal')
 
 const userName = ref({});
 const totalPage = ref(0);
+let perPage = ref(PERPAGE);
 const currentPage = ref(1);
 const usersData = ref({
   user_name : '',
@@ -144,12 +146,24 @@ const updateUserField = ref({
   user_email : '',
   user_password : '',
 
-})
+});
+
+const handleSeach = (value) => {
+  getuser(1,value)
+}
 
 watch (currentPage,(value) =>{
   console.log(value);
       getuser(value);
 });
+
+
+const pageChange = (value) => {
+    perPage.value = parseInt(value);
+    console.log(value);
+    getuser(1);
+};
+
 
 const handlePrev =() =>{
   if (currentPage.value > 1) {
@@ -164,13 +178,13 @@ const handleNext =() =>{
 
 };
 
-const getuser = (page =1) =>{
+const getuser = (page,search = '') =>{
 
     let  data = localStorage.getItem('user');
      data = JSON.parse(data);
     let  token = data.token  
 
-    axios.get('https://blog-api-dev.octalinfotech.com/api/users?page'  + page, {
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/users?page${page}&per_page=${perPage.value}&search=${search}` , {
       headers :{
         Authorization : `Bearer  ${token}`
       }

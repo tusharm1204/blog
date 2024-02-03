@@ -4,16 +4,36 @@
         <div class="px-2 lg:px-2">
             <div class="flow-root pb-10 px-2 bg-white shadow-md h-auto rounded p-2">
                 <div class="xl:flex-row xl:justify-between lg:flex-row lg:justify-between flex flex-col  gap-3 items-center bg-white md:p-4 p-3">
-               <div class="w-[14rem] ml-1">
-                <Multiselect :value="selectedStatus"
-                  :options="allOptions"  @change="showBlog" placeholder="select status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" >
+                  <SearchBox @search="handleSeach"/>
+                  <div class="flex  lg:flex-row md:flex-col flex-col md:gap-5 gap-2 items-center">
+                 <div class="w-[13rem] md:w-[12rem]">
+            <Multiselect v-model="status"  :value="status" :options="allStatus" placeholder="Select Status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" ></Multiselect>
+                 </div>
+                
+            <div class="w-[13rem] md:w-[12rem]">
+            <Multiselect v-model="category_id" :options="categoryOption" placeholder="Select Category" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" ></Multiselect>
+            </div>
+                <div class="w-[13rem] md:w-[12rem]">
+            <Multiselect v-model="user_id" :options="userOption" placeholder="Select User" :closeOnSelect="true" :clearOnSelect="true" :searchable="true"  ></Multiselect>
+                </div>
+
+
+                <router-link to="/admin/creatblog">
+                      <button class="bg-slate-950 text-white rounded-sm p-2" @click="addBlog">Add Blog</button>
+                     </router-link>
+           </div>
+               <!-- <div class="flex gap-3 md:flex-row flex-col">
+                <div class="w-[14rem] ml-1">
+                <Multiselect v-model="status"
+                  :options="allOptions"  placeholder="select status" :closeOnSelect="true" :clearOnSelect="true" :searchable="true" >
                 </Multiselect>
-               </div>
-                  <div class="mr-2">
+               </div> -->
+                  <!-- <div class="mr-2">
                     <router-link to="/admin/creatblog">
                       <button class="bg-slate-950 text-white rounded-sm p-2" @click="addBlog">Add Blog</button>
                      </router-link>
-                  </div>
+                  </div> -->
+               <!-- </div> -->
                </div>
                 <div class="overflow-x-auto w-full py-5">
                     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 overflow-x-auto pb-3">
@@ -57,20 +77,22 @@
                                </tbody>
                             </table>
                           </div>
-                          <div class="flex justify-end mt-3">
-                            <ul class="pagination  flex justify-end">
-                              <li class="page-item">
-                              <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
-                              </li>
-                              <li class="page-item" v-for="page in totalPage" :key="page">
-                              <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
-                              </li>
-                              <li class="page-item">
-                              <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
-                              </li>
-                              </ul>
-                              </div>
                         </div>
+                        <div class="flex justify-between items-center mt-3 mx-3">
+                          <PageEvent @onChange="pageChange" />
+                          
+                          <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" @click.prevent="handlePrev">Previous</a>
+                            </li>
+                            <li class="page-item" v-for="page in totalPage" :key="page">
+                            <a class="page-link" href="#" @click.prevent="currentPage = page">{{page}}</a>
+                            </li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" @click.prevent="handleNext">Next</a>
+                            </li>
+                            </ul>
+                            </div>
                       </div>
                     </div>
         </div>
@@ -79,14 +101,17 @@
 </template>
 
 <script setup>
+import SearchBox from "./SearchBox.vue";
 import Multiselect from '@vueform/multiselect';
-import { useRouter } from 'vue-router';
 import axios from "axios";
 import { ref, onMounted,watch} from "vue";
 import { inject } from 'vue'
 import {useLoading} from 'vue-loading-overlay';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import { useRouter } from 'vue-router';
+import { PERPAGE } from '@/Constance/constance';
+import PageEvent from "./PageEvent.vue";
 const router = useRouter();
     
 const $loading = useLoading({});
@@ -95,13 +120,40 @@ const blog = ref ({});
 const totalPage = ref(0);
 const currentPage = ref(1);
 const selectedStatus = ref('');
-const allOptions = ref(['all','publish','unpublish'])
+const allStatus = ref([
+  {label:'All',value:0},
+  {label:'Publish',value:1},
+  {label:'Unpublish',value:2}
+]);
+const userOption = ref([]);
+const categoryOption = ref([]);
+const status = ref('')
+const page = ref(1);
+const user_id = ref('')
+const category_id = ref('');
+let perPage = ref(PERPAGE);
+
 
 
 watch (currentPage,(value) =>{
   console.log(value); 
       getBlog(value);
 });
+
+watch (status,(value) => {
+  getBlog(page.value);
+  console.log(value);
+});
+
+watch (category_id,(value) => {
+  getBlog(page.value);
+  console.log(value);
+});
+
+watch (user_id,(value) => {
+  getBlog(page.value);
+  console.log(value);
+})
 
 const handlePrev =() =>{
   if (currentPage.value > 1) {
@@ -116,13 +168,40 @@ const handleNext =() =>{
 
 };
 
-  const getBlog = async (page = 1) => {
+const handleSeach  = (value) => {
+  getBlog(1,value);
+  console.log(value);
+}
+
+
+const pageChange = (value) => {
+    perPage.value = parseInt(value);
+    console.log(value);
+    getBlog(1);
+};
+
+  const getBlog = async (page,search = '') => {
 
    
     let data = localStorage.getItem("user");
       data = JSON.parse(data);
       let token = data.token;
-      await axios.get("https://blog-api-dev.octalinfotech.com/api/blogs?page=" + page, {
+
+      let url = `https://blog-api-dev.octalinfotech.com/api/blogs?page=${page}&search=${search}&per_page=${perPage.value}`
+
+      if(category_id.value){
+        url+=`&category_id=${category_id.value}`;
+    }
+
+    if(user_id.value){
+        url+=`&user_id=${user_id.value}`;
+    }
+
+    if(status.value){
+        url+=`&status=${status.value}`;
+    }
+
+      await axios.get(url ,{
                   headers: {
                       Authorization: `Bearer ${token}`,
                   },
@@ -142,11 +221,6 @@ const handleNext =() =>{
        
   };
 
-  const showBlog = (value) =>{
-    if (value === 'publish') selectedStatus.value = 1
-    if (value === 'unpublish') selectedStatus.value = 2
-    if (value === 'all') selectedStatus.value = 0
-  }
   const deleteBlog = async(id)=>{
   let data = localStorage.getItem("user");
       data = JSON.parse(data);
@@ -223,7 +297,50 @@ const getBlogs = (id) =>{
 })
 
 }
+const getUsers = () => {
+  let  data = localStorage.getItem('user');
+     data = JSON.parse(data);
+    let  token = data.token  
 
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/users` , {
+      headers :{
+        Authorization : `Bearer  ${token}`
+      }
+    })
+    .then((response) =>{
+      userOption.value = [];
+        response.data.data.data.forEach( user =>{
+            userOption.value.push({
+                        label: user.name,
+                        value: user.id
+                    })
+        })
+    }).catch((err) =>{
+    console.log(err);
+  })
+}
+const getCategory = () => {
+  let  data = localStorage.getItem('user');
+     data = JSON.parse(data);
+    let  token = data.token  
+
+    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories` , {
+      headers :{
+        Authorization : `Bearer  ${token}`
+      }
+    })
+    .then((response) =>{
+      categoryOption.value = [];
+        response.data.data.data.forEach( user =>{
+          categoryOption.value.push({
+                        label: user.name,
+                        value: user.id
+                    })
+        })
+    }).catch((err) =>{
+    console.log(err);
+  })
+}
 const editBlog = (data) => {
   router.push({
                     name: 'EditBlog',
@@ -233,6 +350,8 @@ const editBlog = (data) => {
     onMounted (async () =>{
       const loader = $loading.show({});
       await getBlog();
+      await getUsers();
+      await getCategory();
        loader.hide()
     })
 
