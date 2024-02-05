@@ -2,20 +2,20 @@
     <Navbar @search="search"/>
     <div class="mx-auto max-w-full px-2 sm:px-6 md:px-8 bg-slate-50">
       <section class="mt-5 w-[100%] md:w-[100%]  md:justify-end xl:justify-end justify-center">
-      <Carousel :items-to-show="9">
+        <Carousel :items-to-show="10">
         <Slide v-for="category in categories" :key="category">
         <div>
+          <router-link :to="`/categories/${category.id}/blogs`">
             <div class="item">
-              <router-link :to="`/categories/${category.id}/blogs`">
                 <img :src="category.image" alt="" class="rounded-full w-[50px] h-[40px] md:w-[145px] xl:w-[40px] lg:w-[145px] border-2 md:h-[145px] lg:h-[145px] xl:h-[40px]">
-              </router-link>
-              <div class="text-base text-center cursor-pointer">
-                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black">
-                  {{ category.name }}
+                <div class="mt-3 text-base text-center cursor-pointer">
+                  <h1 class="text-xl dark:text-gray-400 hover-underline-animation text-black hover:text-red-600 hover:border-b-2 hover:border-black/100">
+                    {{ category.name }} 
                   </h1>
+                </div>
               </div>
-              </div>
-             </div>
+            </router-link>
+            </div>
       </Slide>
           <template #addons>
             <Navigation />

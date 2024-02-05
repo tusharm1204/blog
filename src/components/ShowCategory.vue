@@ -49,7 +49,7 @@
       
     </section>
 
-    <div class="mt-64" @click="showBlog">
+    <div class="mt-64" @click="changeCategory">
     <Footer />
 </div>
 </template>
@@ -95,29 +95,38 @@ console.log(error);
 
 
 
-const showBlog = (page,search = '') => {
-    axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs?page=${page}&search=${search}`)
-.then((res) =>{
-  currentActiveId.value = route.params.id;
-    Blogs.value = res.data.data.data
-    console.log(route.params.id);
-}).catch((error)=>{
-console.log(error);
-});
-}
+// const showBlog = (page,search = '') => {
+//     axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs?page=${page}&search=${search}`)
+// .then((res) =>{
+//   currentActiveId.value = route.params.id;
+//     Blogs.value = res.data.data.data
+//     console.log(route.params.id);
+// }).catch((error)=>{
+// console.log(error);
+// });
+// }
 
 
 
-const changeCategory  = (id) => {
-  currentActiveId.value = id;
-  console.log(id);
-  axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${id}/blogs`)
-.then((res) =>{
+const changeCategory  = () => {
+  axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
+  .then((res) =>{
+    currentActiveId.value = route.params.id;
     Blogs.value = res.data.data.data;
 }).catch((error)=>{
 console.log(error);
 })
 }
+
+// const changeName  = () => {
+//   axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
+//   .then((res) =>{
+//     Blogs.value = res.data.data.data;
+//     currentActiveId.value = route.params.id;
+// }).catch((error)=>{
+// console.log(error);
+// })
+// }
 
 
 const getCategories = () =>{
@@ -144,6 +153,8 @@ console.log(error);
 }
 .active{
   border-bottom:3px solid black;
-  color: red;
+  color: red !important;
 }
+
+
 </style>

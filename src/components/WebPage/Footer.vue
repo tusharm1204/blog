@@ -62,7 +62,7 @@
               <p class="font-medium text-white text-xl">Categories</p>
               <ul class="text-sm">
             <li v-for="category in categoryCount" :key="category">
-              <router-link :to="`/categories/${category.id}/blogs`"  class="flex items-center gap-2 text-white">
+              <router-link :to="`/categories/${category.id}/blogs`"  class="flex items-center gap-2 text-white" :class="category.id == isAcive ? 'router-link-active' : ''">
                 <div>{{category.name}}</div>
                 <div>({{category.blog_count}})</div>
               </router-link>
@@ -80,6 +80,7 @@
 
     
     const categoryCount = ref('');
+    const isAcive = ref(null);
 
   onMounted(()=>{
     getCategories();
@@ -102,6 +103,9 @@ console.log(error);
     </script>
     
     <style scoped>
-    
+ .router-link-active {
+    background-color: #f1f5f9!important;
+    color: black!important;
+}   
       </style>
       

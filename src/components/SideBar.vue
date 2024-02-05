@@ -119,3 +119,11 @@ const logOut = () =>{
 
 </script>
 
+
+<style scoped>
+.router-link-active {
+    background-color: #f1f5f9!important;
+    color: black!important;
+}
+</style>
+
