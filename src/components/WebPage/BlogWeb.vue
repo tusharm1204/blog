@@ -81,6 +81,8 @@
   <div style="margin-top: 80px;">
     <Footer />
   </div>
+  <loader v-if="loaders"  object="#ff7a00" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#000000" objectbg="#999793" opacity="100" disableScrolling="false" name="box"></loader>
+
  </template>
  
    <script setup>
@@ -88,8 +90,8 @@ import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import { ref,onMounted } from "vue";
 import axios  from "axios";
-import {useLoading} from 'vue-loading-overlay'
-const $loading = useLoading({});
+// import {useLoading} from 'vue-loading-overlay'
+// const $loading = useLoading({});
 import Navbar from './Navbar.vue';
 import Footer from '../WebPage/Footer.vue';
 import { useToast } from "vue-toastification";
@@ -97,6 +99,7 @@ const  toast = useToast();
 
   const categories = ref({});
   const blogDatas = ref({});
+  const loaders = ref(false);
   const showCatagory = (page, search = '') =>{
 
       axios.get(`https://blog-api-dev.octalinfotech.com/categories?page=${page}&search=${search}` ,{
@@ -115,7 +118,7 @@ const  toast = useToast();
   }
   
   const showBlog  = (page,search = '') =>{
-  
+    loaders.value = true;
   axios.get(`https://blog-api-dev.octalinfotech.com/blogs?page=${page}&search=${search}` , {
       headers :{
           token : '7ELX2CnkfqWpipzXNB5QV9sxSf4dPk'
@@ -128,6 +131,10 @@ const  toast = useToast();
               position: "top-right",
               timeout: 5000,
               });
+      }).finally(()=>{
+        setTimeout (()=>{
+          loaders.value = false;
+        },2000)
       })
   }
   const search = (value) => {
@@ -135,11 +142,18 @@ const  toast = useToast();
 }
 
   onMounted (() =>{
-  const loader = $loading.show({});
+  // const loader = $loading.show({
+  //   loader: 'bars',
+  //  color: '#1b9712',
+  //  backgroundColor: '#fff',
+  //  width:90,
+  //   height:90,
+  // });
+  // loader.value = true;
       showCatagory();
       showBlog();
-
- loader.hide();
+    // loader.value = false;
+//  loader.hide();
   })
    </script>
    <style scoped>

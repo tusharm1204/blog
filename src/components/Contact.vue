@@ -34,7 +34,7 @@
                                 </tbody>
                             </table>
                           </div>
-                          <div class="flex justify-between items-center mt-3 mx-3">
+                          <div class="flex justify-between items-center mt-3 mx-3  md:flex-row flex-col md:justify-between gap-2">
                             <PageEvent @onChange="pageChange" />
                             <ul class="pagination  flex justify-end">
                                   <li class="page-item">
@@ -63,7 +63,8 @@ import { ref, onMounted,watch } from "vue";
 import PageEvent from "./PageEvent.vue";
 import SearchBox from "./SearchBox.vue";
 import axios from "axios";  
-
+import {useLoading} from 'vue-loading-overlay';
+const $loading = useLoading({});
 
 const contacts = ref([]);
 const page = ref(1);
@@ -72,7 +73,19 @@ const totalPage = ref(0);
 const currentPage = ref(1);
 
 onMounted(() => {
-  getContact();
+});
+
+
+onMounted(async() => {
+  const loader = $loading.show({
+    loader: 'bars',
+    backgroundColor: '#fff',
+   color: '#1b9712',
+   width:90,
+    height:90,
+  });
+ await getContact();
+ loader.hide();
 });
 
 const handleSeach  = (value) => {

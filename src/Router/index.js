@@ -54,8 +54,8 @@ const routes = [
                 },
             },
              {
-                name: 'Contact Us',
-                path: 'contact',
+                name: 'ContactUs',
+                path: 'contacts',
                 component: () => import('../components/Contact.vue'),
                 meta: {
                     middleware: [   

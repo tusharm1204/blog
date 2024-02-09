@@ -17,10 +17,16 @@ import 'vue-loading-overlay/dist/css/index.css';
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import './registerServiceWorker'
+import loader from "vue-ui-preloader";
 
-const app = createApp(App);
 
+
+
+
+
+const app = createApp(App)
 app.use(router);
+app.use(loader);
 app.use(VueSweetalert2);
 app.use(Toaster);
 app.use(Vue3Toastify);

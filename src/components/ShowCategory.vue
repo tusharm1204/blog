@@ -62,7 +62,9 @@ import axios  from "axios";
 import {useRoute } from 'vue-router';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+import {useLoading} from 'vue-loading-overlay';
 const route = useRoute();
+const $loading = useLoading({});
 
 
 
@@ -70,9 +72,17 @@ let categories = ref([]);
 let Blogs = ref({});
 let currentActiveId = ref(null);
 
-onMounted(() => {
-    getBlog(1);
-    getCategories(1); 
+onMounted(async() => {
+  const loader = $loading.show({
+    loader: 'bars',
+   color: '#1b9712',
+   backgroundColor: '#fff',
+   width:90,
+    height:90,
+  });
+await  getCategories(1); 
+await getBlog(1);
+ loader.hide();
 });
 
 const search = (value) => {
@@ -93,21 +103,6 @@ console.log(error);
 }
 
 
-
-
-// const showBlog = (page,search = '') => {
-//     axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs?page=${page}&search=${search}`)
-// .then((res) =>{
-//   currentActiveId.value = route.params.id;
-//     Blogs.value = res.data.data.data
-//     console.log(route.params.id);
-// }).catch((error)=>{
-// console.log(error);
-// });
-// }
-
-
-
 const changeCategory  = () => {
   axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
   .then((res) =>{
@@ -117,16 +112,6 @@ const changeCategory  = () => {
 console.log(error);
 })
 }
-
-// const changeName  = () => {
-//   axios.get(`https://blog-api-dev.octalinfotech.com/api/categories/${route.params.id}/blogs`)
-//   .then((res) =>{
-//     Blogs.value = res.data.data.data;
-//     currentActiveId.value = route.params.id;
-// }).catch((error)=>{
-// console.log(error);
-// })
-// }
 
 
 const getCategories = () =>{

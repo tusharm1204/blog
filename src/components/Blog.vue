@@ -78,7 +78,7 @@
                             </table>
                           </div>
                         </div>
-                        <div class="flex justify-between items-center mt-3 mx-3">
+                        <div class="flex justify-center gap-2 items-center mt-3 mx-3 md:flex-row flex-col md:justify-between">
                           <PageEvent @onChange="pageChange" />
                           
                           <ul class="pagination">
@@ -348,7 +348,13 @@ const editBlog = (data) => {
                 });
 }
     onMounted (async () =>{
-      const loader = $loading.show({});
+      const loader = $loading.show({
+        loader: 'bars',
+   color: '#1b9712',
+   backgroundColor: '#fff',
+   width:90,
+    height:90,
+      });
       await getBlog();
       await getUsers();
       await getCategory();

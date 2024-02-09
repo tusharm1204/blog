@@ -188,7 +188,13 @@ const showDashboard = () =>{
 
 
 onMounted(async ()=>{
-const loader = $loading.show({});
+const loader = $loading.show({
+   loader: 'bars',
+   color: '#1b9712',
+   backgroundColor: '#fff',
+   width:90,
+    height:90,
+});
  await  showDashboard();
  loader.hide();
 //  this.name = JSON.parse(localStorage.getItem('user')).name;

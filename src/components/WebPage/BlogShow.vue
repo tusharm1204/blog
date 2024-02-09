@@ -117,7 +117,13 @@ const changeCategory  = () => {
 }
 
 onMounted ( () =>{
-  const loader = $loading.show({});
+  const loader = $loading.show({
+    loader: 'bars',
+   color: '#1b9712',
+   backgroundColor: '#fff',
+   width:90,
+    height:90,
+  });
    showBlogs(1);
  loader.hide();
 })

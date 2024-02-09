@@ -92,7 +92,7 @@
                     </router-link>
                 </li>   
                   <li  class="flex hover:bg-gray-400 hove rounded-md">  
-                    <router-link to="/admin/contact" class="flex gap-3 items-center">
+                    <router-link to="/admin/contacts" class="flex gap-3 items-center">
                       <i class="fa-solid fa-clipboard text-[20px] text-gray-500"></i>
                       <div>Contacts</div>
                     </router-link>
@@ -121,9 +121,6 @@ const logOut = () =>{
 
 
 <style scoped>
-.router-link-active {
-    background-color: #f1f5f9!important;
-    color: black!important;
-}
+
 </style>
 
